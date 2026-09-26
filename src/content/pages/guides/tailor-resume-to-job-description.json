@@ -4,12 +4,8 @@
   "title": "How to tailor a resume to a job description | SearchBreaker",
   "description": "A step-by-step method for tailoring a resume to a job description using only your real experience, with a checklist and common mistakes to avoid.",
   "source": "guide-tailor-resume",
-  "current": "/guides",
-  "breadcrumbs": [
-    { "label": "Home", "href": "/" },
-    { "label": "Guides", "href": "/guides" },
-    { "label": "How to tailor a resume to a job description" }
-  ],
+  "current": "/guides/tailor-resume-to-job-description",
+  "breadcrumbs": [{"label": "Home", "href": "/"}, {"label": "How to tailor a resume to a job description"}],
   "blocks": [
     {
       "type": "articleHero",

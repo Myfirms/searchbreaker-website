@@ -1,0 +1,110 @@
+{
+  "path": "/features/job-application-tracker",
+  "template": "feature",
+  "pageId": "P015",
+  "title": "Track job applications in one clear pipeline | SearchBreaker",
+  "description": "See every application and next step in one organized job-search pipeline. Learn the workflow, its controls and what you can review before applying.",
+  "source": "tracker",
+  "breadcrumbs": [{"label": "Home", "href": "/"}, {"label": "Application Tracker"}],
+  "blocks": [
+    {
+      "type": "hero",
+      "variant": "feature",
+      "headline": "Track job applications in one clear pipeline",
+      "lead": "Know which resume you sent, where each application stands and what to do next. SearchBreaker keeps the job, the dates, the resume version and the follow-ups in one place.",
+      "badge": { "state": "concept", "detail": "design concept" },
+      "primaryCta": { "readiness": "waitlist" },
+      "secondaryCta": { "label": "See how to begin", "href": "#start" },
+      "media": {
+        "state": "concept",
+        "label": "Application pipeline",
+        "alt": "Concept of the application pipeline with the resume version and next action on each card",
+        "caption": "Each card shows the resume version and the next action."
+      },
+      "reassurance": "Your applications stay yours to edit and export."
+    },
+    {
+      "type": "pipelineBoard",
+      "heading": "See the whole application pipeline",
+      "lead": "Switch between a board by stage and a table you can scan. Both show the same applications.",
+      "columns": [
+        { "id": "to-apply", "title": "To apply" },
+        { "id": "applied", "title": "Applied" },
+        { "id": "screening", "title": "Screening" },
+        { "id": "next", "title": "Next steps" },
+        { "id": "closed", "title": "Rejected / No answer" }
+      ],
+      "cards": [
+        { "id": 1, "column": "to-apply", "title": "Senior Product Manager, Payments", "company": "Fenwick Pay", "resumeVersion": "Resume v3", "nextAction": "Review tailored resume", "updated": "Sep 22" },
+        { "id": 2, "column": "applied", "title": "Product Lead, Billing", "company": "Arcadia Health", "resumeVersion": "Resume v2", "nextAction": "Follow up on Oct 2", "updated": "Sep 18" },
+        { "id": 3, "column": "applied", "title": "Group PM, Platform", "company": "Oakridge Freight", "resumeVersion": "Resume v2", "nextAction": "Wait for reply until Sep 30", "updated": "Sep 16" },
+        { "id": 4, "column": "screening", "title": "Senior PM, Checkout", "company": "Lumen Retail", "resumeVersion": "Resume v3", "nextAction": "Recruiter call on Sep 29", "updated": "Sep 20" },
+        { "id": 5, "column": "next", "title": "Principal Product Manager", "company": "Halden Systems", "resumeVersion": "Resume v1", "nextAction": "Prepare case study", "updated": "Sep 12" },
+        { "id": 6, "column": "closed", "title": "Product Manager, Growth", "company": "Verto Media", "resumeVersion": "Resume v1", "nextAction": "No answer after 21 days", "updated": "Aug 30" }
+      ]
+    },
+    {
+      "type": "featureGrid",
+      "tone": "muted",
+      "heading": "Keep every application’s details together",
+      "lead": "Everything you need for a follow-up or an interview lives on the application, not in a spreadsheet.",
+      "columns": 3,
+      "items": [
+        { "title": "Job and description", "text": "The posting and its description saved with the application, even if the listing disappears.", "icon": "file" },
+        { "title": "Date and resume version", "text": "When you applied and exactly which resume version you sent.", "icon": "calendar" },
+        { "title": "Contacts and notes", "text": "Recruiters, hiring managers and the notes from every conversation.", "icon": "edit" }
+      ]
+    },
+    {
+      "type": "controlPoints",
+      "heading": "Know your next action",
+      "lead": "Every application carries one next step, so nothing waits on your memory.",
+      "points": [
+        { "title": "Set follow-up dates", "text": "Choose when to follow up and see what is due, in order of date.", "icon": "calendar" },
+        { "title": "Update the stage yourself", "text": "Move an application forward as things change. You always control the status.", "icon": "check-circle" },
+        { "title": "See what is stalled", "text": "Spot applications with no activity so you can follow up or move on.", "icon": "eye" }
+      ]
+    },
+    {
+      "type": "featureGrid",
+      "anchor": "start",
+      "tone": "muted",
+      "heading": "Start with the tracker",
+      "lead": "You can begin with one application. What is available today is labeled.",
+      "columns": 2,
+      "items": [
+        { "title": "Add an application by hand", "text": "Enter a job, date and resume version directly into the tracker.", "icon": "plus", "availability": "concept" },
+        { "title": "Import earlier applications", "text": "Bring in applications you tracked elsewhere. Supported formats will be listed when import is verified.", "icon": "arrow-down", "availability": "planned" }
+      ]
+    },
+    {
+      "type": "faq",
+      "heading": "Common questions",
+      "defaultOpen": 0,
+      "faqs": [
+        { "q": "Is setup too much work?", "a": "You can start with a single application and add detail as you go. The tracker is meant to save time, not to become another spreadsheet to maintain." },
+        { "q": "Can I import old applications?", "a": "Import is planned. Supported formats will be published when it is verified. Until then, none are promised." },
+        { "q": "Which resume did I send?", "a": "Each application records the exact resume version and the date, so you can answer that question in seconds." },
+        { "q": "How is this different from a spreadsheet template?", "a": "A template is a file you maintain yourself. The tracker keeps the resume version, dates and follow-ups connected to the rest of your search." },
+        { "q": "What do the status names mean?", "a": "Each stage describes where the application stands, and you can rename or reorder stages to match your own process." },
+        { "q": "Is the tracker available now?", "a": "It is at concept stage. Join the waitlist to hear when it is ready to test." }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Next in your workflow",
+      "items": [
+        { "kind": "next", "label": "Job search automation", "href": "/features/job-search-automation", "blurb": "What the workflow can run for you, and where you decide.", "availability": "preview" },
+        { "kind": "related", "label": "Resume tailoring", "href": "/features/resume-tailoring", "blurb": "Every tailored resume is saved as a version you can trace.", "availability": "preview" },
+        { "kind": "related", "label": "Auto apply", "href": "/features/auto-apply", "blurb": "Submission results appear in the same pipeline.", "availability": "planned" }
+      ]
+    },
+    {
+      "type": "finalCta",
+      "heading": "Stop losing track of your applications",
+      "text": "The application tracker is at concept stage. Join the waitlist to hear when it is ready to test.",
+      "cta": { "readiness": "waitlist" }
+    }
+  ]
+}

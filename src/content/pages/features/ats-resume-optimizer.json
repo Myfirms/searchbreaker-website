@@ -1,0 +1,109 @@
+{
+  "path": "/features/ats-resume-optimizer",
+  "template": "feature",
+  "pageId": "P010",
+  "title": "Optimize your resume for ATS and the job description | SearchBreaker",
+  "description": "See what to improve in your resume for a specific job, with fixes grounded in your real experience. Learn the workflow, its controls and what you can review before applying.",
+  "source": "ats-optimizer",
+  "breadcrumbs": [{"label": "Home", "href": "/"}, {"label": "ATS Resume Optimizer"}],
+  "blocks": [
+    {
+      "type": "hero",
+      "variant": "feature",
+      "headline": "Optimize your resume for ATS and the job description",
+      "lead": "Add a resume and a job description. SearchBreaker shows what to improve for that job, explains each issue and proposes fixes grounded in your real experience.",
+      "badge": { "state": "concept", "detail": "design concept" },
+      "primaryCta": { "readiness": "waitlist" },
+      "secondaryCta": { "label": "What an ATS score can tell you", "href": "#limits" },
+      "media": {
+        "state": "concept",
+        "label": "Resume review",
+        "alt": "Concept of a resume and job description side by side with issues and suggested fixes",
+        "caption": "Each issue comes with a reason and a suggested fix."
+      },
+      "reassurance": "You approve every change before it is saved."
+    },
+    {
+      "type": "featureGrid",
+      "heading": "Get a requirement-level review",
+      "lead": "The review looks at two things: how easily your resume can be read, and how well it answers this job.",
+      "columns": 2,
+      "items": [
+        { "title": "Parsing and readability", "text": "Formats, headings and layout that some systems read poorly, with a plain-text alternative.", "icon": "file" },
+        { "title": "Job-specific evidence gaps", "text": "Requirements from the job that your resume does not yet show, checked against your verified profile.", "icon": "search" }
+      ]
+    },
+    {
+      "type": "issueFix",
+      "tone": "muted",
+      "heading": "Fix issues without keyword stuffing",
+      "lead": "Every issue has a reason and a fix. Fixes reword facts you already have; they never add new ones.",
+      "frameLabel": "Resume check · Senior Product Manager, Payments",
+      "items": [
+        { "issue": "Dates use two formats", "why": "Some parsers read “2019–21” and “Mar 2021” differently and can misplace roles.", "fix": "Use one format for every role, for example “Mar 2019 – Jun 2021”." },
+        { "issue": "Skills appear only inside a table", "why": "Some applicant tracking systems skip table content when they extract text.", "fix": "Add a plain-text Skills section below the summary." },
+        { "issue": "The job’s term “stakeholder management” is missing", "why": "The job lists it twice. Your profile describes the same work as “cross-team planning”.", "fix": "Use the job’s wording where it describes a fact already in your profile." }
+      ]
+    },
+    {
+      "type": "beforeAfterDiff",
+      "heading": "Review your optimized draft",
+      "lead": "Each revision shows the fact it comes from. Accept, edit or reject it before it reaches your resume.",
+      "frameLabel": "Proposed revision · Senior Product Manager, Payments",
+      "requirement": "Experience with stakeholder management across teams.",
+      "before": [
+        { "text": "Handled " }, { "text": "cross-team planning", "kind": "removed" }, { "text": " for the payments roadmap." }
+      ],
+      "after": [
+        { "text": "Handled " }, { "text": "stakeholder management", "kind": "added" }, { "text": " for the payments roadmap." }
+      ],
+      "provenance": {
+        "source": "Profile · Northwind Logistics · Product Manager",
+        "fact": "Coordinated roadmap planning across engineering, finance and support teams (2023–2024).",
+        "confirmedOn": "2026-08-02"
+      }
+    },
+    {
+      "type": "limitationsCallout",
+      "anchor": "limits",
+      "tone": "muted",
+      "heading": "What an ATS score can and cannot tell you",
+      "lead": "A score is one signal about readability and keyword coverage. It is not a verdict from any employer’s system.",
+      "items": [
+        { "title": "It cannot guarantee a pass", "text": "Employers configure their systems differently, and no outside tool can confirm how yours will read a resume." },
+        { "title": "It does not predict interviews", "text": "A resume that reads well helps people find your evidence. Hiring decisions depend on much more." },
+        { "title": "Different tools disagree", "text": "Two checkers can score the same resume differently. Focus on the issues and reasons, not on one number." },
+        { "title": "It should not push you to add keywords", "text": "Repeating terms without matching experience hurts readability and can mislead the reader." }
+      ]
+    },
+    {
+      "type": "faq",
+      "heading": "Common questions",
+      "defaultOpen": 0,
+      "faqs": [
+        { "q": "Is this a fake score?", "a": "The review focuses on issues, reasons and fixes rather than on one number. Any score shown is labeled with what it does and does not mean." },
+        { "q": "Will it guarantee ATS passage?", "a": "No. No tool can. It helps you fix readability problems and show real evidence for the job’s requirements." },
+        { "q": "Will edits change my experience?", "a": "No. Revisions reword facts you already confirmed. If the job asks for something your profile does not show, it is marked as a gap." },
+        { "q": "What is the difference between a checker and an optimizer?", "a": "A checker diagnoses. An optimizer also proposes fixes you can review, edit or reject. This page describes the second." },
+        { "q": "Which file formats work?", "a": "Supported formats will be listed when the review flow is verified. Until then, none are promised here." }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Next in your workflow",
+      "items": [
+        { "kind": "next", "label": "Resume tailoring", "href": "/features/resume-tailoring", "blurb": "Adapt your resume to each job from verified facts.", "availability": "preview" },
+        { "kind": "related", "label": "Job matcher", "href": "/features/job-matcher", "blurb": "See which requirements your experience covers.", "availability": "preview" },
+        { "kind": "related", "label": "Job search automation", "href": "/features/job-search-automation", "blurb": "What the workflow can run for you, and where you decide.", "availability": "preview" }
+      ]
+    },
+    {
+      "type": "finalCta",
+      "heading": "Fix your resume for the job, not for a score",
+      "text": "The ATS resume optimizer is at concept stage. Join the waitlist to hear when it is ready.",
+      "cta": { "readiness": "waitlist" },
+      "reassurance": "You approve every change before it is saved."
+    }
+  ]
+}

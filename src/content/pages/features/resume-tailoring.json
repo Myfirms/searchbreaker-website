@@ -5,11 +5,7 @@
   "title": "Tailor your resume to each job without starting over | SearchBreaker",
   "description": "Tailor a resume to a job using the experience you have actually verified. Learn the workflow, its controls and what you can review before applying.",
   "source": "tailoring",
-  "breadcrumbs": [
-    { "label": "Home", "href": "/" },
-    { "label": "Features", "href": "/features" },
-    { "label": "Resume Tailoring" }
-  ],
+  "breadcrumbs": [{"label": "Home", "href": "/"}, {"label": "Resume Tailoring"}],
   "blocks": [
     {
       "type": "hero",

@@ -1,0 +1,113 @@
+{
+  "path": "/features/ai-job-finder",
+  "template": "feature",
+  "pageId": "P003",
+  "title": "Find relevant jobs faster with an AI job finder | SearchBreaker",
+  "description": "Bring promising openings into one reviewable feed based on your goals and experience. Learn the workflow, its controls and what you can review before applying.",
+  "source": "job-finder",
+  "breadcrumbs": [{"label": "Home", "href": "/"}, {"label": "AI Job Finder"}],
+  "blocks": [
+    {
+      "type": "hero",
+      "variant": "feature",
+      "headline": "Find relevant jobs faster with an AI job finder",
+      "lead": "Set the roles, location and work mode you want. SearchBreaker gathers promising openings into one feed and shows why each one appears, when it was posted and where it came from.",
+      "badge": { "state": "preview", "detail": "in private testing" },
+      "primaryCta": { "readiness": "waitlist" },
+      "secondaryCta": { "label": "See matching workflow", "href": "/features/job-matcher" },
+      "media": {
+        "state": "illustrative",
+        "label": "Job feed",
+        "alt": "Example of a job feed card with posting time, source and fit reasons",
+        "caption": "Each opening shows its date, source and why it appears."
+      },
+      "reassurance": "You decide which openings to pursue."
+    },
+    {
+      "type": "jobFeed",
+      "tone": "muted",
+      "heading": "Find jobs for the roles you chose",
+      "lead": "Target role, geography and work arrangement shape the feed. Save what looks right and skip the rest.",
+      "jobs": [
+        {
+          "title": "Senior Product Manager, Payments", "company": "Fenwick Pay", "location": "Berlin", "workMode": "Hybrid",
+          "postedAt": "2 days ago", "source": "Company careers page",
+          "matches": ["Title matches your target role", "Payments work overlaps with your invoicing redesign", "Location fits your Berlin or remote preference"],
+          "missing": ["Salary range not listed", "Team size not stated"]
+        },
+        {
+          "title": "Product Lead, Billing", "company": "Arcadia Health", "location": "Remote (EU)", "workMode": "Remote",
+          "postedAt": "5 hours ago", "source": "Job board listing",
+          "matches": ["Billing experience is confirmed in your profile", "Remote matches your work-mode setting"],
+          "missing": ["Reporting line not stated"]
+        },
+        {
+          "title": "Group PM, Platform", "company": "Oakridge Freight", "location": "Hamburg", "workMode": "On-site",
+          "postedAt": "1 day ago", "source": "Company careers page",
+          "matches": ["Seniority matches your target level", "Logistics experience is confirmed in your profile"],
+          "missing": ["Work mode differs from your preference"]
+        }
+      ]
+    },
+    {
+      "type": "featureGrid",
+      "heading": "See why an opening appears",
+      "lead": "Every card explains itself, so you can judge an opening in seconds.",
+      "columns": 3,
+      "items": [
+        { "title": "Match context", "text": "The reasons an opening fits your roles, level and confirmed experience.", "icon": "check-circle" },
+        { "title": "Date and source", "text": "When the opening was posted and the original page it came from.", "icon": "calendar" },
+        { "title": "Missing information", "text": "What the posting does not say, such as salary or team size, so gaps are visible.", "icon": "help" }
+      ]
+    },
+    {
+      "type": "controlPoints",
+      "tone": "muted",
+      "heading": "Review before you apply",
+      "lead": "The feed is a shortlist to review, not a list of applications.",
+      "points": [
+        { "title": "Save or skip each opening", "text": "Keep promising openings and dismiss the rest. Skipped openings can be restored.", "icon": "skip" },
+        { "title": "Send a saved job to the matcher", "text": "Check your requirements and gaps for one role before spending time on it.", "icon": "user-check" },
+        { "title": "Change the search at any time", "text": "Edit roles, location or work mode and the feed updates to match.", "icon": "edit" }
+      ]
+    },
+    {
+      "type": "supportMatrix",
+      "heading": "Where jobs come from",
+      "nameLabel": "Source",
+      "lastReviewed": "2026-09-25",
+      "rows": [],
+      "emptyTitle": "No job sources are verified yet",
+      "emptyText": "We test each source before listing it, including how often it refreshes. Until then, the coverage list stays empty rather than promise sources we have not checked.",
+      "footnote": "Sources not listed here are not supported. Coverage and refresh limits are shown with the date of the last check."
+    },
+    {
+      "type": "faq",
+      "tone": "muted",
+      "heading": "Common questions",
+      "defaultOpen": 0,
+      "faqs": [
+        { "q": "Are listings current?", "a": "Each opening shows when it was posted and where it came from, so you can judge freshness yourself. Refresh limits for each source appear in the coverage list once a source is verified." },
+        { "q": "How broad is source coverage?", "a": "Only verified sources are listed, with the date each was last tested. If a source is missing from the list, it is not covered." },
+        { "q": "Are sponsored jobs prioritized?", "a": "No paid placement is planned. Order is based on your target roles and confirmed experience." },
+        { "q": "How are duplicates handled?", "a": "The same role posted on several sources is meant to appear once, with each source noted. Duplicate handling is part of what private testing checks." },
+        { "q": "Is the job finder available now?", "a": "It is in private testing. Join the waitlist to get an invite." }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "heading": "Next in your workflow",
+      "items": [
+        { "kind": "next", "label": "Job matcher", "href": "/features/job-matcher", "blurb": "See which requirements your experience covers.", "availability": "preview" },
+        { "kind": "related", "label": "Job search automation", "href": "/features/job-search-automation", "blurb": "What the workflow can run for you, and where you decide.", "availability": "preview" },
+        { "kind": "related", "label": "Resume tailoring", "href": "/features/resume-tailoring", "blurb": "Adapt your resume to each job from verified facts.", "availability": "preview" }
+      ]
+    },
+    {
+      "type": "finalCta",
+      "heading": "Spend less time checking job boards",
+      "text": "The job finder is in private testing. Join the waitlist to get an invite.",
+      "cta": { "readiness": "waitlist" }
+    }
+  ]
+}

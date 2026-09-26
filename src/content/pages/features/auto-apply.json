@@ -1,0 +1,125 @@
+{
+  "path": "/features/auto-apply",
+  "template": "feature",
+  "pageId": "P014",
+  "title": "Auto apply to jobs with clear review and control | SearchBreaker",
+  "description": "Submit selected applications through a controlled workflow when automatic submission is actually supported. Learn the workflow, its controls and what you can review before applying.",
+  "source": "auto-apply",
+  "breadcrumbs": [{"label": "Home", "href": "/"}, {"label": "Auto Apply"}],
+  "blocks": [
+    {
+      "type": "hero",
+      "variant": "feature",
+      "headline": "Auto apply to jobs with clear review and control",
+      "lead": "Speed matters, but quality matters more. Auto apply is designed to send only the applications you selected, under rules you set, with every material and result visible to you.",
+      "badge": { "state": "planned" },
+      "primaryCta": { "readiness": "waitlist" },
+      "secondaryCta": { "label": "See autofill workflow", "href": "/features/job-application-autofill" },
+      "media": {
+        "state": "concept",
+        "label": "Submission log",
+        "alt": "Concept of a submission log showing prepared, reviewed, submitted and failed applications",
+        "caption": "Every application has a status and a record of what was sent."
+      },
+      "reassurance": "Nothing is sent outside rules you approved."
+    },
+    {
+      "type": "workflowSteps",
+      "heading": "How application submission works",
+      "lead": "Three steps sit between a saved job and a submitted application. You control each one.",
+      "steps": [
+        { "title": "Selection rules", "text": "You define which jobs are eligible, such as roles, fit and sources. Nothing outside the rules is sent.", "availability": "planned" },
+        { "title": "Approval mode", "text": "Choose to approve each application, or to review a daily summary before anything goes out.", "availability": "planned" },
+        { "title": "Submission confirmation", "text": "After each submission you see the result and a copy of what was sent.", "availability": "planned" }
+      ]
+    },
+    {
+      "type": "controlPoints",
+      "tone": "muted",
+      "heading": "What you can review",
+      "lead": "Before and after every submission, the details are yours to check.",
+      "points": [
+        { "title": "The job and its source", "text": "The exact opening, where it was found and when it was posted.", "icon": "external" },
+        { "title": "The resume version", "text": "Which tailored version is attached, and the facts behind its edits.", "icon": "file" },
+        { "title": "The answers", "text": "Every answer to a form question. Questions that need your input are sent back to you.", "icon": "edit" },
+        { "title": "The timing", "text": "When each application was prepared, approved and submitted.", "icon": "calendar" }
+      ]
+    },
+    {
+      "type": "statusStates",
+      "heading": "Every application has one clear status",
+      "lead": "Statuses always show icon and text, and the record explains what happened.",
+      "states": [
+        { "id": "prepared", "description": "Materials are ready. Nothing has been sent." },
+        { "id": "reviewed", "description": "You checked and approved the materials for this job." },
+        { "id": "submitted", "description": "The application was sent, by you or under rules you approved." },
+        { "id": "failed", "description": "Submission did not complete. The record says why and what to do next." }
+      ]
+    },
+    {
+      "type": "supportMatrix",
+      "tone": "muted",
+      "heading": "Where auto apply is supported",
+      "nameLabel": "Platform",
+      "lastReviewed": "2026-09-25",
+      "rows": [],
+      "emptyTitle": "No platforms are verified yet",
+      "emptyText": "Automatic submission is only offered on platforms we have tested and where it is allowed. Until then, no platform is listed and no automatic submission is available.",
+      "footnote": "Platforms not listed here are not supported. Each platform sets its own rules, and we follow them."
+    },
+    {
+      "type": "comparisonTable",
+      "heading": "Auto apply versus autofill",
+      "lead": "The difference is who presses submit.",
+      "columns": [
+        { "key": "auto", "label": "Auto apply" },
+        { "key": "autofill", "label": "Autofill" }
+      ],
+      "rows": [
+        { "label": "What it does", "values": { "auto": "Prepares and sends applications that match rules you set.", "autofill": "Fills application fields from your verified profile." } },
+        { "label": "Who presses submit", "emphasis": true, "values": { "auto": "SearchBreaker, only under rules you approved. You can pause it at any time.", "autofill": "You, every time." } },
+        { "label": "Custom questions", "values": { "auto": { "text": "Sent back to you, never guessed", "mark": "no" }, "autofill": { "text": "Drafted for you to edit", "mark": "yes" } } },
+        { "label": "Availability", "values": { "auto": "Planned", "autofill": "Planned" } }
+      ]
+    },
+    {
+      "type": "limitationsCallout",
+      "tone": "muted",
+      "heading": "What auto apply does not do",
+      "items": [
+        { "title": "It does not apply to everything", "text": "Only jobs that match your rules, on platforms where it is supported and allowed." },
+        { "title": "It does not guess answers", "text": "Questions it cannot answer from your verified profile are sent back to you." },
+        { "title": "It does not promise results", "text": "Sending an application does not mean a reply. Volume is not a goal in itself." }
+      ]
+    },
+    {
+      "type": "faq",
+      "heading": "Common questions",
+      "defaultOpen": 0,
+      "faqs": [
+        { "q": "Is this spam?", "a": "It is designed against spam. Only jobs that match your rules are eligible, and you can require approval for every application." },
+        { "q": "Is it compliant with each platform?", "a": "Each platform has its own terms. Automatic submission is offered only where it has been tested and is allowed. Otherwise it is not offered." },
+        { "q": "Can I see exactly what was sent?", "a": "Yes. Each submitted application keeps a copy of the job, resume version and answers, with the time it was sent." },
+        { "q": "What happens if a submission fails?", "a": "The application is marked as failed and the record shows the reason. Nothing is retried without your approval." },
+        { "q": "How can I stop it?", "a": "Pause auto apply at any time. Approved rules stop working the moment you pause them." },
+        { "q": "Is auto apply available now?", "a": "It is planned. Join the waitlist to hear when it is ready to test." }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Next in your workflow",
+      "items": [
+        { "kind": "next", "label": "Application tracker", "href": "/features/job-application-tracker", "blurb": "Every application and next step in one pipeline.", "availability": "concept" },
+        { "kind": "related", "label": "Job application autofill", "href": "/features/job-application-autofill", "blurb": "Fill forms from your profile, then submit them yourself.", "availability": "planned" },
+        { "kind": "related", "label": "Job search automation", "href": "/features/job-search-automation", "blurb": "What the workflow can run for you, and where you decide.", "availability": "preview" }
+      ]
+    },
+    {
+      "type": "finalCta",
+      "heading": "Apply faster without losing control",
+      "text": "Auto apply is planned. Join the waitlist to hear when it is ready to test.",
+      "cta": { "readiness": "waitlist" }
+    }
+  ]
+}

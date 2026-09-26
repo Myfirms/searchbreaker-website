@@ -14,7 +14,7 @@ const {
   updated,
   reviewer,
   reviewedOn,
-  policyHref = '/editorial-policy',
+  policyHref,
   policyLabel = 'How we write and review guides',
 } = Astro.props as AuthorReviewedProps;
 
@@ -35,7 +35,7 @@ const facts = [
           <div class="sb-ar__fact"><dt>{f.label}</dt><dd>{f.value}</dd></div>
         ))}
       </dl>
-      <a class="sb-ar__link" href={policyHref}>{policyLabel}</a>
+      {policyHref && <a class="sb-ar__link" href={policyHref}>{policyLabel}</a>}
     </div>
   </div>
 </section>

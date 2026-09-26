@@ -1,0 +1,108 @@
+{
+  "path": "/features/job-search-automation",
+  "template": "feature",
+  "pageId": "P002",
+  "title": "Job search automation with you in control | SearchBreaker",
+  "description": "Automate repetitive job-search work while keeping decisions visible and under your control. Learn the workflow, its controls and what you can review before applying.",
+  "source": "automation",
+  "breadcrumbs": [{"label": "Home", "href": "/"}, {"label": "Job Search Automation"}],
+  "blocks": [
+    {
+      "type": "hero",
+      "variant": "feature",
+      "headline": "Job search automation with you in control",
+      "lead": "SearchBreaker takes over the repeated work of searching, comparing and preparing. You choose the roles, review what it prepared and decide what happens next.",
+      "badge": { "state": "preview", "detail": "in private testing" },
+      "primaryCta": { "readiness": "waitlist" },
+      "secondaryCta": { "label": "Explore the workflow", "href": "#workflow" },
+      "media": {
+        "state": "concept",
+        "label": "Review queue",
+        "alt": "Concept of a review queue with approve and skip controls for each opening",
+        "caption": "One queue for every opening, with approve and skip on each."
+      },
+      "reassurance": "Nothing is sent to an employer without your action."
+    },
+    {
+      "type": "workflowSteps",
+      "anchor": "workflow",
+      "heading": "What the workflow can automate",
+      "lead": "Four stages of the search can run in the background. Each stage shows what is available today.",
+      "steps": [
+        { "title": "Discover jobs", "text": "Collect new openings that fit your target roles from the sources you choose.", "availability": "preview" },
+        { "title": "Evaluate fit", "text": "Compare each job’s requirements with the experience you confirmed.", "availability": "preview" },
+        { "title": "Prepare materials", "text": "Draft a tailored resume and answers from verified facts, ready for your review.", "availability": "preview" },
+        { "title": "Track progress", "text": "Keep every application, resume version and next step in one pipeline.", "availability": "concept" }
+      ]
+    },
+    {
+      "type": "controlPoints",
+      "tone": "muted",
+      "heading": "Where you review and decide",
+      "lead": "Automation prepares. You approve. These are the points where the workflow stops and waits for you.",
+      "points": [
+        { "title": "Approve which jobs to pursue", "text": "New openings wait in a review queue. Save the ones you want and skip the rest.", "icon": "check-circle" },
+        { "title": "Review every prepared material", "text": "Tailored resumes and answers are drafts until you accept them.", "icon": "user-check" },
+        { "title": "Decide when to submit", "text": "Nothing is sent to an employer without an explicit action from you.", "icon": "send" },
+        { "title": "Pause or stop at any time", "text": "Pause the search or skip a job without losing your profile or your history.", "icon": "pause" }
+      ]
+    },
+    {
+      "type": "comparisonTable",
+      "heading": "Automation versus auto apply",
+      "lead": "Automation covers the whole search. Auto apply is one narrower step inside it. Here is who does what.",
+      "columns": [
+        { "key": "search", "label": "Search" },
+        { "key": "prepare", "label": "Preparation" },
+        { "key": "autofill", "label": "Autofill" },
+        { "key": "submit", "label": "Submission" }
+      ],
+      "rows": [
+        { "label": "What happens", "values": { "search": "New openings are collected and compared with your profile.", "prepare": "A tailored resume and answers are drafted from verified facts.", "autofill": "Application fields are filled from your profile.", "submit": "The finished application is sent to the employer." } },
+        { "label": "Who decides", "emphasis": true, "values": { "search": "You choose roles, location and sources.", "prepare": "You accept, edit or reject each draft.", "autofill": "You check each field.", "submit": "You, or rules you approved, when auto apply is available." } },
+        { "label": "Availability", "values": { "search": "Preview", "prepare": "Preview", "autofill": "Planned", "submit": "Planned" } }
+      ],
+      "caption": "Autofill and auto apply are separate features with their own pages."
+    },
+    {
+      "type": "featureGrid",
+      "tone": "muted",
+      "heading": "Set up your search",
+      "lead": "You describe the search once. Every stage uses the same settings.",
+      "columns": 2,
+      "items": [
+        { "title": "Roles and level", "text": "Choose the titles you want and the seniority you are aiming for.", "icon": "user-check" },
+        { "title": "Location and work mode", "text": "Set where you can work and whether remote, hybrid or on-site fits.", "icon": "search" },
+        { "title": "Preferences", "text": "Add the industries, company types and conditions that matter to you.", "icon": "edit" },
+        { "title": "Sources", "text": "Choose where openings come from. Only verified sources are listed.", "icon": "external", "availability": "concept", "href": "/features/ai-job-finder", "linkLabel": "See how the job finder works" }
+      ]
+    },
+    {
+      "type": "faq",
+      "heading": "Common questions",
+      "defaultOpen": 0,
+      "faqs": [
+        { "q": "Does automation mean spam?", "a": "No. Automation here means less repeated work, not more volume for its own sake. Openings wait for your approval, and nothing is sent without an action from you." },
+        { "q": "Can I pause or skip?", "a": "Yes. You can skip any opening, pause the search at any time and restart it later. Your profile and history stay as they are." },
+        { "q": "Does it work on every job site?", "a": "Not every site. Coverage is published only for sources that have been tested, with the date of the last check. Until a source is verified, it is not listed." },
+        { "q": "Is job search automation available now?", "a": "It is in private testing. Join the waitlist to get an invite when the stages you need are ready." }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Next in your workflow",
+      "items": [
+        { "kind": "next", "label": "AI job finder", "href": "/features/ai-job-finder", "blurb": "Find openings that fit your target roles.", "availability": "preview" },
+        { "kind": "related", "label": "Auto apply", "href": "/features/auto-apply", "blurb": "How controlled submission works, and who presses submit.", "availability": "planned" },
+        { "kind": "related", "label": "Application tracker", "href": "/features/job-application-tracker", "blurb": "Every application and next step in one pipeline.", "availability": "concept" }
+      ]
+    },
+    {
+      "type": "finalCta",
+      "heading": "Automate the repeated work, keep the decisions",
+      "text": "Job search automation is in private testing. Join the waitlist to get an invite.",
+      "cta": { "readiness": "waitlist" }
+    }
+  ]
+}

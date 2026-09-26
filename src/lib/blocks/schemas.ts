@@ -12,7 +12,7 @@ export const readiness = z.enum(['waitlist', 'live']);
 export const iconName = z.enum([
   'search', 'check', 'check-circle', 'arrow-right', 'arrow-left', 'chevron-down', 'chevron-up', 'chevron-right',
   'menu', 'close', 'info', 'alert', 'lock', 'file', 'calendar', 'external', 'edit', 'eye', 'pause', 'skip', 'send',
-  'user-check', 'shield', 'plus', 'minus',
+  'user-check', 'shield', 'plus', 'minus', 'arrow-down', 'circle-half', 'x-circle', 'help', 'board', 'table',
 ]);
 export const evidenceStatus = z.enum(['confirmed', 'partial', 'gap', 'unclear']);
 export const applicationStatus = z.enum(['prepared', 'reviewed', 'submitted', 'failed']);

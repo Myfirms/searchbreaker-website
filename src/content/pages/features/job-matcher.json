@@ -1,0 +1,101 @@
+{
+  "path": "/features/job-matcher",
+  "template": "feature",
+  "pageId": "P004",
+  "title": "Match your experience to the jobs worth pursuing | SearchBreaker",
+  "description": "See where your experience meets a job’s requirements before spending time applying. Learn the workflow, its controls and what you can review before applying.",
+  "source": "matcher",
+  "breadcrumbs": [{"label": "Home", "href": "/"}, {"label": "Job Matcher"}],
+  "blocks": [
+    {
+      "type": "hero",
+      "variant": "feature",
+      "headline": "Match your experience to the jobs worth pursuing",
+      "lead": "Paste or select a job and SearchBreaker compares its requirements with the experience you confirmed. You see what is supported, what is missing and what is unclear, then decide whether to apply.",
+      "badge": { "state": "preview", "detail": "in private testing" },
+      "primaryCta": { "readiness": "waitlist" },
+      "secondaryCta": { "label": "Explore job finder", "href": "/features/ai-job-finder" },
+      "media": {
+        "state": "illustrative",
+        "label": "Requirement breakdown",
+        "alt": "Example of job requirements mapped to confirmed evidence with a status for each",
+        "caption": "Every requirement shows the evidence behind its status."
+      },
+      "reassurance": "No score replaces your own judgment."
+    },
+    {
+      "type": "requirementEvidence",
+      "heading": "See your fit for a specific role",
+      "lead": "Each requirement is marked supported, partial, a gap or unclear, with the evidence from your profile beside it.",
+      "frameLabel": "Requirement breakdown · Senior Product Manager, Payments",
+      "rows": [
+        { "requirement": "5+ years of product management in B2B software", "evidence": "6 years as a product manager at Northwind Logistics and Brightline.", "status": "confirmed" },
+        { "requirement": "Experience with payments or billing products", "evidence": "Led the invoicing redesign at Northwind Logistics.", "note": "Invoicing is related to billing. Payment processing is not in your profile.", "status": "partial" },
+        { "requirement": "SQL for self-serve analysis", "evidence": "No confirmed evidence in your profile.", "status": "gap" },
+        { "requirement": "Comfortable working in regulated industries", "evidence": "Healthcare logistics clients at Brightline.", "note": "The job does not say which regulations apply.", "status": "unclear" }
+      ]
+    },
+    {
+      "type": "featureGrid",
+      "tone": "muted",
+      "heading": "How the match is explained",
+      "lead": "The match shows its reasoning instead of hiding it behind a number.",
+      "columns": 3,
+      "items": [
+        { "title": "Requirements from the job", "text": "The posting is broken into separate requirements you can read one by one.", "icon": "file" },
+        { "title": "Evidence from your profile", "text": "Each requirement is compared only with facts you confirmed, never with guesses.", "icon": "user-check" },
+        { "title": "A status you can check", "text": "Supported, partial, gap or unclear, so you can correct a misread or fill a gap.", "icon": "check-circle" }
+      ]
+    },
+    {
+      "type": "controlPoints",
+      "heading": "Decide: apply, improve or skip",
+      "lead": "The breakdown ends in a decision that stays with you.",
+      "points": [
+        { "title": "Apply with the right resume", "text": "When the evidence is strong, pick the base resume that fits best and move on to tailoring.", "icon": "send" },
+        { "title": "Improve your profile first", "text": "If a gap is real experience you left out, add it and check the match again.", "icon": "edit" },
+        { "title": "Skip and move on", "text": "If the gaps are real, skip the job and spend the time on a better fit.", "icon": "skip" }
+      ]
+    },
+    {
+      "type": "limitationsCallout",
+      "tone": "muted",
+      "heading": "Match score limitations",
+      "lead": "A match shows how your confirmed experience lines up with a job description. It is a decision aid, not a forecast.",
+      "items": [
+        { "title": "It does not predict interviews", "text": "Hiring decisions depend on people and on factors that are not in the job text." },
+        { "title": "It only sees what you entered", "text": "Experience missing from your profile lowers the match, even if you have it." },
+        { "title": "Job descriptions are incomplete", "text": "Many requirements are unstated or flexible. The match cannot see them." },
+        { "title": "It is not an ATS result", "text": "Employers configure their systems differently. No outside tool can replicate them." }
+      ]
+    },
+    {
+      "type": "faq",
+      "heading": "Common questions",
+      "defaultOpen": 0,
+      "faqs": [
+        { "q": "Is the score objective?", "a": "No. It reflects how your confirmed facts line up with the text of one job. Two people can read the same posting differently, so the reasoning is shown rather than hidden." },
+        { "q": "Does it invent missing skills?", "a": "No. A requirement with no matching fact is marked as a gap. It is never filled in for you." },
+        { "q": "Can it predict an interview?", "a": "No. The match does not estimate your chance of an interview and does not claim to." },
+        { "q": "How is this different from an ATS score?", "a": "An ATS score is about how a resume is read by a system. The match is about how your experience lines up with a job’s requirements." },
+        { "q": "Is the job matcher available now?", "a": "It is in private testing. Join the waitlist to get an invite." }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Next in your workflow",
+      "items": [
+        { "kind": "next", "label": "Resume tailoring", "href": "/features/resume-tailoring", "blurb": "Adapt your resume to the job from verified facts.", "availability": "preview" },
+        { "kind": "related", "label": "AI job finder", "href": "/features/ai-job-finder", "blurb": "Find openings that fit your target roles.", "availability": "preview" },
+        { "kind": "related", "label": "ATS resume optimizer", "href": "/features/ats-resume-optimizer", "blurb": "See what to improve in your resume for a specific job.", "availability": "concept" }
+      ]
+    },
+    {
+      "type": "finalCta",
+      "heading": "Know where you stand before you apply",
+      "text": "The job matcher is in private testing. Join the waitlist to get an invite.",
+      "cta": { "readiness": "waitlist" }
+    }
+  ]
+}
