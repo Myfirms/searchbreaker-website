@@ -1,0 +1,441 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/astro/primitives/Button.astro';
+import Icon from '../../components/astro/primitives/Icon.astro';
+---
+
+<BaseLayout title="Waitlist admin · SearchBreaker (internal)" noindex>
+  <main class="adm" data-admin data-endpoint={import.meta.env.PUBLIC_WAITLIST_ADMIN_URL ?? ''}>
+    <header class="adm__head">
+      <a class="adm__brand" href="/"><img src="/brand/mark.svg" width="26" height="26" alt="" />SearchBreaker</a>
+      <span class="adm__tag">Internal · waitlist admin</span>
+    </header>
+
+    <section class="adm__login" data-login aria-labelledby="adm-login-title">
+      <h1 class="adm__title" id="adm-login-title">Waitlist admin</h1>
+      <p class="adm__muted">Enter the admin token. It is kept in this browser tab only and is cleared when you sign out or close the tab.</p>
+      <form class="adm__form" data-login-form novalidate>
+        <label class="adm__label" for="adm-token">Admin token</label>
+        <input class="adm__input" id="adm-token" type="password" autocomplete="off" spellcheck="false" data-token />
+        <p class="adm__error" role="alert" data-login-error hidden></p>
+        <Button type="submit" label="Sign in" />
+      </form>
+    </section>
+
+    <section class="adm__panel" data-panel hidden aria-labelledby="adm-title">
+      <div class="adm__bar">
+        <h1 class="adm__title" id="adm-title">Waitlist</h1>
+        <div class="adm__actions">
+          <Button variant="secondary" size="sm" label="Refresh" action="refresh" />
+          <Button variant="secondary" size="sm" label="Copy emails" action="copy" />
+          <Button variant="secondary" size="sm" label="Download CSV" action="csv" />
+          <Button variant="ghost" size="sm" label="Sign out" action="logout" />
+        </div>
+      </div>
+
+      <dl class="adm__stats" data-stats>
+        <div class="adm__stat"><dt>Total</dt><dd data-stat-total>-</dd></div>
+        <div class="adm__stat"><dt>Last 7 days</dt><dd data-stat-week>-</dd></div>
+        <div class="adm__stat"><dt>Top source</dt><dd data-stat-source>-</dd></div>
+      </dl>
+
+      <p class="adm__status" role="status" data-status></p>
+
+      <div class="adm__filter">
+        <label class="adm__label" for="adm-filter">Filter</label>
+        <input class="adm__input" id="adm-filter" type="search" placeholder="Email, role or source" data-filter />
+      </div>
+
+      <div class="adm__scroll">
+        <table class="adm__table">
+          <thead>
+            <tr><th>Email</th><th>Role level</th><th>Source</th><th>Signed up</th><th><span class="adm__sr">Actions</span></th></tr>
+          </thead>
+          <tbody data-rows></tbody>
+        </table>
+      </div>
+      <p class="adm__muted" data-empty hidden>No sign-ups match.</p>
+    </section>
+
+    <template data-row-template>
+      <tr>
+        <td data-c="email"></td>
+        <td data-c="role"></td>
+        <td data-c="source" class="adm__mono"></td>
+        <td data-c="date" class="adm__mono"></td>
+        <td>
+          <button class="adm__delete" type="button" data-delete aria-label="Delete this sign-up"><Icon icon="close" size={16} /></button>
+        </td>
+      </tr>
+    </template>
+  </main>
+</BaseLayout>
+
+<style>
+  .adm {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: var(--space-8) var(--gutter) var(--space-16);
+    font-family: var(--font-sans);
+    color: var(--color-text);
+  }
+  .adm__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-8);
+  }
+  .adm__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: -0.03em;
+  }
+  .adm__tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .adm__title {
+    margin: 0;
+    font-size: var(--text-h3);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    font-weight: var(--font-weight-semibold);
+  }
+  .adm__muted {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+  }
+  .adm__login {
+    max-width: 26rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .adm__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+  .adm__label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+  }
+  .adm__input {
+    width: 100%;
+    height: var(--input-height);
+    padding: 0 var(--input-pad-x);
+    font-family: inherit;
+    font-size: var(--text-md);
+    color: var(--input-fg);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--input-radius);
+  }
+  .adm__input:hover {
+    border-color: var(--input-border-hover);
+  }
+  .adm__error {
+    margin: 0;
+    color: var(--color-error);
+    font-size: var(--text-sm);
+  }
+  .adm [hidden] {
+    display: none;
+  }
+  .adm__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .adm__bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .adm__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .adm__stats {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-3);
+  }
+  .adm__stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+  }
+  .adm__stat dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .adm__stat dd {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-semibold);
+    word-break: break-word;
+  }
+  .adm__status {
+    margin: 0;
+    min-height: 1.25rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+  .adm__filter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    max-width: 24rem;
+  }
+  .adm__scroll {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .adm__table {
+    width: 100%;
+    min-width: 40rem;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+  .adm__table th {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border-strong);
+    font-weight: var(--font-weight-semibold);
+  }
+  .adm__table :global(td) {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+    word-break: break-word;
+  }
+  .adm__table :global(.adm__mono),
+  .adm__mono {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+  }
+  .adm__delete {
+    width: var(--touch-target);
+    height: var(--touch-target);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+  }
+  .adm__delete:hover {
+    background: var(--color-error-subtle);
+    color: var(--color-error);
+  }
+  .adm__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-admin]')!;
+  const endpoint = root.dataset.endpoint ?? '';
+  const KEY = 'sb-admin-token';
+
+  const loginEl = root.querySelector<HTMLElement>('[data-login]')!;
+  const panelEl = root.querySelector<HTMLElement>('[data-panel]')!;
+  const loginForm = root.querySelector<HTMLFormElement>('[data-login-form]')!;
+  const tokenInput = root.querySelector<HTMLInputElement>('[data-token]')!;
+  const loginError = root.querySelector<HTMLElement>('[data-login-error]')!;
+  const statusEl = root.querySelector<HTMLElement>('[data-status]')!;
+  const rowsEl = root.querySelector<HTMLElement>('[data-rows]')!;
+  const emptyEl = root.querySelector<HTMLElement>('[data-empty]')!;
+  const filterEl = root.querySelector<HTMLInputElement>('[data-filter]')!;
+  const tpl = root.querySelector<HTMLTemplateElement>('[data-row-template]')!;
+
+  type Item = { email: string; role: string | null; source: string; createdAt: string };
+  let items: Item[] = [];
+
+  const getToken = () => {
+    try {
+      return sessionStorage.getItem(KEY) ?? '';
+    } catch {
+      return '';
+    }
+  };
+  const setToken = (t: string) => {
+    try {
+      t ? sessionStorage.setItem(KEY, t) : sessionStorage.removeItem(KEY);
+    } catch {}
+  };
+
+  async function api(body: object): Promise<{ status: number; data: any }> {
+    if (!endpoint) throw new Error('The admin endpoint is not configured for this build.');
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
+      body: JSON.stringify(body),
+    });
+    let data: any = null;
+    try {
+      data = await res.json();
+    } catch {}
+    return { status: res.status, data };
+  }
+
+  const fmtDate = (iso: string) => (iso ? new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : '');
+
+  function stats() {
+    const week = Date.now() - 7 * 24 * 3600 * 1000;
+    root.querySelector('[data-stat-total]')!.textContent = String(items.length);
+    root.querySelector('[data-stat-week]')!.textContent = String(items.filter((i) => Date.parse(i.createdAt) >= week).length);
+    const counts = new Map<string, number>();
+    items.forEach((i) => counts.set(i.source, (counts.get(i.source) ?? 0) + 1));
+    const top = [...counts.entries()].sort((a, b) => b[1] - a[1])[0];
+    root.querySelector('[data-stat-source]')!.textContent = top ? `${top[0]} (${top[1]})` : '-';
+  }
+
+  function visible(): Item[] {
+    const q = filterEl.value.trim().toLowerCase();
+    if (!q) return items;
+    return items.filter((i) => `${i.email} ${i.role ?? ''} ${i.source}`.toLowerCase().includes(q));
+  }
+
+  function render() {
+    const list = visible();
+    rowsEl.replaceChildren();
+    for (const it of list) {
+      const tr = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+      tr.querySelector('[data-c="email"]')!.textContent = it.email;
+      tr.querySelector('[data-c="role"]')!.textContent = it.role ?? '-';
+      tr.querySelector('[data-c="source"]')!.textContent = it.source;
+      const d = tr.querySelector<HTMLElement>('[data-c="date"]')!;
+      d.textContent = fmtDate(it.createdAt);
+      d.title = it.createdAt;
+      tr.querySelector<HTMLElement>('[data-delete]')!.dataset.email = it.email;
+      rowsEl.append(tr);
+    }
+    emptyEl.hidden = list.length > 0;
+    stats();
+  }
+
+  function showLogin(message = '') {
+    panelEl.hidden = true;
+    loginEl.hidden = false;
+    loginError.hidden = !message;
+    loginError.textContent = message;
+    tokenInput.focus();
+  }
+
+  async function load() {
+    statusEl.textContent = 'Loading…';
+    try {
+      const { status, data } = await api({ action: 'list' });
+      if (status === 401) {
+        setToken('');
+        return showLogin('The token was not accepted.');
+      }
+      if (status !== 200) throw new Error('The server returned an error.');
+      items = data.items as Item[];
+      loginEl.hidden = true;
+      panelEl.hidden = false;
+      statusEl.textContent = `Updated ${new Date().toLocaleTimeString()}`;
+      render();
+    } catch (err) {
+      statusEl.textContent = '';
+      if (panelEl.hidden) showLogin(err instanceof Error ? err.message : 'Could not reach the server.');
+      else statusEl.textContent = 'Could not refresh. Check your connection and try again.';
+    }
+  }
+
+  // CSV cells that start with = + - @ are prefixed so spreadsheets never run them as formulas.
+  const csvCell = (v: string) => {
+    const safe = /^[=+\-@\t\r]/.test(v) ? `'${v}` : v;
+    return `"${safe.replace(/"/g, '""')}"`;
+  };
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const t = tokenInput.value.trim();
+    if (!t) return showLogin('Enter the admin token.');
+    setToken(t);
+    tokenInput.value = '';
+    void load();
+  });
+
+  filterEl.addEventListener('input', render);
+
+  root.addEventListener('click', async (e) => {
+    const target = e.target as HTMLElement;
+    const del = target.closest<HTMLElement>('[data-delete]');
+    if (del?.dataset.email) {
+      const email = del.dataset.email;
+      if (!window.confirm(`Delete ${email} from the waitlist? This cannot be undone.`)) return;
+      const { status } = await api({ action: 'delete', email });
+      if (status === 200) {
+        items = items.filter((i) => i.email !== email);
+        statusEl.textContent = 'Deleted.';
+        render();
+      } else statusEl.textContent = 'Could not delete. Try again.';
+      return;
+    }
+    const action = target.closest<HTMLElement>('[data-action]')?.dataset.action;
+    if (action === 'refresh') void load();
+    else if (action === 'logout') {
+      setToken('');
+      items = [];
+      showLogin();
+    } else if (action === 'copy') {
+      const text = visible().map((i) => i.email).join('\n');
+      try {
+        await navigator.clipboard.writeText(text);
+        statusEl.textContent = `Copied ${visible().length} emails.`;
+      } catch {
+        statusEl.textContent = 'Copy is not available in this browser.';
+      }
+    } else if (action === 'csv') {
+      const lines = [['email', 'role_level', 'source', 'signed_up_at'].join(',')];
+      for (const i of visible()) lines.push([i.email, i.role ?? '', i.source, i.createdAt].map(csvCell).join(','));
+      const url = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8' }));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `searchbreaker-waitlist-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  });
+
+  if (getToken()) void load();
+  else showLogin();
+</script>

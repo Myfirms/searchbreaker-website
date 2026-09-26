@@ -19,7 +19,11 @@ Tests: `npm run test:lambda` (Node's built-in runner, no AWS needed).
 | Function URL (auth NONE, CORS: POST from the site origins) | `https://rq3ctxxn7txnt6sbbcbv7odouu0emhlg.lambda-url.us-west-2.on.aws/` |
 | Amplify app env var | `PUBLIC_WAITLIST_ENDPOINT_URL` (build-time; redeploy after changing) |
 
-Function environment: `TABLE_NAME`, `ALLOWED_ORIGINS` (comma-separated; must match the Function URL CORS list), optional `NOTIFY_EMAIL` / `NOTIFY_FROM` / `SES_REGION` for a new-signup email through SES (needs a verified SES identity; not enabled).
+Function environment: `TABLE_NAME`, `ALLOWED_ORIGINS` (comma-separated; must match the Function URL CORS list), `NOTIFY_EMAIL` and `NOTIFY_FROM` (both `admin@searchbreaker.com`), `SES_REGION` (`us-west-2`).
+
+## New-signup notification
+
+Every new (not duplicate) sign-up sends a plain-text email to `admin@searchbreaker.com` through Amazon SES. The domain `searchbreaker.com` is a verified SES identity with Easy DKIM (three CNAME records at Porkbun, `*._domainkey`). The role has `ses:SendEmail` on that identity only. A failed email never fails the sign-up. The SES account is still in the sandbox (200 messages/day, recipients must be on the verified domain), which is enough for this use.
 
 ## Update the code
 
@@ -40,4 +44,4 @@ aws dynamodb scan --region us-west-2 --table-name searchbreaker-waitlist --query
 
 ## Not done yet
 
-Reserved concurrency and rate limiting (the URL is public; the honeypot and origin check are the only abuse controls), SES notification, unsubscribe handling, and a privacy policy text that the consent checkbox links to.
+Reserved concurrency and rate limiting (the URL is public; the honeypot and origin check are the only abuse controls), unsubscribe handling, and a privacy policy text that the consent checkbox links to. The list can be read and managed on `/internal/admin/` (see `../waitlist-admin/README.md`).

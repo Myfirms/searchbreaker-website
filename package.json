@@ -13,7 +13,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
-    "test:lambda": "node --test lambda/waitlist/index.test.mjs"
+    "test:lambda": "node --test lambda/waitlist/index.test.mjs lambda/waitlist-admin/index.test.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.1",
