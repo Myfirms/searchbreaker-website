@@ -1,0 +1,279 @@
+---
+import Button from '../primitives/Button.astro';
+import Icon from '../primitives/Icon.astro';
+
+export interface WaitlistFormProps {
+  /** e.g. 'home-hero', 'resume-tailoring-final-cta'. The dialog overrides it per trigger. */
+  source: string;
+  consentText?: string;
+  privacyHref?: string;
+  /** Default true; role level is optional. */
+  showRole?: boolean;
+  roleOptions?: string[];
+}
+
+const {
+  source,
+  consentText = 'I agree to receive email about the SearchBreaker waitlist. I can unsubscribe at any time.',
+  privacyHref = '/privacy',
+  showRole = true,
+  roleOptions = ['Mid-level', 'Senior', 'Lead / Principal', 'Manager / Director', 'Changing careers'],
+} = Astro.props as WaitlistFormProps;
+
+/** Function URL of the waitlist Lambda. Unset: the form tells the truth instead of pretending to succeed. */
+const endpoint = import.meta.env.PUBLIC_WAITLIST_ENDPOINT_URL ?? '';
+const uid = `sb-wl-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+<div class="sb-wl" data-waitlist-form data-status="idle" data-endpoint={endpoint}>
+  <form class="sb-wl__form" novalidate>
+    <div class="sb-wl__alert" role="alert" data-wl-server-error hidden>
+      <span class="sb-wl__alert-icon"><Icon icon="alert" size={20} /></span>
+      <div class="sb-wl__alert-body">
+        <strong data-wl-error-title>We couldn't add you right now</strong>
+        <span data-wl-error-text>Your details are still here. Try again in a minute.</span>
+      </div>
+    </div>
+
+    <div class="sb-wl__field">
+      <label class="sb-wl__label" for={`${uid}-email`}>Email</label>
+      <input
+        class="sb-wl__input"
+        id={`${uid}-email`}
+        name="email"
+        type="email"
+        autocomplete="email"
+        inputmode="email"
+        placeholder="name@example.com"
+        aria-describedby={`${uid}-email-desc`}
+        data-wl-email
+      />
+      <span class="sb-wl__hint" id={`${uid}-email-desc`} data-wl-email-desc>We only use it for waitlist updates.</span>
+      <span class="sb-wl__error" data-wl-email-error hidden><Icon icon="alert" size={16} /><span data-wl-email-error-text></span></span>
+    </div>
+
+    {showRole && (
+      <div class="sb-wl__field">
+        <label class="sb-wl__label" for={`${uid}-role`}>
+          Target role level <span class="sb-wl__optional">(optional)</span>
+        </label>
+        <div class="sb-wl__select-wrap">
+          <select class="sb-wl__select" id={`${uid}-role`} name="role">
+            <option value="">Choose one</option>
+            {roleOptions.map((o) => <option value={o}>{o}</option>)}
+          </select>
+          <span class="sb-wl__chevron"><Icon icon="chevron-down" size={16} /></span>
+        </div>
+      </div>
+    )}
+
+    <div class="sb-wl__field">
+      <label class="sb-wl__consent">
+        <input class="sb-wl__checkbox" type="checkbox" name="consent" aria-describedby={`${uid}-consent-desc`} data-wl-consent />
+        <span>{consentText} <a href={privacyHref}>Privacy policy</a></span>
+      </label>
+      <span class="sb-wl__error sb-wl__error--consent" id={`${uid}-consent-desc`} data-wl-consent-error hidden>
+        <Icon icon="alert" size={16} />Check this box to join the waitlist.
+      </span>
+    </div>
+
+    <input type="hidden" name="source" value={source} data-wl-source />
+    <Button type="submit" readiness="waitlist" size="lg" fullWidth />
+  </form>
+
+  <div class="sb-wl__result sb-wl__result--success" role="status" data-wl-success hidden>
+    <span class="sb-wl__result-title"><Icon icon="check-circle" size={24} /><span>You're on the waitlist</span></span>
+    <p>
+      We'll email <strong data-wl-email-echo></strong> when your invite is ready. We don't share your address, and every
+      message has an unsubscribe link.
+    </p>
+  </div>
+
+  <div class="sb-wl__result sb-wl__result--duplicate" role="status" data-wl-duplicate hidden>
+    <span class="sb-wl__result-title"><Icon icon="info" size={24} /><span>This email is already on the waitlist</span></span>
+    <p>
+      You don't need to sign up again. We'll email <strong data-wl-email-echo></strong> when your invite is ready.
+    </p>
+    <div><Button variant="link" label="Use a different email" type="button" /></div>
+  </div>
+</div>
+
+<style>
+  .sb-wl {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .sb-wl__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin: 0;
+  }
+  .sb-wl[data-status='success'] .sb-wl__form,
+  .sb-wl[data-status='duplicate'] .sb-wl__form {
+    display: none;
+  }
+  .sb-wl__alert {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-error-subtle);
+  }
+  .sb-wl__alert[hidden],
+  .sb-wl__error[hidden],
+  .sb-wl__result[hidden] {
+    display: none;
+  }
+  .sb-wl__alert-icon {
+    display: flex;
+    color: var(--color-error);
+  }
+  .sb-wl__alert-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+  }
+  .sb-wl__alert-body strong {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+  .sb-wl__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .sb-wl__label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+  }
+  .sb-wl__optional {
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-muted);
+  }
+  .sb-wl__input,
+  .sb-wl__select {
+    width: 100%;
+    height: var(--input-height);
+    padding: 0 var(--input-pad-x);
+    font-family: inherit;
+    font-size: var(--text-md);
+    color: var(--input-fg);
+    background: var(--input-bg);
+    border: var(--field-border-width) solid var(--field-border);
+    border-radius: var(--input-radius);
+  }
+  .sb-wl__input:hover,
+  .sb-wl__select:hover {
+    border-color: var(--field-border-hover);
+  }
+  .sb-wl__input:focus,
+  .sb-wl__select:focus {
+    border-color: var(--input-border-focus);
+  }
+  .sb-wl__input[aria-invalid='true'] {
+    --field-border: var(--input-border-error);
+    --field-border-hover: var(--input-border-error);
+    --field-border-width: var(--border-width-strong);
+  }
+  .sb-wl__select-wrap {
+    position: relative;
+  }
+  .sb-wl__select {
+    appearance: none;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+  .sb-wl__chevron {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    display: flex;
+    color: var(--color-text-secondary);
+  }
+  .sb-wl__hint {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+  .sb-wl__error {
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+    color: var(--color-error);
+  }
+  .sb-wl__error--consent {
+    padding-left: 2rem;
+  }
+  .sb-wl__consent {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+  }
+  .sb-wl__consent a {
+    color: var(--color-link);
+    text-underline-offset: var(--link-underline-offset);
+  }
+  .sb-wl__checkbox {
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    margin: 0;
+    flex: none;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+  }
+  .sb-wl__result {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+  }
+  .sb-wl__result p {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+  }
+  .sb-wl__result strong {
+    color: var(--color-text);
+    font-weight: var(--font-weight-medium);
+  }
+  .sb-wl__result-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-lg);
+    color: var(--color-text);
+  }
+  .sb-wl__result--success {
+    background: var(--color-success-subtle);
+  }
+  .sb-wl__result--success .sb-wl__result-title :global(svg) {
+    color: var(--color-success);
+  }
+  .sb-wl__result--duplicate {
+    background: var(--color-accent-subtle);
+  }
+  .sb-wl__result--duplicate .sb-wl__result-title :global(svg) {
+    color: var(--color-accent);
+  }
+</style>
+
+<script>
+  import '../../../lib/waitlist-client';
+</script>

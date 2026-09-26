@@ -6,6 +6,8 @@
 @import url("tokens/spacing.css");
 @import url("tokens/effects.css");
 @import url("tokens/components.css");
+@import url("components/button.css");
+@import url("components/article.css");
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }

@@ -1,0 +1,46 @@
+/* Button (used by primitives/Button.astro and any script-rendered markup). Variant tokens come from tokens/components.css via data-variant / data-size. */
+.sb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--btn-h);
+  width: var(--btn-width);
+  padding: 0 var(--btn-px);
+  font-family: var(--button-font);
+  font-size: var(--btn-fs);
+  font-weight: var(--button-weight);
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: var(--button-radius);
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  text-decoration: var(--btn-decoration);
+  text-underline-offset: var(--link-underline-offset);
+  cursor: var(--btn-cursor);
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+.sb-btn:hover {
+  background: var(--btn-bg-hover);
+  color: var(--btn-fg-hover);
+  text-decoration-thickness: var(--link-underline-thickness-hover);
+}
+.sb-btn:active {
+  background: var(--btn-bg-active);
+}
+.sb-btn__spinner {
+  animation: sb-spin 0.9s linear infinite;
+}
+@keyframes sb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sb-btn__spinner {
+    animation: none;
+  }
+}

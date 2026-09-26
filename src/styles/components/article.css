@@ -1,0 +1,14 @@
+/* Article sections (ArticleHero, ArticleBody, KeyTakeaways, InlineCta, AuthorReviewed) share one container
+   query scope so the TOC sidebar and the text column line up across separate sections. Layout rules for
+   [data-article-col] / [data-article-layout] / [data-toc] live in tokens/components.css. */
+.sb-art {
+  container-type: inline-size;
+  container-name: article;
+  background: var(--section-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+.sb-art__inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}

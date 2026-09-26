@@ -21,6 +21,8 @@ interface Props {
   ariaLabel?: string;
   /** Passed to WaitlistDialog as `source` when readiness="waitlist", e.g. "home-hero". */
   waitlistSource?: string;
+  /** Rendered as data-action for block scripts (e.g. the BeforeAfterDiff review controls). */
+  action?: string;
 }
 
 const {
@@ -37,6 +39,7 @@ const {
   arrow = false,
   ariaLabel,
   waitlistSource,
+  action,
 } = Astro.props;
 
 const base = readiness === 'live' ? (label ?? 'Start profile') : readiness === 'waitlist' ? 'Join the waitlist' : (label ?? 'Button');
@@ -47,7 +50,7 @@ const asLink = !!href && !blocked && !isWaitlist;
 ---
 
 {asLink ? (
-  <a class="sb-btn" href={href} data-variant={variant} data-size={size} data-full={fullWidth ? 'true' : 'false'} aria-label={ariaLabel}>
+  <a class="sb-btn" href={href} data-variant={variant} data-size={size} data-full={fullWidth ? 'true' : 'false'} aria-label={ariaLabel} data-action={action}>
     {text}{arrow && <Icon icon="arrow-right" size={16} />}
   </a>
 ) : (
@@ -60,8 +63,9 @@ const asLink = !!href && !blocked && !isWaitlist;
     aria-disabled={disabled ? 'true' : undefined}
     aria-busy={loading ? 'true' : undefined}
     aria-label={ariaLabel}
-    data-waitlist-open={isWaitlist && !blocked ? '' : undefined}
+    data-waitlist-open={isWaitlist && !blocked && type !== 'submit' ? '' : undefined}
     data-waitlist-source={isWaitlist ? waitlistSource : undefined}
+    data-action={action}
   >
     {loading && (
       <svg class="sb-btn__spinner" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -72,51 +76,3 @@ const asLink = !!href && !blocked && !isWaitlist;
     {text}{arrow && <Icon icon="arrow-right" size={16} />}
   </button>
 )}
-
-<style>
-  .sb-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    height: var(--btn-h);
-    width: var(--btn-width);
-    padding: 0 var(--btn-px);
-    font-family: var(--button-font);
-    font-size: var(--btn-fs);
-    font-weight: var(--button-weight);
-    line-height: 1;
-    white-space: nowrap;
-    border-radius: var(--button-radius);
-    border: 1px solid var(--btn-border);
-    background: var(--btn-bg);
-    color: var(--btn-fg);
-    text-decoration: var(--btn-decoration);
-    text-underline-offset: var(--link-underline-offset);
-    cursor: var(--btn-cursor);
-    transition:
-      background-color var(--duration-fast) var(--ease-standard),
-      color var(--duration-fast) var(--ease-standard);
-  }
-  .sb-btn:hover {
-    background: var(--btn-bg-hover);
-    color: var(--btn-fg-hover);
-    text-decoration-thickness: var(--link-underline-thickness-hover);
-  }
-  .sb-btn:active {
-    background: var(--btn-bg-active);
-  }
-  .sb-btn__spinner {
-    animation: sb-spin 0.9s linear infinite;
-  }
-  @keyframes sb-spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .sb-btn__spinner {
-      animation: none;
-    }
-  }
-</style>

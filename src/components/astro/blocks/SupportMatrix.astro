@@ -1,0 +1,226 @@
+---
+import type { SectionTone } from '../../../lib/types';
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Button from '../primitives/Button.astro';
+import StatusChip from '../primitives/StatusChip.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface SupportRow {
+  name: string;
+  scope: string;
+  status: 'verified' | 'partial';
+  /** Required: rows without a verified-on date are dropped. */
+  verifiedOn: string;
+  note?: string;
+}
+export interface SupportMatrixProps {
+  heading: string;
+  lead?: string;
+  /** Column label: "Platform" or "Source". */
+  nameLabel?: string;
+  /** Verified or partial rows only. Launch with an empty array. */
+  rows: SupportRow[];
+  lastReviewed: string;
+  emptyTitle?: string;
+  emptyText?: string;
+  emptyLinkLabel?: string;
+  emptyHref?: string;
+  footnote?: string;
+  /** Keep on while entries are example data. */
+  illustrative?: boolean;
+  tone?: SectionTone;
+}
+
+const CHIP = {
+  verified: { status: 'confirmed', label: 'Verified' },
+  partial: { status: 'partial', label: 'Partly works' },
+} as const;
+
+const {
+  heading,
+  lead,
+  nameLabel = 'Platform',
+  rows: allRows,
+  lastReviewed,
+  emptyTitle = 'No platforms are verified yet',
+  emptyText = 'We test each platform before listing it. Until then, SearchBreaker prepares your answers and you fill in the form yourself.',
+  emptyLinkLabel,
+  emptyHref,
+  footnote = 'Platforms not listed here are not supported. Support can change when a platform updates its forms; we re-test and update the date.',
+  illustrative = false,
+  tone = 'default',
+} = Astro.props as SupportMatrixProps;
+const id = makeId('sb-sm', heading);
+const rows = allRows.filter((r) => CHIP[r.status] && r.verifiedOn);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-sm">
+    <SectionHeader {heading} {id} {lead} />
+    <div class="sb-sm__frame">
+      <div class="sb-sm__bar">
+        <span class="sb-sm__label">Last reviewed {lastReviewed} · verified items only</span>
+        {illustrative && <AvailabilityBadge state="illustrative" />}
+      </div>
+
+      {rows.length === 0 ? (
+        <div class="sb-sm__empty" role="status">
+          <StatusChip status="unclear" label="Not yet tested" />
+          <h3 class="sb-sm__empty-title">{emptyTitle}</h3>
+          <p class="sb-sm__empty-text">{emptyText}</p>
+          {emptyHref && emptyLinkLabel && <Button variant="link" label={emptyLinkLabel} href={emptyHref} />}
+        </div>
+      ) : (
+        <div role="table" aria-label={heading}>
+          <div class="sb-sm__row sb-sm__row--head" role="row">
+            <span role="columnheader">{nameLabel}</span>
+            <span role="columnheader">What works</span>
+            <span role="columnheader">Status</span>
+            <span role="columnheader">Verified on</span>
+          </div>
+          {rows.map((r) => (
+            <div class="sb-sm__row" role="row">
+              <span class="sb-sm__name" role="cell">{r.name}</span>
+              <span class="sb-sm__scope" role="cell">
+                <span>{r.scope}</span>
+                {r.note && <span class="sb-sm__note">{r.note}</span>}
+              </span>
+              <span class="sb-sm__status" role="cell"><StatusChip status={CHIP[r.status].status} label={CHIP[r.status].label} /></span>
+              <span class="sb-sm__date" role="cell"><span class="sb-sm__date-prefix">Verified on </span>{r.verifiedOn}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <p class="sb-sm__footnote">{footnote}</p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .sb-sm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .sb-sm__frame {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    overflow: hidden;
+  }
+  .sb-sm__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-3);
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-sm__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-sm__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-10) var(--space-6);
+    background-color: var(--color-surface-sunken);
+  }
+  .sb-sm__empty-title {
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-sm__empty-text {
+    margin: 0;
+    max-width: var(--measure-lead);
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+  }
+  /* Mobile: stacked card per row. */
+  .sb-sm__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'name status'
+      'scope scope'
+      'date date';
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-sm__row--head {
+    display: none;
+  }
+  .sb-sm__name {
+    grid-area: name;
+    font-size: var(--text-md);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-sm__scope {
+    grid-area: scope;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+  }
+  .sb-sm__note {
+    color: var(--color-text-muted);
+  }
+  .sb-sm__status {
+    grid-area: status;
+    display: flex;
+  }
+  .sb-sm__date {
+    grid-area: date;
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    color: var(--color-text-muted);
+  }
+  .sb-sm__footnote {
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-muted);
+  }
+  @media (min-width: 768px) {
+    .sb-sm__row {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.6fr) 9.375rem 8.125rem;
+      grid-template-areas: 'name scope status date';
+      gap: var(--space-5);
+      align-items: start;
+      padding: var(--space-4) var(--space-5);
+    }
+    .sb-sm__row--head {
+      display: grid;
+      padding: var(--space-3) var(--space-5);
+      font-family: var(--font-mono);
+      font-size: var(--text-2xs);
+      letter-spacing: var(--tracking-mono-caps);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    .sb-sm__date {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      padding-top: 4px;
+    }
+    .sb-sm__date-prefix {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,173 @@
+---
+import type { LinkItem } from '../../../lib/types';
+
+export interface FooterColumn {
+  title: string;
+  /** ≤ 7 links, published pages only. */
+  links: LinkItem[];
+}
+export interface FooterProps {
+  /** 3-4 columns. */
+  columns: FooterColumn[];
+  legalLinks?: LinkItem[];
+  /** Must state the current release status honestly. */
+  statusNote?: string;
+  copyright?: string;
+  tone?: 'default' | 'muted';
+}
+
+const {
+  columns,
+  legalLinks = [],
+  statusNote,
+  copyright = `© ${new Date().getFullYear()} SearchBreaker`,
+  tone = 'muted',
+} = Astro.props as FooterProps;
+---
+
+<footer class="sb-footer" data-tone={tone}>
+  <div class="sb-footer__inner">
+    <div class="sb-footer__top">
+      <div class="sb-footer__brand">
+        <a class="sb-footer__logo" href="/" aria-label="SearchBreaker home">
+          <img src="/brand/mark.svg" width="26" height="26" alt="" />SearchBreaker
+        </a>
+        {statusNote && <p class="sb-footer__note">{statusNote}</p>}
+      </div>
+      <nav class="sb-footer__nav" aria-label="Footer">
+        {columns.map((col) => (
+          <div class="sb-footer__col">
+            <h2 class="sb-footer__col-title">{col.title}</h2>
+            <ul class="sb-footer__links">
+              {col.links.map((l) => <li><a class="sb-footer__link" href={l.href}>{l.label}</a></li>)}
+            </ul>
+          </div>
+        ))}
+      </nav>
+    </div>
+    <div class="sb-footer__bottom">
+      <span>{copyright}</span>
+      {legalLinks.length > 0 && (
+        <ul class="sb-footer__legal">
+          {legalLinks.map((l) => <li><a class="sb-footer__legal-link" href={l.href}>{l.label}</a></li>)}
+        </ul>
+      )}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .sb-footer {
+    background: var(--section-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-16) var(--gutter) var(--space-8);
+  }
+  .sb-footer__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+  .sb-footer__top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-10) var(--space-12);
+  }
+  .sb-footer__brand {
+    flex: 1 1 16.25rem;
+    max-width: 22.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .sb-footer__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: -0.03em;
+  }
+  .sb-footer__note {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .sb-footer__nav {
+    flex: 2 1 32.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.375rem, 1fr));
+    gap: var(--space-8);
+  }
+  .sb-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .sb-footer__col-title {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+  }
+  .sb-footer__links,
+  .sb-footer__legal {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sb-footer__links {
+    display: flex;
+    flex-direction: column;
+  }
+  .sb-footer__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .sb-footer__link:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .sb-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2) var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+  .sb-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+  }
+  .sb-footer__legal-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+  .sb-footer__legal-link:hover {
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+  }
+</style>

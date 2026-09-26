@@ -1,0 +1,245 @@
+---
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Button from '../primitives/Button.astro';
+import Icon from '../primitives/Icon.astro';
+import StatusChip from '../primitives/StatusChip.astro';
+
+export interface Job {
+  title: string;
+  company: string;
+  location: string;
+  workMode: string;
+  postedAt: string;
+  source: string;
+  url?: string;
+  /** 2-4 items, ≤ 10 words each. */
+  matches: string[];
+  /** 1-3 items, ≤ 10 words each. */
+  missing: string[];
+}
+export interface JobFeedCardProps {
+  job: Job;
+  /** Keep on for marketing pages: never imply live listings. */
+  illustrative?: boolean;
+}
+
+const { job, illustrative = true } = Astro.props as JobFeedCardProps;
+---
+
+<article class="sb-jf" data-job-card data-jf-state="default" aria-label={`${job.title}, ${job.company}`}>
+  <div class="sb-jf__skipped" role="status" data-jf-skipped hidden>
+    <span class="sb-jf__skipped-text"><Icon icon="skip" size={16} />Skipped · {job.title}, {job.company}</span>
+    <Button variant="link" size="sm" label="Undo" action="undo" />
+  </div>
+
+  <div class="sb-jf__main" data-jf-main>
+    <div class="sb-jf__head">
+      <div class="sb-jf__titles">
+        <h3 class="sb-jf__title">{job.title}</h3>
+        <span class="sb-jf__company">{job.company} · {job.location} · {job.workMode}</span>
+      </div>
+      <div class="sb-jf__badges">
+        <span data-jf-saved-chip hidden><StatusChip status="reviewed" label="Saved" /></span>
+        {illustrative && <AvailabilityBadge state="illustrative" />}
+      </div>
+    </div>
+
+    <div class="sb-jf__meta">
+      <span class="sb-jf__meta-item"><Icon icon="calendar" size={16} />Posted {job.postedAt}</span>
+      <span class="sb-jf__meta-item"><Icon icon="external" size={16} />Source: {job.source}</span>
+    </div>
+
+    <div class="sb-jf__cols">
+      <div class="sb-jf__col">
+        <span class="sb-jf__mini">Why it appears</span>
+        <ul class="sb-jf__list">
+          {job.matches.map((m) => (
+            <li class="sb-jf__li"><span class="sb-jf__li-icon sb-jf__li-icon--ok"><Icon icon="check" size={16} /></span>{m}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="sb-jf__col">
+        <span class="sb-jf__mini">Missing information</span>
+        <ul class="sb-jf__list sb-jf__list--muted">
+          {job.missing.map((m) => (
+            <li class="sb-jf__li"><span class="sb-jf__li-icon"><Icon icon="help" size={16} /></span>{m}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="sb-jf__actions">
+      <span data-jf-save><Button size="sm" variant="secondary" label="Save" action="save" /></span>
+      <span data-jf-saved hidden><Button size="sm" label="Saved" action="save" /></span>
+      <Button size="sm" variant="ghost" label="Skip" action="skip" />
+      <span class="sb-jf__view"><Button size="sm" variant="link" label="View posting" href={job.url ?? '#posting'} /></span>
+    </div>
+  </div>
+</article>
+
+<style>
+  .sb-jf {
+    --jf-border: var(--color-border);
+    width: 100%;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--jf-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+  .sb-jf[data-jf-state='saved'] {
+    --jf-border: var(--color-accent);
+  }
+  .sb-jf__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .sb-jf__skipped {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .sb-jf__skipped[hidden],
+  .sb-jf__main[hidden],
+  [data-jf-saved-chip][hidden],
+  [data-jf-save][hidden],
+  [data-jf-saved][hidden] {
+    display: none;
+  }
+  .sb-jf__skipped-text {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+  .sb-jf__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .sb-jf__titles {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+    flex: 1 1 15rem;
+  }
+  .sb-jf__title {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-jf__company {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+  .sb-jf__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .sb-jf__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-jf__meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sb-jf__cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.75rem), 1fr));
+    gap: var(--space-4);
+  }
+  .sb-jf__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .sb-jf__mini {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-jf__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sb-jf__list--muted {
+    color: var(--color-text-secondary);
+  }
+  .sb-jf__li {
+    display: flex;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+  }
+  .sb-jf__li-icon {
+    display: flex;
+    padding-top: 1px;
+    color: var(--color-text-muted);
+  }
+  .sb-jf__li-icon--ok {
+    color: var(--color-success);
+  }
+  .sb-jf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+  .sb-jf__view {
+    margin-left: auto;
+    display: flex;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-job-card]').forEach((card) => {
+    const main = card.querySelector<HTMLElement>('[data-jf-main]')!;
+    const skipped = card.querySelector<HTMLElement>('[data-jf-skipped]')!;
+    const chip = card.querySelector<HTMLElement>('[data-jf-saved-chip]')!;
+    const saveBtn = card.querySelector<HTMLElement>('[data-jf-save]')!;
+    const savedBtn = card.querySelector<HTMLElement>('[data-jf-saved]')!;
+    const set = (state: 'default' | 'saved' | 'skipped') => {
+      card.dataset.jfState = state;
+      main.hidden = state === 'skipped';
+      skipped.hidden = state !== 'skipped';
+      chip.hidden = state !== 'saved';
+      saveBtn.hidden = state === 'saved';
+      savedBtn.hidden = state !== 'saved';
+      (state === 'skipped' ? skipped : main).querySelector<HTMLElement>('button, a')?.focus();
+    };
+    card.querySelectorAll<HTMLElement>('[data-action]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const state = card.dataset.jfState;
+        if (btn.dataset.action === 'save') set(state === 'saved' ? 'default' : 'saved');
+        else if (btn.dataset.action === 'skip') set('skipped');
+        else if (btn.dataset.action === 'undo') set('default');
+      }),
+    );
+  });
+</script>

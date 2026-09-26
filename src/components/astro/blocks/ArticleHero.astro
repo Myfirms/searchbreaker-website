@@ -1,0 +1,103 @@
+---
+import type { ArticleMeta, SectionTone } from '../../../lib/types';
+import Icon from '../primitives/Icon.astro';
+import { makeId } from '../../../lib/ids';
+import { inline } from '../../../lib/inline';
+
+export interface ArticleHeroProps {
+  eyebrow?: string;
+  /** ≤ 12 words. */
+  headline: string;
+  /** One sentence, ≤ 35 words. */
+  answer: string;
+  meta: ArticleMeta;
+  tone?: SectionTone;
+}
+
+const { eyebrow = 'Guide', headline, answer, meta, tone = 'default' } = Astro.props as ArticleHeroProps;
+const id = makeId('sb-ah', headline);
+const items = [
+  meta.updated && { icon: 'calendar' as const, text: `Updated ${meta.updated}` },
+  meta.reviewed && { icon: 'check' as const, text: `Reviewed ${meta.reviewed}` },
+  meta.readingTime && { icon: 'file' as const, text: meta.readingTime },
+].filter(Boolean) as { icon: 'calendar' | 'check' | 'file'; text: string }[];
+---
+
+<section class="sb-art sb-ah" data-tone={tone} aria-labelledby={id}>
+  <div class="sb-art__inner">
+    <div class="sb-ah__col" data-article-col="true">
+      <span class="sb-ah__eyebrow">{eyebrow}</span>
+      <h1 class="sb-ah__h1" id={id}>{headline}</h1>
+      <div class="sb-ah__answer">
+        <span class="sb-ah__mini">Short answer</span>
+        <p set:html={inline(answer)} />
+      </div>
+      <ul class="sb-ah__meta">
+        {items.map((m) => <li><Icon icon={m.icon} size={16} />{m.text}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sb-ah {
+    padding: var(--section-pad-y-tight) var(--gutter) var(--space-10);
+  }
+  .sb-ah__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .sb-ah__eyebrow,
+  .sb-ah__mini {
+    font-family: var(--font-mono);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+  }
+  .sb-ah__eyebrow {
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+  }
+  .sb-ah__h1 {
+    margin: 0;
+    font-size: var(--display-compact);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+    font-weight: var(--font-weight-semibold);
+    text-wrap: balance;
+  }
+  .sb-ah__answer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+  }
+  .sb-ah__mini {
+    font-size: var(--text-2xs);
+    color: var(--color-text-muted);
+  }
+  .sb-ah__answer p {
+    margin: 0;
+    font-size: var(--text-xl);
+    line-height: var(--leading-body);
+    text-wrap: pretty;
+  }
+  .sb-ah__meta {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+  .sb-ah__meta li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+</style>

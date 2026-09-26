@@ -1,0 +1,107 @@
+---
+import type { Availability } from '../../../lib/types';
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Icon from '../primitives/Icon.astro';
+
+export interface AnnouncementBarProps {
+  /** ≤ 14 words. A real, time-bound or status notice; never urgency or promotion. */
+  text: string;
+  href?: string;
+  linkLabel?: string;
+  badge?: Availability | 'none';
+  dismissible?: boolean;
+  /** Storage key so a dismissal persists for the session. */
+  storageKey?: string;
+  /** When set, the link opens the waitlist dialog with this source instead of navigating. */
+  waitlistSource?: string;
+}
+
+const { text, href, linkLabel, badge = 'preview', dismissible = false, storageKey = 'sb-announcement', waitlistSource } =
+  Astro.props as AnnouncementBarProps;
+---
+
+<div class="sb-ann" role="region" aria-label="Announcement" data-announcement data-storage-key={storageKey}>
+  <div class="sb-ann__inner">
+    {badge !== 'none' && <AvailabilityBadge state={badge} />}
+    <p class="sb-ann__text">
+      {text}
+      {linkLabel && (href || waitlistSource) && (
+        <>{' '}<a class="sb-ann__link" href={waitlistSource ? '#' : href} data-waitlist-open={waitlistSource ? '' : undefined} data-waitlist-source={waitlistSource}>{linkLabel}</a></>
+      )}
+    </p>
+    {dismissible && (
+      <button class="sb-ann__close" type="button" aria-label="Dismiss announcement" data-announcement-close>
+        <Icon icon="close" size={16} />
+      </button>
+    )}
+  </div>
+</div>
+
+<style>
+  .sb-ann {
+    background: var(--color-surface-accent);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-ann[hidden] {
+    display: none;
+  }
+  .sb-ann__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    min-height: var(--touch-target);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+  }
+  .sb-ann__text {
+    margin: 0;
+    flex: 1 1 auto;
+    padding: var(--space-2) 0;
+    line-height: var(--leading-snug);
+  }
+  .sb-ann__link {
+    color: var(--color-link);
+    font-weight: var(--font-weight-medium);
+    text-underline-offset: var(--link-underline-offset);
+    white-space: nowrap;
+  }
+  .sb-ann__link:hover {
+    color: var(--color-link-hover);
+    text-decoration-thickness: var(--link-underline-thickness-hover);
+  }
+  .sb-ann__close {
+    width: var(--touch-target);
+    height: var(--touch-target);
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+  .sb-ann__close:hover {
+    background: var(--color-bg);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-announcement]').forEach((bar) => {
+    const key = bar.dataset.storageKey ?? 'sb-announcement';
+    try {
+      if (sessionStorage.getItem(key) === 'dismissed') bar.hidden = true;
+    } catch {}
+    bar.querySelector('[data-announcement-close]')?.addEventListener('click', () => {
+      bar.hidden = true;
+      try {
+        sessionStorage.setItem(key, 'dismissed');
+      } catch {}
+    });
+  });
+</script>

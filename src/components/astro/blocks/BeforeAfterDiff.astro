@@ -1,0 +1,329 @@
+---
+import type { SectionTone } from '../../../lib/types';
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Button from '../primitives/Button.astro';
+import Icon from '../primitives/Icon.astro';
+import StatusChip from '../primitives/StatusChip.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface DiffSegment {
+  text: string;
+  kind?: 'added' | 'removed';
+}
+export interface Provenance {
+  source: string;
+  fact: string;
+  confirmedOn?: string;
+}
+export interface BeforeAfterDiffProps {
+  heading: string;
+  lead?: string;
+  frameLabel?: string;
+  /** Job requirement the edit responds to. */
+  requirement: string;
+  /** 'removed' segments render as <del>. ≤ 40 words per side. */
+  before: DiffSegment[];
+  /** 'added' segments render as <ins>. */
+  after: DiffSegment[];
+  /** Required: every edit cites a profile fact. */
+  provenance: Provenance;
+  resumeVersion?: string;
+  tone?: SectionTone;
+}
+
+const {
+  heading,
+  lead,
+  frameLabel = 'Proposed edit',
+  requirement,
+  before,
+  after,
+  provenance,
+  resumeVersion = 'Resume v3',
+  tone = 'default',
+} = Astro.props as BeforeAfterDiffProps;
+const id = makeId('sb-ba', heading);
+const afterPlain = after.map((s) => s.text).join('');
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-ba" data-diff data-state="proposed" data-version={resumeVersion}>
+    <SectionHeader {heading} {id} {lead} />
+    <div class="sb-ba__frame">
+      <div class="sb-ba__bar">
+        <span class="sb-ba__label">{frameLabel}</span>
+        <AvailabilityBadge state="illustrative" />
+      </div>
+      <div class="sb-ba__body">
+        <div class="sb-ba__block">
+          <span class="sb-ba__mini">Job requirement</span>
+          <p class="sb-ba__requirement">“{requirement}”</p>
+        </div>
+
+        <div class="sb-ba__columns">
+          <div class="sb-ba__block">
+            <span class="sb-ba__mini">Before</span>
+            <p class="sb-ba__text">
+              {before.map((s) => (s.kind === 'removed' ? <del>{s.text}</del> : <span>{s.text}</span>))}
+            </p>
+          </div>
+          <div class="sb-ba__block">
+            <span class="sb-ba__mini sb-ba__mini--accent" data-diff-after-label>Proposed</span>
+            <p class="sb-ba__text sb-ba__text--after" data-show="proposed accepted rejected">
+              {after.map((s) => (s.kind === 'added' ? <ins>{s.text}</ins> : <span>{s.text}</span>))}
+            </p>
+            <p class="sb-ba__text sb-ba__text--after" data-show="edited" data-diff-edited>{afterPlain}</p>
+            <div data-show="editing">
+              <label class="sb-ba__sr" for={`${id}-edit`}>Edit proposed line</label>
+              <textarea class="sb-ba__textarea" id={`${id}-edit`} rows="4" data-diff-draft>{afterPlain}</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="sb-ba__source">
+          <span class="sb-ba__source-icon"><Icon icon="file" size={20} /></span>
+          <div class="sb-ba__source-body">
+            <span class="sb-ba__mini sb-ba__mini--accent">Source · {provenance.source}</span>
+            <span class="sb-ba__source-fact">{provenance.fact}</span>
+            {provenance.confirmedOn && (
+              <span class="sb-ba__source-date">Confirmed by you on {provenance.confirmedOn}</span>
+            )}
+          </div>
+        </div>
+
+        <div class="sb-ba__controls">
+          <div class="sb-ba__group" role="group" aria-label="Review this edit" data-show="proposed">
+            <Button size="sm" label="Accept" action="accept" />
+            <Button size="sm" variant="secondary" label="Edit" action="edit" />
+            <Button size="sm" variant="ghost" label="Reject" action="reject" />
+          </div>
+          <div class="sb-ba__group" data-show="editing">
+            <Button size="sm" label="Save edit" action="save" />
+            <Button size="sm" variant="ghost" label="Cancel" action="cancel" />
+          </div>
+          <div class="sb-ba__decision" role="status" data-show="accepted">
+            <StatusChip status="submitted" label="Accepted" />
+            <span class="sb-ba__decision-text">Added to {resumeVersion}.</span>
+            <Button size="sm" variant="link" label="Undo" action="undo" />
+          </div>
+          <div class="sb-ba__decision" role="status" data-show="edited">
+            <StatusChip status="reviewed" label="Edited" />
+            <span class="sb-ba__decision-text">Your version was saved to {resumeVersion}.</span>
+            <Button size="sm" variant="link" label="Undo" action="undo" />
+          </div>
+          <div class="sb-ba__decision" role="status" data-show="rejected">
+            <StatusChip status="unclear" label="Rejected" />
+            <span class="sb-ba__decision-text">The original line stays in your resume.</span>
+            <Button size="sm" variant="link" label="Undo" action="undo" />
+          </div>
+          <span class="sb-ba__legend"><ins>added</ins><del>removed</del></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .sb-ba {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .sb-ba__frame {
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    overflow: hidden;
+  }
+  .sb-ba__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-ba__label,
+  .sb-ba__mini {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-ba__mini--accent {
+    color: var(--color-accent);
+  }
+  .sb-ba__body {
+    padding: var(--card-pad);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .sb-ba__block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .sb-ba__requirement {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    font-size: var(--text-md);
+    line-height: var(--leading-snug);
+  }
+  .sb-ba__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.75rem), 1fr));
+    gap: var(--space-4);
+  }
+  .sb-ba__text {
+    margin: 0;
+    flex: 1 1 auto;
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+  }
+  .sb-ba__text--after {
+    border-color: var(--color-accent);
+  }
+  .sb-ba__text del,
+  .sb-ba__legend del {
+    background: var(--color-error-subtle);
+    color: var(--color-text);
+    text-decoration-color: var(--color-error);
+  }
+  .sb-ba__text ins,
+  .sb-ba__legend ins {
+    background: var(--color-success-subtle);
+    color: var(--color-text);
+    text-decoration-color: var(--color-success);
+    text-underline-offset: 3px;
+  }
+  .sb-ba__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .sb-ba__textarea {
+    width: 100%;
+    padding: var(--space-3) var(--input-pad-x);
+    font-family: inherit;
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--input-fg);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border-focus);
+    border-radius: var(--input-radius);
+    resize: vertical;
+  }
+  .sb-ba__source {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-subtle);
+  }
+  .sb-ba__source-icon {
+    display: flex;
+    color: var(--color-accent);
+  }
+  .sb-ba__source-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .sb-ba__source-fact {
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+  }
+  .sb-ba__source-date {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    color: var(--color-text-secondary);
+  }
+  .sb-ba__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+  .sb-ba__group,
+  .sb-ba__decision {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+  }
+  .sb-ba__decision-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+  .sb-ba__legend {
+    display: flex;
+    gap: var(--space-4);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  /* Show only the parts that belong to the current review state. */
+  .sb-ba[data-state='proposed'] [data-show]:not([data-show~='proposed']),
+  .sb-ba[data-state='editing'] [data-show]:not([data-show~='editing']),
+  .sb-ba[data-state='accepted'] [data-show]:not([data-show~='accepted']),
+  .sb-ba[data-state='edited'] [data-show]:not([data-show~='edited']),
+  .sb-ba[data-state='rejected'] [data-show]:not([data-show~='rejected']) {
+    display: none;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-diff]').forEach((root) => {
+    const label = root.querySelector<HTMLElement>('[data-diff-after-label]')!;
+    const edited = root.querySelector<HTMLElement>('[data-diff-edited]')!;
+    const draft = root.querySelector<HTMLTextAreaElement>('[data-diff-draft]')!;
+    const original = draft.value;
+    const LABELS: Record<string, string> = {
+      proposed: 'Proposed',
+      editing: 'Proposed',
+      accepted: 'Proposed',
+      edited: 'Your edit',
+      rejected: 'Proposed (rejected)',
+    };
+    const set = (state: string) => {
+      root.dataset.state = state;
+      label.textContent = LABELS[state] ?? 'Proposed';
+      // Move focus to the first control of the new state so keyboard users do not lose their place.
+      queueMicrotask(() => {
+        const target = root.querySelector<HTMLElement>(
+          state === 'editing'
+            ? 'textarea'
+            : `[data-show~="${state}"] button, [data-show~="${state}"] a`,
+        );
+        target?.focus();
+      });
+    };
+    root.querySelectorAll<HTMLElement>('[data-action]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        switch (btn.dataset.action) {
+          case 'accept': return set('accepted');
+          case 'reject': return set('rejected');
+          case 'edit': draft.value = edited.textContent || original; return set('editing');
+          case 'save': edited.textContent = draft.value; return set('edited');
+          case 'cancel': return set('proposed');
+          case 'undo': edited.textContent = original; draft.value = original; return set('proposed');
+        }
+      });
+    });
+  });
+</script>

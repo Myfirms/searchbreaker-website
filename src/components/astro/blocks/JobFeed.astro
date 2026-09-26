@@ -1,0 +1,41 @@
+---
+import type { SectionTone } from '../../../lib/types';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import JobFeedCard, { type Job } from './JobFeedCard.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface JobFeedProps {
+  heading: string;
+  lead?: string;
+  /** 2-4 cards. Keep them illustrative on marketing pages. */
+  jobs: Job[];
+  tone?: SectionTone;
+}
+
+const { heading, lead, jobs, tone = 'default' } = Astro.props as JobFeedProps;
+const id = makeId('sb-jfeed', heading);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-jfeed">
+    <SectionHeader {heading} {id} {lead} />
+    <div class="sb-jfeed__list">
+      {jobs.map((job) => <JobFeedCard {job} />)}
+    </div>
+  </div>
+</Section>
+
+<style>
+  .sb-jfeed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .sb-jfeed__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    max-width: 50rem;
+  }
+</style>

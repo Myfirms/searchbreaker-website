@@ -1,0 +1,40 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AnnouncementBar from '../components/astro/blocks/AnnouncementBar.astro';
+import Header from '../components/astro/blocks/Header.astro';
+import Footer from '../components/astro/blocks/Footer.astro';
+import StickyMobileCta from '../components/astro/blocks/StickyMobileCta.astro';
+import WaitlistDialog from '../components/astro/blocks/WaitlistDialog.astro';
+import { announcement, footerColumns, legalLinks, navItems, statusNote } from '../lib/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+  /** Current path, drives the nav indicator. */
+  current?: string;
+  noindex?: boolean;
+  /** Mobile bottom CTA bar (feature pages and home). Off for guides. */
+  stickyCta?: boolean;
+  /** Pre-launch status bar above the header. */
+  announcementBar?: boolean;
+  /** Prefix for waitlist `source` values, e.g. "home" or "resume-tailoring". */
+  source?: string;
+}
+
+const { title, description, canonicalPath, current, noindex, stickyCta = true, announcementBar = true, source = 'page' } =
+  Astro.props;
+---
+
+<BaseLayout {title} {description} {canonicalPath} {noindex}>
+  {announcementBar && (
+    <AnnouncementBar text={announcement.text} linkLabel={announcement.linkLabel} waitlistSource={`${source}-announcement`} dismissible />
+  )}
+  <Header {navItems} cta={{ readiness: 'waitlist' }} {current} waitlistSource={`${source}-header`} />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer columns={footerColumns} {legalLinks} {statusNote} />
+  {stickyCta && <StickyMobileCta readiness="waitlist" waitlistSource={`${source}-sticky`} />}
+  <WaitlistDialog />
+</BaseLayout>

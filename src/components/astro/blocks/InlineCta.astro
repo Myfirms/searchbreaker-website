@@ -1,0 +1,88 @@
+---
+import type { Availability, CtaConfig } from '../../../lib/types';
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Button from '../primitives/Button.astro';
+
+export interface InlineCtaProps {
+  eyebrow?: string;
+  /** ≤ 8 words. */
+  title: string;
+  /** ≤ 25 words. */
+  text: string;
+  /** The ONE canonical product page for this guide. */
+  href: string;
+  linkLabel: string;
+  availability: Availability;
+  cta: CtaConfig;
+  waitlistSource?: string;
+}
+
+const { eyebrow = 'Try it in SearchBreaker', title, text, href, linkLabel, availability, cta, waitlistSource } =
+  Astro.props as InlineCtaProps;
+---
+
+<section class="sb-art sb-ic">
+  <div class="sb-art__inner">
+    <div class="sb-ic__box" data-article-col="true">
+      <div class="sb-ic__top">
+        <span class="sb-ic__eyebrow">{eyebrow}</span>
+        <AvailabilityBadge state={availability} variant="outline" />
+      </div>
+      <p class="sb-ic__title">{title}</p>
+      <p class="sb-ic__text">{text}</p>
+      <div class="sb-ic__actions">
+        {cta.readiness === 'live' && <Button readiness="live" label={cta.label} href={cta.href} />}
+        <Button variant="secondary" label={linkLabel} href={href} arrow />
+        {cta.readiness === 'waitlist' && <Button variant="link" readiness="waitlist" {waitlistSource} />}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sb-ic {
+    padding: var(--space-6) var(--gutter);
+  }
+  .sb-ic__box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-accent);
+  }
+  .sb-ic__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+  .sb-ic__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .sb-ic__title {
+    margin: 0;
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-semibold);
+    text-wrap: balance;
+  }
+  .sb-ic__text {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .sb-ic__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+  }
+</style>

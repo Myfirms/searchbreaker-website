@@ -1,0 +1,112 @@
+---
+import Icon from '../primitives/Icon.astro';
+
+export interface BreadcrumbsProps {
+  /** Last item is the current page. ≤ 4 levels, short H1 names. */
+  items: { label: string; href?: string }[];
+  tone?: 'default' | 'muted';
+}
+
+const { items, tone = 'default' } = Astro.props as BreadcrumbsProps;
+const n = items.length;
+const parent = items[n - 2] ?? items[0];
+const compact = n > 2;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((it, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: it.label,
+    ...(it.href ? { item: new URL(it.href, Astro.site).toString() } : {}),
+  })),
+};
+---
+
+<nav class="sb-bc" aria-label="Breadcrumb" data-tone={tone}>
+  <div class="sb-bc__inner">
+    <ol class:list={['sb-bc__trail', { 'sb-bc__trail--compact': compact }]}>
+      {items.map((c, i) => (
+        <li class="sb-bc__item">
+          {i < n - 1 ? (
+            <>
+              <a class="sb-bc__link" href={c.href}>{c.label}</a>
+              <span class="sb-bc__sep"><Icon icon="chevron-right" size={16} /></span>
+            </>
+          ) : (
+            <span class="sb-bc__current" aria-current="page">{c.label}</span>
+          )}
+        </li>
+      ))}
+    </ol>
+    {compact && parent?.href && (
+      <a class="sb-bc__back" href={parent.href}><Icon icon="arrow-left" size={16} />{parent.label}</a>
+    )}
+  </div>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</nav>
+
+<style>
+  .sb-bc {
+    background: var(--section-bg);
+    font-family: var(--font-sans);
+    padding: var(--space-3) var(--gutter) 0;
+  }
+  .sb-bc__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+  .sb-bc__trail {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-2);
+    font-size: var(--text-sm);
+  }
+  .sb-bc__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .sb-bc__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+  .sb-bc__link:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .sb-bc__sep {
+    display: flex;
+    color: var(--color-text-muted);
+  }
+  .sb-bc__current {
+    color: var(--color-text);
+    font-weight: var(--font-weight-medium);
+  }
+  .sb-bc__back {
+    display: none;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch-target);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+  @media (max-width: 639.98px) {
+    .sb-bc__trail--compact {
+      display: none;
+    }
+    .sb-bc__back {
+      display: inline-flex;
+    }
+  }
+</style>

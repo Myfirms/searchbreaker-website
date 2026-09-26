@@ -1,0 +1,251 @@
+---
+import type { SectionTone } from '../../../lib/types';
+import Callout from './Callout.astro';
+import TableOfContents from './TableOfContents.astro';
+import { inline } from '../../../lib/inline';
+
+export type ArticleBlock =
+  | { type: 'h2'; id: string; text: string; tocLabel?: string }
+  | { type: 'h3'; id?: string; text: string }
+  | { type: 'p'; text: string }
+  | { type: 'ul'; items: string[] }
+  | { type: 'steps'; steps: { title: string; text: string }[] }
+  | { type: 'table'; columns: string[]; rows: string[][]; caption?: string }
+  | { type: 'quote'; text: string; cite?: string }
+  | { type: 'callout'; variant: 'tip' | 'warning' | 'note'; title?: string; text: string };
+
+export interface ArticleBodyProps {
+  /** Paragraphs ≤ 80 words; steps 3-7; tables ≤ 4 columns, ≤ 8 rows. Strings accept **bold** and [label](/path). */
+  blocks: ArticleBlock[];
+  /** Default true; built from the h2 blocks. */
+  toc?: boolean;
+  tocTitle?: string;
+  tone?: SectionTone;
+}
+
+const { blocks, toc = true, tocTitle = 'On this page', tone = 'default' } = Astro.props as ArticleBodyProps;
+const tocItems = blocks
+  .filter((b): b is Extract<ArticleBlock, { type: 'h2' }> => b.type === 'h2' && !!b.id)
+  .map((b) => ({ id: b.id, label: b.tocLabel ?? b.text }));
+const hasToc = toc && tocItems.length > 1;
+---
+
+<section class="sb-art sb-ab" data-tone={tone}>
+  <div class="sb-art__inner" data-article-layout="true">
+    {hasToc && (
+      <aside class="sb-ab__aside" data-toc="sidebar">
+        <TableOfContents items={tocItems} title={tocTitle} variant="sidebar" />
+      </aside>
+    )}
+    <article class="sb-ab__main" data-article-main="true">
+      {hasToc && (
+        <div data-toc="collapsible">
+          <TableOfContents items={tocItems} title={tocTitle} variant="collapsible" />
+        </div>
+      )}
+      {blocks.map((b) => {
+        switch (b.type) {
+          case 'h2':
+            return <h2 class="sb-ab__h2" id={b.id}>{b.text}</h2>;
+          case 'h3':
+            return <h3 class="sb-ab__h3" id={b.id}>{b.text}</h3>;
+          case 'p':
+            return <p class="sb-ab__p" set:html={inline(b.text)} />;
+          case 'ul':
+            return (
+              <ul class="sb-ab__ul">
+                {b.items.map((li) => <li set:html={inline(li)} />)}
+              </ul>
+            );
+          case 'steps':
+            return (
+              <ol class="sb-ab__steps">
+                {b.steps.map((s, i) => (
+                  <li class="sb-ab__step">
+                    <span class="sb-ab__num" aria-hidden="true">{i + 1}</span>
+                    <div class="sb-ab__step-body">
+                      <h3 class="sb-ab__h3">{s.title}</h3>
+                      <p class="sb-ab__step-text" set:html={inline(s.text)} />
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            );
+          case 'table': {
+            const cols = `minmax(7.5rem, 0.8fr) repeat(${Math.max(b.columns.length - 1, 1)}, minmax(0, 1fr))`;
+            return (
+              <figure class="sb-ab__figure">
+                <div class="sb-ab__scroll">
+                  <div class="sb-ab__table" role="table" aria-label={b.caption}>
+                    <div class="sb-ab__tr sb-ab__tr--head" role="row" style={`grid-template-columns:${cols}`}>
+                      {b.columns.map((h) => <span role="columnheader" class="sb-ab__td sb-ab__th">{h}</span>)}
+                    </div>
+                    {b.rows.map((r) => (
+                      <div class="sb-ab__tr" role="row" style={`grid-template-columns:${cols}`}>
+                        {r.map((c) => <span role="cell" class="sb-ab__td">{c}</span>)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {b.caption && <figcaption class="sb-ab__caption">{b.caption}</figcaption>}
+              </figure>
+            );
+          }
+          case 'quote':
+            return (
+              <blockquote class="sb-ab__quote">
+                <p>{b.text}</p>
+                {b.cite && <cite>{b.cite}</cite>}
+              </blockquote>
+            );
+          case 'callout':
+            return <Callout variant={b.variant} title={b.title} text={b.text} />;
+        }
+      })}
+    </article>
+  </div>
+</section>
+
+<style>
+  .sb-ab {
+    padding: 0 var(--gutter) var(--section-pad-y-tight);
+  }
+  .sb-ab__aside {
+    position: sticky;
+    top: var(--space-6);
+  }
+  .sb-ab__main {
+    min-width: 0;
+    max-width: var(--measure-article);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .sb-ab__h2 {
+    margin: 0;
+    padding-top: var(--space-6);
+    scroll-margin-top: var(--space-6);
+    font-size: var(--article-h2);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    font-weight: var(--font-weight-semibold);
+    text-wrap: balance;
+  }
+  .sb-ab__h3 {
+    margin: 0;
+    font-size: var(--article-h3);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-ab__p,
+  .sb-ab__ul {
+    margin: 0;
+    font-size: var(--article-text);
+    line-height: var(--leading-body);
+  }
+  .sb-ab__p {
+    text-wrap: pretty;
+  }
+  .sb-ab__ul {
+    padding-left: 1.25em;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .sb-ab__ul :global(li) {
+    padding-left: var(--space-1);
+  }
+  .sb-ab__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .sb-ab__step {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+  .sb-ab__num {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+  }
+  .sb-ab__step-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-top: 4px;
+  }
+  .sb-ab__step-text {
+    margin: 0;
+    font-size: var(--article-text);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .sb-ab__figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .sb-ab__scroll {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .sb-ab__table {
+    min-width: 32.5rem;
+  }
+  .sb-ab__tr {
+    display: grid;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-ab__tr--head {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border-strong);
+  }
+  .sb-ab__td {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+  }
+  .sb-ab__th {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+  .sb-ab__caption {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .sb-ab__quote {
+    margin: 0;
+    padding: var(--space-2) 0 var(--space-2) var(--space-6);
+    border-left: 2px solid var(--color-border-strong);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .sb-ab__quote p {
+    margin: 0;
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+  }
+  .sb-ab__quote cite {
+    font-style: normal;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

@@ -1,0 +1,128 @@
+---
+import type { SectionTone } from '../../../lib/types';
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Icon from '../primitives/Icon.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface IssueFixExampleProps {
+  heading: string;
+  lead?: string;
+  frameLabel?: string;
+  /** 2-5 items, each field ≤ 25 words. Use "some systems", never absolute claims. */
+  items: { issue: string; why: string; fix: string }[];
+  tone?: SectionTone;
+}
+
+const { heading, lead, frameLabel = 'Resume check', items, tone = 'default' } = Astro.props as IssueFixExampleProps;
+const id = makeId('sb-if', heading);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-if">
+    <SectionHeader {heading} {id} {lead} />
+    <div class="sb-if__frame">
+      <div class="sb-if__bar">
+        <span class="sb-if__label">{frameLabel}</span>
+        <AvailabilityBadge state="illustrative" />
+      </div>
+      <ol class="sb-if__list">
+        {items.map((it, i) => (
+          <li class="sb-if__item">
+            <div class="sb-if__col">
+              <span class="sb-if__mini sb-if__mini--warn"><Icon icon="alert" size={16} />{String(i + 1).padStart(2, '0')} · Issue</span>
+              <span class="sb-if__issue">{it.issue}</span>
+            </div>
+            <div class="sb-if__col">
+              <span class="sb-if__mini">Why it matters</span>
+              <span class="sb-if__why">{it.why}</span>
+            </div>
+            <div class="sb-if__col sb-if__fix">
+              <span class="sb-if__mini sb-if__mini--accent"><Icon icon="check" size={16} />Suggested fix</span>
+              <span class="sb-if__fix-text">{it.fix}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .sb-if {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .sb-if__frame {
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    overflow: hidden;
+  }
+  .sb-if__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-if__label,
+  .sb-if__mini {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-if__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sb-if__item {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-4) var(--space-6);
+    padding: var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-if__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .sb-if__mini {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .sb-if__mini--warn {
+    color: var(--color-warning);
+  }
+  .sb-if__mini--accent {
+    color: var(--color-accent);
+  }
+  .sb-if__issue {
+    font-size: var(--text-md);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-if__why {
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+  }
+  .sb-if__fix {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-subtle);
+  }
+  .sb-if__fix-text {
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+  }
+</style>

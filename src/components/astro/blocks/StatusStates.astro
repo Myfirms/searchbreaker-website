@@ -1,0 +1,70 @@
+---
+import type { ApplicationStatus, SectionTone } from '../../../lib/types';
+import StatusChip from '../primitives/StatusChip.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface StatusStateItem {
+  id: ApplicationStatus;
+  label?: string;
+  /** ≤ 18 words. */
+  description: string;
+}
+export interface StatusStatesProps {
+  heading: string;
+  lead?: string;
+  states: StatusStateItem[];
+  tone?: SectionTone;
+}
+
+const { heading, lead, states, tone = 'default' } = Astro.props as StatusStatesProps;
+const id = makeId('sb-ss', heading);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-ss">
+    <SectionHeader {heading} {id} {lead} />
+    <dl class="sb-ss__grid">
+      {states.map((s) => (
+        <div class="sb-ss__card">
+          <dt class="sb-ss__term"><StatusChip status={s.id} label={s.label} /></dt>
+          <dd class="sb-ss__desc">{s.description}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</Section>
+
+<style>
+  .sb-ss {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  .sb-ss__grid {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-4);
+  }
+  .sb-ss__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+  }
+  .sb-ss__term {
+    display: flex;
+  }
+  .sb-ss__desc {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+</style>

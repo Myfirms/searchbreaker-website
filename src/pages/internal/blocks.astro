@@ -1,0 +1,318 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnnouncementBar from '../../components/astro/blocks/AnnouncementBar.astro';
+import Header from '../../components/astro/blocks/Header.astro';
+import Breadcrumbs from '../../components/astro/blocks/Breadcrumbs.astro';
+import Hero from '../../components/astro/blocks/Hero.astro';
+import WorkflowSteps from '../../components/astro/blocks/WorkflowSteps.astro';
+import WorkflowDiagram from '../../components/astro/blocks/WorkflowDiagram.astro';
+import ControlPoints from '../../components/astro/blocks/ControlPoints.astro';
+import FeatureGrid from '../../components/astro/blocks/FeatureGrid.astro';
+import BeforeAfterDiff from '../../components/astro/blocks/BeforeAfterDiff.astro';
+import RequirementEvidencePanel from '../../components/astro/blocks/RequirementEvidencePanel.astro';
+import IssueFixExample from '../../components/astro/blocks/IssueFixExample.astro';
+import JobFeed from '../../components/astro/blocks/JobFeed.astro';
+import PipelineBoard from '../../components/astro/blocks/PipelineBoard.astro';
+import StatusStates from '../../components/astro/blocks/StatusStates.astro';
+import ComparisonTable from '../../components/astro/blocks/ComparisonTable.astro';
+import SupportMatrix from '../../components/astro/blocks/SupportMatrix.astro';
+import LimitationsCallout from '../../components/astro/blocks/LimitationsCallout.astro';
+import AudienceCards from '../../components/astro/blocks/AudienceCards.astro';
+import RelatedLinks from '../../components/astro/blocks/RelatedLinks.astro';
+import FaqAccordion from '../../components/astro/blocks/FaqAccordion.astro';
+import FinalCta from '../../components/astro/blocks/FinalCta.astro';
+import ArticleHero from '../../components/astro/blocks/ArticleHero.astro';
+import ArticleBody from '../../components/astro/blocks/ArticleBody.astro';
+import KeyTakeaways from '../../components/astro/blocks/KeyTakeaways.astro';
+import InlineCta from '../../components/astro/blocks/InlineCta.astro';
+import AuthorReviewed from '../../components/astro/blocks/AuthorReviewed.astro';
+import Footer from '../../components/astro/blocks/Footer.astro';
+import StickyMobileCta from '../../components/astro/blocks/StickyMobileCta.astro';
+import WaitlistDialog from '../../components/astro/blocks/WaitlistDialog.astro';
+import ProductShot from '../../components/astro/blocks/ProductShot.astro';
+import WaitlistForm from '../../components/astro/blocks/WaitlistForm.astro';
+
+const wl = { readiness: 'waitlist' } as const;
+
+const navItems = [
+  {
+    label: 'Product',
+    children: [
+      { label: 'How it works', href: '/how-it-works', description: 'The full workflow from verified profile to follow-up.', availability: 'concept' as const },
+      { label: 'Job Finder', href: '/features/ai-job-finder', description: 'Find openings that fit your target roles.', availability: 'preview' as const },
+      { label: 'Job Matching', href: '/features/job-matcher', description: 'Compare job requirements with your confirmed experience.', availability: 'preview' as const },
+      { label: 'Resume Tailoring', href: '/features/resume-tailoring', description: 'Adapt your resume to each job from verified facts.', availability: 'preview' as const },
+      { label: 'Autofill and Auto Apply', href: '/features/job-application-autofill', description: 'Fill applications from your profile. You decide when to submit.', availability: 'planned' as const },
+      { label: 'Application Tracker', href: '/features/job-application-tracker', description: 'Every application, resume version and next step in one pipeline.', availability: 'concept' as const },
+    ],
+  },
+  { label: 'Job Finder', href: '/features/ai-job-finder' },
+  { label: 'Job Matching', href: '/features/job-matcher' },
+  { label: 'Resume Tailoring', href: '/features/resume-tailoring' },
+  { label: 'Auto Apply', href: '/features/auto-apply' },
+  { label: 'Tracker', href: '/features/job-application-tracker' },
+  { label: 'Resources', href: '/guides' },
+];
+
+const jobs = [
+  {
+    title: 'Senior Product Manager, Payments', company: 'Fenwick Pay', location: 'Berlin', workMode: 'Hybrid',
+    postedAt: '2 days ago', source: 'Company careers page',
+    matches: ['Title matches your target role', 'Payments work overlaps with your invoicing redesign', 'Location fits your Berlin or remote preference'],
+    missing: ['Salary range not listed', 'Team size not stated'],
+  },
+  {
+    title: 'Product Lead, Billing', company: 'Arcadia Health', location: 'Remote (EU)', workMode: 'Remote',
+    postedAt: '5 hours ago', source: 'Job board listing',
+    matches: ['Billing experience is confirmed in your profile', 'Remote matches your work-mode setting'],
+    missing: ['Reporting line not stated'],
+  },
+];
+
+const columns = [
+  { id: 'to-apply', title: 'To apply' }, { id: 'applied', title: 'Applied' }, { id: 'screening', title: 'Screening' },
+  { id: 'next', title: 'Next steps' }, { id: 'closed', title: 'Rejected / No answer' },
+];
+const cards = [
+  { id: 1, column: 'to-apply', title: 'Senior Product Manager, Payments', company: 'Fenwick Pay', resumeVersion: 'Resume v3', nextAction: 'Review tailored resume', updated: 'Sep 22' },
+  { id: 2, column: 'applied', title: 'Product Lead, Billing', company: 'Arcadia Health', resumeVersion: 'Resume v2', nextAction: 'Follow up on Oct 2', updated: 'Sep 18' },
+  { id: 3, column: 'applied', title: 'Group PM, Platform', company: 'Oakridge Freight', resumeVersion: 'Resume v2', nextAction: 'Wait for reply until Sep 30', updated: 'Sep 16' },
+  { id: 4, column: 'screening', title: 'Senior PM, Checkout', company: 'Lumen Retail', resumeVersion: 'Resume v3', nextAction: 'Recruiter call on Sep 29', updated: 'Sep 20' },
+  { id: 5, column: 'next', title: 'Principal Product Manager', company: 'Halden Systems', resumeVersion: 'Resume v1', nextAction: 'Prepare case study', updated: 'Sep 12' },
+  { id: 6, column: 'closed', title: 'Product Manager, Growth', company: 'Verto Media', resumeVersion: 'Resume v1', nextAction: 'No answer after 21 days', updated: 'Aug 30' },
+];
+
+const articleBlocks = [
+  { type: 'h2', id: 'why', text: 'Why tailoring matters' },
+  { type: 'p', text: 'Recruiters and applicant tracking systems both compare your resume with the job description. A tailored resume makes the overlap easy to see. It needs no new experience, only clearer wording and ordering of what you already did. See [resume tailoring](/features/resume-tailoring) for the product view.' },
+  { type: 'h2', id: 'steps', text: 'Tailor your resume in five steps' },
+  { type: 'steps', steps: [
+    { title: 'List the job’s requirements', text: 'Copy the must-have and nice-to-have items into two lists. Skip generic phrases like “team player”.' },
+    { title: 'Match each requirement to evidence', text: 'For each item, find a role, project or result that shows it. Mark gaps honestly.' },
+    { title: 'Reorder, then reword', text: 'Move the most relevant roles and bullets up. Use the job’s terms where they describe the same work.' },
+  ] },
+  { type: 'callout', variant: 'warning', title: 'Never add experience you do not have', text: 'Using the job’s wording is fine when it describes real work. Adding skills or results you cannot back up can end an interview process.' },
+  { type: 'h2', id: 'compare', text: 'Tailoring vs rewriting from scratch' },
+  { type: 'table', caption: 'When to tailor and when to rewrite', columns: ['', 'Tailoring', 'Rewriting'], rows: [
+    ['Starting point', 'Your existing resume', 'A blank page'],
+    ['Effort per job', 'Small edits to wording and order', 'A full rewrite'],
+    ['Best for', 'Roles similar to your recent work', 'A major career change'],
+  ] },
+  { type: 'h2', id: 'keywords', text: 'Use keywords without stuffing' },
+  { type: 'ul', items: ['Use the job’s exact term once, where it fits a real bullet.', 'Keep your own wording elsewhere so the resume still reads naturally.'] },
+  { type: 'callout', variant: 'tip', title: 'Keep a master list of facts', text: 'Write down every role, result and skill once. Tailoring then becomes selecting and rewording, not remembering.' },
+] as const;
+
+---
+
+<BaseLayout title="Blocks · SearchBreaker (internal)" noindex>
+  <AnnouncementBar text="SearchBreaker is in private testing. Invites go out in small groups." href="#waitlist" linkLabel="Join the waitlist" dismissible />
+  <Header {navItems} cta={wl} current="/features/resume-tailoring" waitlistSource="blocks-header" />
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Features', href: '/features' }, { label: 'Resume Tailoring' }]} />
+
+  <main>
+    <Hero
+      variant="home"
+      headline="AI job search built around your whole application workflow"
+      lead="SearchBreaker turns your verified experience into a controlled workflow: find relevant jobs, tailor materials and track every application. You review everything before anything is sent."
+      primaryCta={wl}
+      secondaryCta={{ label: 'See how the search works', href: '#how' }}
+      badge={{ state: 'preview', detail: 'in private testing' }}
+      media={{ state: 'concept', alt: 'Pipeline view with the resume version and next action on each card.', label: 'Application pipeline', caption: 'Pipeline view with the resume version and next action on each card.' }}
+      reassurance="You review everything before anything is sent."
+      waitlistSource="blocks-hero"
+    />
+
+    <WorkflowDiagram
+      heading="How the search works"
+      lead="Four stages share one verified profile. Each stage shows what is available today."
+      nodes={[
+        { label: 'Verified profile', availability: 'preview', text: 'Your confirmed roles, results and skills.' },
+        { label: 'Target roles', availability: 'preview', text: 'Titles, level, location and work mode.' },
+        { label: 'Job discovery', href: '/features/ai-job-finder', availability: 'preview', text: 'Openings from sources you choose.' },
+        { label: 'Fit assessment', href: '/features/job-matcher', availability: 'preview', text: 'Requirements against your evidence.' },
+        { label: 'Tailored materials', href: '/features/resume-tailoring', availability: 'preview', text: 'Resume and answers you approve.' },
+        { label: 'Application record', href: '/features/job-application-tracker', availability: 'concept', text: 'Status, version and next step.' },
+      ]}
+    />
+
+    <WorkflowSteps
+      tone="muted"
+      heading="What the workflow can automate"
+      steps={[
+        { title: 'Discover jobs', text: 'Collect openings that fit your target roles from the sources you choose.', availability: 'preview' },
+        { title: 'Evaluate fit', text: 'Compare each job’s requirements with the experience you confirmed.', availability: 'preview' },
+        { title: 'Prepare materials', text: 'Tailor your resume and answers from verified facts, then review every edit.', availability: 'preview' },
+        { title: 'Track progress', text: 'Keep each application, resume version and next step in one pipeline.', availability: 'concept' },
+      ]}
+    />
+
+    <ControlPoints
+      heading="What you control"
+      lead="SearchBreaker prepares drafts and suggestions. Every step that changes your materials or contacts an employer waits for you."
+      points={[
+        { title: 'Edit your experience', text: 'Your profile is the only source for resumes and applications. Change or remove any fact at any time.', icon: 'edit' },
+        { title: 'Approve every material', text: 'Each tailored resume and answer waits for your review. Accept, edit or reject each proposed change.', icon: 'user-check' },
+        { title: 'Decide when to submit', text: 'Nothing is sent to an employer without an explicit action from you.', icon: 'send' },
+        { title: 'Pause or skip at any point', text: 'Skip a job, pause a search or stop a workflow without losing your data.', icon: 'pause' },
+      ]}
+    />
+
+    <FeatureGrid
+      tone="muted"
+      heading="Start from verified experience"
+      items={[
+        { title: 'Candidate facts', text: 'Every role, result and skill you confirm is stored once and reused. Tailoring can reword a fact but never add one.', icon: 'user-check' },
+        { title: 'Role-specific resume base', text: 'Keep a base resume per target role, so each tailored version starts close to the job.', icon: 'file', availability: 'preview', href: '/features/master-resume', linkLabel: 'See the master resume' },
+      ]}
+    />
+
+    <BeforeAfterDiff
+      heading="See what changes for this job"
+      frameLabel="Proposed edit · Senior Product Manager, Payments"
+      requirement="Experience reducing checkout or payment failure rates."
+      before={[{ text: 'Worked on redesigning', kind: 'removed' }, { text: ' the invoicing flow for enterprise customers.' }]}
+      after={[
+        { text: 'Redesigned', kind: 'added' },
+        { text: ' the invoicing flow for enterprise customers' },
+        { text: ', cutting failed invoice payments from 7% to 3% in two quarters', kind: 'added' },
+        { text: '.' },
+      ]}
+      provenance={{ source: 'Profile · Northwind Logistics · Product Manager', fact: 'Failed invoice payments fell from 7% to 3% after the invoicing redesign (Q3–Q4 2024).', confirmedOn: '2026-08-02' }}
+    />
+
+    <RequirementEvidencePanel
+      tone="muted"
+      heading="See which requirements your experience covers"
+      frameLabel="Requirement breakdown · Senior Product Manager, Payments"
+      rows={[
+        { requirement: '5+ years of product management in B2B software', evidence: '6 years as a product manager at Northwind Logistics and Brightline.', status: 'confirmed' },
+        { requirement: 'Experience with payments or billing products', evidence: 'Led the invoicing redesign at Northwind Logistics.', note: 'Invoicing is related to billing. Payment processing is not in your profile.', status: 'partial' },
+        { requirement: 'SQL for self-serve analysis', evidence: 'No confirmed evidence in your profile.', status: 'gap' },
+        { requirement: 'Comfortable working in regulated industries', evidence: 'Healthcare logistics clients at Brightline.', note: 'The job does not say which regulations apply.', status: 'unclear' },
+      ]}
+    />
+
+    <IssueFixExample
+      heading="See each issue with a reason and a fix"
+      frameLabel="Resume check · Senior Product Manager, Payments"
+      items={[
+        { issue: 'Dates use two formats', why: 'Some parsers read “2019–21” and “Mar 2021” differently and can misplace roles.', fix: 'Use one format for every role, for example “Mar 2019 – Jun 2021”.' },
+        { issue: 'Skills appear only inside a table', why: 'Some applicant tracking systems skip table content when they extract text.', fix: 'Add a plain-text Skills section below the summary.' },
+      ]}
+    />
+
+    <JobFeed tone="muted" heading="Find jobs for the roles you chose" jobs={jobs} />
+
+    <PipelineBoard heading="See your application pipeline" {columns} {cards} />
+
+    <StatusStates
+      tone="muted"
+      heading="Every application has one clear status"
+      states={[
+        { id: 'prepared', description: 'Materials are ready. Nothing has been sent.' },
+        { id: 'reviewed', description: 'You checked and approved the materials for this job.' },
+        { id: 'submitted', description: 'The application was sent, by you or under rules you approved.' },
+        { id: 'failed', description: 'Submission did not complete. The record says why and what to do next.' },
+      ]}
+    />
+
+    <ComparisonTable
+      heading="Autofill vs auto apply: who presses submit"
+      columns={[{ key: 'autofill', label: 'Autofill' }, { key: 'auto', label: 'Auto apply' }]}
+      rows={[
+        { label: 'What it does', values: { autofill: 'Fills application fields from your verified profile.', auto: 'Prepares and sends applications that match rules you set.' } },
+        { label: 'Who presses submit', emphasis: true, values: { autofill: 'You, every time.', auto: 'SearchBreaker, only under rules you approved. You can pause it at any time.' } },
+        { label: 'You review before sending', values: { autofill: { text: 'Always', mark: 'yes' }, auto: { text: 'Per rule: every application, or a daily summary', mark: 'partial' } } },
+        { label: 'Custom questions', values: { autofill: { text: 'Drafted for you to edit', mark: 'yes' }, auto: { text: 'Sent back to you, never guessed', mark: 'no' } } },
+      ]}
+    />
+
+    <SupportMatrix tone="muted" heading="Where autofill is supported" rows={[]} lastReviewed="2026-09-14" />
+    <SupportMatrix
+      heading="Where jobs come from"
+      nameLabel="Source"
+      lastReviewed="2026-09-14"
+      illustrative
+      rows={[
+        { name: 'Northstar Careers', scope: 'Autofill of basic details, experience and education', status: 'verified', verifiedOn: '2026-09-10' },
+        { name: 'Portway ATS', scope: 'Autofill of basic details', note: 'Custom questions are not filled. You answer them yourself.', status: 'partial', verifiedOn: '2026-09-03' },
+      ]}
+    />
+
+    <LimitationsCallout
+      tone="muted"
+      heading="What a match score can and cannot tell you"
+      items={[
+        { title: 'It does not predict interviews', text: 'Hiring decisions depend on people and on factors that are not in the job text.' },
+        { title: 'It only sees what you entered', text: 'Experience missing from your profile lowers the score, even if you have it.' },
+        { title: 'Job descriptions are incomplete', text: 'Many requirements are unstated or flexible. The score cannot see them.' },
+        { title: 'It is not an ATS result', text: 'Employers configure their systems differently. No outside tool can replicate them.' },
+      ]}
+    />
+
+    <AudienceCards
+      heading="Who this helps"
+      items={[
+        { title: 'Experienced professionals', text: 'You have years of results to draw on and need each application to show the ones that matter for that job.', caveat: 'Less useful if you apply to one or two roles a month.' },
+        { title: 'Career changers', text: 'You need to show how past work maps to a new field, using only what you actually did.', caveat: 'It will not invent experience in the new field.' },
+        { title: 'High-volume searchers', text: 'You apply often and need to keep versions, dates and follow-ups straight.', caveat: 'It will not send applications without your approval.' },
+      ]}
+    />
+
+    <RelatedLinks
+      tone="muted"
+      heading="Explore each stage"
+      items={[
+        { kind: 'next', label: 'Autofill job applications', href: '/features/job-application-autofill', blurb: 'Fill application forms from the same verified profile.', availability: 'planned' },
+        { kind: 'related', label: 'Match your experience to jobs', href: '/features/job-matcher', blurb: 'See which requirements your experience covers before you tailor.', availability: 'preview' },
+        { kind: 'guide', label: 'How to tailor a resume to a job description', href: '/guides/tailor-resume-to-job-description', blurb: 'A step-by-step method you can use with or without SearchBreaker.' },
+      ]}
+    />
+
+    <FaqAccordion
+      heading="Questions"
+      defaultOpen={0}
+      faqs={[
+        { q: 'Is this another job board?', a: 'No. SearchBreaker does not host job listings. It helps you find openings from existing sources, assess fit and manage your applications in one workspace.' },
+        { q: 'Will AI invent experience?', a: 'No. Resumes and applications use only facts you entered and confirmed. Each proposed edit shows which profile fact it comes from, and you can reject any of them.' },
+        { q: 'Will it submit applications without my consent?', a: 'No. Submission always needs your explicit approval. Auto-apply, when available, runs only under rules you set and can be paused at any time.' },
+      ]}
+    />
+
+    <section style="padding:var(--space-10) var(--gutter)">
+      <div style="max-width:var(--container-max);margin:0 auto;display:grid;gap:var(--space-6);grid-template-columns:repeat(auto-fit,minmax(20rem,1fr))">
+        <ProductShot state="live" alt="Live screenshot slot" label="Live screenshot" caption="Real capture only." />
+        <ProductShot state="illustrative" alt="Illustrative slot" label="Illustrative example" />
+        <div>
+          <p style="margin:0 0 var(--space-3);font-size:var(--text-sm);color:var(--color-text-muted)">Inline WaitlistForm</p>
+          <WaitlistForm source="blocks-inline" />
+        </div>
+      </div>
+    </section>
+
+    <FinalCta heading="Run your job search as one controlled workflow" text="Join the waitlist and we’ll invite you as each stage moves from preview to live." cta={wl} secondaryCta={{ label: 'See how the search works', href: '#how' }} waitlistSource="blocks-final" />
+
+    <ArticleHero
+      headline="How to tailor a resume to a job description"
+      answer="Match each requirement in the job description to real evidence from your experience, then reorder and reword your resume so that evidence is easy to find."
+      meta={{ updated: '2026-09-14', reviewed: '2026-09-14', readingTime: '8 min read' }}
+    />
+    <ArticleBody blocks={articleBlocks as any} />
+    <KeyTakeaways items={['Tailoring changes wording and order, not facts.', 'Map each requirement to real evidence before you edit.', 'Use the job’s terms only where they describe your actual work.', 'Check every line before you send.']} />
+    <InlineCta title="Tailor each resume from verified facts" text="SearchBreaker maps job requirements to the experience you confirmed and proposes edits you approve one by one." href="/features/resume-tailoring" linkLabel="See how resume tailoring works" availability="preview" cta={wl} waitlistSource="blocks-inline-cta" />
+    <AuthorReviewed updated="2026-09-14" />
+  </main>
+
+  <Footer
+    columns={[
+      { title: 'Product', links: [{ label: 'How it works', href: '/how-it-works' }, { label: 'Job Finder', href: '/features/ai-job-finder' }, { label: 'Job Matching', href: '/features/job-matcher' }, { label: 'Resume Tailoring', href: '/features/resume-tailoring' }] },
+      { title: 'Resources', links: [{ label: 'Guides', href: '/guides' }] },
+      { title: 'Company', links: [{ label: 'About', href: '/about' }, { label: 'Contact', href: '/contact' }] },
+    ]}
+    legalLinks={[{ label: 'Privacy policy', href: '/privacy' }, { label: 'Terms', href: '/terms' }]}
+    statusNote="SearchBreaker is in private testing. Features marked Preview, Concept or Planned are not generally available yet."
+  />
+  <StickyMobileCta readiness="waitlist" waitlistSource="blocks-sticky" />
+  <WaitlistDialog />
+</BaseLayout>

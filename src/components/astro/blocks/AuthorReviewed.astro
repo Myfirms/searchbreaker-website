@@ -1,0 +1,86 @@
+---
+export interface AuthorReviewedProps {
+  author?: string;
+  updated: string;
+  /** Real people only. Omit when there is no reviewer. */
+  reviewer?: { name: string; role?: string };
+  reviewedOn?: string;
+  policyHref?: string;
+  policyLabel?: string;
+}
+
+const {
+  author = 'SearchBreaker team',
+  updated,
+  reviewer,
+  reviewedOn,
+  policyHref = '/editorial-policy',
+  policyLabel = 'How we write and review guides',
+} = Astro.props as AuthorReviewedProps;
+
+const facts = [
+  { label: 'Written by', value: author },
+  { label: 'Updated', value: updated },
+  ...(reviewer
+    ? [{ label: 'Reviewed by', value: `${reviewer.name}${reviewer.role ? `, ${reviewer.role}` : ''}${reviewedOn ? ` · ${reviewedOn}` : ''}` }]
+    : []),
+];
+---
+
+<section class="sb-art sb-ar">
+  <div class="sb-art__inner">
+    <div class="sb-ar__col" data-article-col="true">
+      <dl class="sb-ar__facts">
+        {facts.map((f) => (
+          <div class="sb-ar__fact"><dt>{f.label}</dt><dd>{f.value}</dd></div>
+        ))}
+      </dl>
+      <a class="sb-ar__link" href={policyHref}>{policyLabel}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sb-ar {
+    padding: var(--space-6) var(--gutter) var(--section-pad-y-tight);
+  }
+  .sb-ar__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+  }
+  .sb-ar__facts {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+    gap: var(--space-4);
+  }
+  .sb-ar__fact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .sb-ar__fact dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-ar__fact dd {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+  }
+  .sb-ar__link {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    font-size: var(--text-sm);
+    color: var(--color-link);
+    text-underline-offset: var(--link-underline-offset);
+  }
+</style>

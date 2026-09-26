@@ -1,0 +1,68 @@
+---
+import type { Readiness } from '../../../lib/types';
+import Button from '../primitives/Button.astro';
+
+export interface StickyMobileCtaProps {
+  readiness: Readiness;
+  label?: string;
+  href?: string;
+  /** ≤ 8 words, optional. */
+  text?: string;
+  /** `static` is for previews only. */
+  position?: 'fixed' | 'static';
+  waitlistSource?: string;
+}
+
+const { readiness, label, href, text, position = 'fixed', waitlistSource } = Astro.props as StickyMobileCtaProps;
+const regionLabel = readiness === 'live' ? (label ?? 'Start profile') : 'Join the waitlist';
+---
+
+<div class="sb-sticky" data-position={position} role="region" aria-label={regionLabel}>
+  {text ? (
+    <div class="sb-sticky__row">
+      <span class="sb-sticky__text">{text}</span>
+      <div class="sb-sticky__action"><Button {readiness} {label} {href} size="md" {waitlistSource} /></div>
+    </div>
+  ) : (
+    <Button {readiness} {label} {href} size="md" fullWidth {waitlistSource} />
+  )}
+</div>
+
+<style>
+  /* Pages using this block add bottom padding equal to its height (76px) below 900px. */
+  .sb-sticky {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    background: var(--color-surface-raised);
+    border-top: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-3) var(--gutter) calc(var(--space-3) + env(safe-area-inset-bottom));
+    font-family: var(--font-sans);
+    color: var(--color-text);
+  }
+  .sb-sticky[data-position='static'] {
+    position: static;
+  }
+  .sb-sticky__row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .sb-sticky__text {
+    flex: 1 1 auto;
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+  }
+  .sb-sticky__action {
+    flex: none;
+  }
+  @media (min-width: 900px) {
+    .sb-sticky {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,570 @@
+---
+import type { Availability, CtaConfig } from '../../../lib/types';
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Button from '../primitives/Button.astro';
+import Icon from '../primitives/Icon.astro';
+
+export interface NavChild {
+  /** ≤ 3 words. */
+  label: string;
+  href: string;
+  /** ≤ 12 words. */
+  description: string;
+  availability: Availability;
+}
+export interface NavItem {
+  label: string;
+  href?: string;
+  children?: NavChild[];
+}
+export interface HeaderProps {
+  /** Max 7 items; at most one with children ("Product"). */
+  navItems: NavItem[];
+  cta: CtaConfig;
+  /** Current path; drives aria-current and the indicator. */
+  current?: string;
+  logoHref?: string;
+  panelIntro?: string;
+  waitlistSource?: string;
+}
+
+const {
+  navItems,
+  cta,
+  current,
+  logoHref = '/',
+  panelIntro = 'Each stage works from the same verified profile. Badges show what is available today.',
+  waitlistSource = 'header',
+} = Astro.props as HeaderProps;
+
+const withKids = navItems
+  .map((item, index) => ({ item, index }))
+  .filter(({ item }) => (item.children?.length ?? 0) > 0);
+const isCurrent = (item: NavItem) => item.href === current || !!item.children?.some((c) => c.href === current);
+---
+
+<div class="sb-header" data-header>
+  <header class="sb-header__bar">
+    <div class="sb-header__inner">
+      <a class="sb-header__logo" href={logoHref} aria-label="SearchBreaker home">
+        <img src="/brand/mark.svg" width="26" height="26" alt="" />SearchBreaker
+      </a>
+
+      <nav class="sb-header__nav" aria-label="Primary" data-header-nav>
+        <ul class="sb-header__list">
+          {navItems.map((item, i) => (
+            <li>
+              {item.children?.length ? (
+                <button
+                  type="button"
+                  class="sb-header__item"
+                  aria-expanded="false"
+                  aria-controls={`sb-panel-${i}`}
+                  data-current={isCurrent(item) ? 'true' : 'false'}
+                  data-panel-toggle={i}
+                >
+                  {item.label}
+                  <span class="sb-header__chev"><Icon icon="chevron-down" size={16} /></span>
+                </button>
+              ) : (
+                <a
+                  class="sb-header__item"
+                  href={item.href}
+                  aria-current={item.href === current ? 'page' : undefined}
+                  data-current={isCurrent(item) ? 'true' : 'false'}
+                >
+                  {item.label}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="sb-header__cta">
+        <Button readiness={cta.readiness} label={cta.label} href={cta.href} size="sm" {waitlistSource} />
+      </div>
+
+      <button
+        type="button"
+        class="sb-header__burger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="sb-drawer"
+        data-drawer-toggle
+      >
+        <span class="sb-header__burger-open"><Icon icon="menu" size={20} /></span>
+        <span class="sb-header__burger-close"><Icon icon="close" size={20} /></span>
+      </button>
+    </div>
+  </header>
+
+  {withKids.map(({ item, index }) => (
+    <div class="sb-header__panel" id={`sb-panel-${index}`} hidden data-panel>
+      <div class="sb-header__panel-inner">
+        <div class="sb-header__panel-intro">
+          <span class="sb-header__eyebrow">{item.label}</span>
+          <p>{panelIntro}</p>
+        </div>
+        <ul class="sb-header__panel-grid">
+          {item.children!.map((sub, j) => (
+            <li>
+              <a class="sb-header__panel-link" href={sub.href}>
+                <span class="sb-header__panel-meta">
+                  <span class="sb-header__panel-num">{String(j + 1).padStart(2, '0')}</span>
+                  <AvailabilityBadge state={sub.availability} />
+                </span>
+                <span class="sb-header__panel-label">{sub.label}</span>
+                <span class="sb-header__panel-desc">{sub.description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  ))}
+
+  <div class="sb-header__drawer" id="sb-drawer" hidden data-drawer>
+    <div class="sb-header__drawer-body">
+      <nav class="sb-header__drawer-top" aria-label="Primary" data-drawer-level="top">
+        <ul>
+          {navItems.map((item, i) => (
+            <li>
+              {item.children?.length ? (
+                <button type="button" class="sb-header__drawer-item" data-open-level={i}>
+                  {item.label}<Icon icon="chevron-right" size={20} />
+                </button>
+              ) : (
+                <a class="sb-header__drawer-item" href={item.href} aria-current={item.href === current ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+      {withKids.map(({ item, index }) => (
+        <div class="sb-header__drawer-sub" data-drawer-level={index} hidden>
+          <button type="button" class="sb-header__back" data-back-level><Icon icon="arrow-left" size={16} />Menu</button>
+          <span class="sb-header__drawer-title">{item.label}</span>
+          <ul>
+            {item.children!.map((sub) => (
+              <li>
+                <a class="sb-header__drawer-link" href={sub.href}>
+                  <span class="sb-header__drawer-link-head">{sub.label}<AvailabilityBadge state={sub.availability} /></span>
+                  <span class="sb-header__panel-desc">{sub.description}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <div class="sb-header__drawer-cta">
+      <Button readiness={cta.readiness} label={cta.label} href={cta.href} size="md" fullWidth {waitlistSource} />
+    </div>
+  </div>
+</div>
+
+<style>
+  .sb-header {
+    position: relative;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+  }
+  .sb-header__bar {
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-header__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+  .sb-header__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: none;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: -0.03em;
+  }
+  .sb-header__nav {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .sb-header__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    width: max-content;
+  }
+  .sb-header__item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 2.5rem;
+    padding: 0 var(--space-2);
+    border: 0;
+    background: transparent;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: inset 0 -2px 0 var(--nav-indicator);
+  }
+  .sb-header__item:hover {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+  .sb-header__chev {
+    display: flex;
+    transition: transform var(--duration-fast) var(--ease-standard);
+  }
+  .sb-header__item[aria-expanded='true'] .sb-header__chev {
+    transform: rotate(180deg);
+  }
+  .sb-header__cta {
+    flex: none;
+  }
+  .sb-header__burger {
+    display: none;
+    margin-left: auto;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  .sb-header__burger:hover {
+    background: var(--color-surface);
+  }
+  .sb-header__burger-close {
+    display: none;
+  }
+  .sb-header__burger[aria-expanded='true'] .sb-header__burger-open {
+    display: none;
+  }
+  .sb-header__burger[aria-expanded='true'] .sb-header__burger-close {
+    display: block;
+  }
+
+  /* Desktop mega panel */
+  .sb-header__panel {
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    background: var(--color-surface-raised);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+  .sb-header__panel[hidden],
+  .sb-header__drawer[hidden] {
+    display: none;
+  }
+  .sb-header__panel-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-8) var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+    gap: var(--space-8);
+  }
+  .sb-header__panel-intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .sb-header__panel-intro p {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .sb-header__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-header__panel-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+  .sb-header__panel-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: 100%;
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text);
+  }
+  .sb-header__panel-link:hover {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+  .sb-header__panel-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .sb-header__panel-num {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    color: var(--color-text-muted);
+  }
+  .sb-header__panel-label {
+    font-size: var(--text-md);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: -0.01em;
+  }
+  .sb-header__panel-desc {
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+  }
+
+  /* Mobile drawer */
+  .sb-header__drawer {
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    height: calc(100dvh - 4rem);
+    z-index: 40;
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  .sb-header__drawer-body {
+    flex: 1 1 auto;
+    padding: var(--space-2) var(--gutter);
+  }
+  .sb-header__drawer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sb-header__drawer li {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-header__drawer-item {
+    width: 100%;
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .sb-header__drawer-sub {
+    display: flex;
+    flex-direction: column;
+  }
+  .sb-header__drawer-sub[hidden],
+  .sb-header__drawer-top[hidden] {
+    display: none;
+  }
+  .sb-header__back {
+    align-self: flex-start;
+    min-height: var(--touch-target);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+  }
+  .sb-header__drawer-title {
+    padding: var(--space-2) 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-header__drawer-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3) 0;
+    text-decoration: none;
+    color: var(--color-text);
+  }
+  .sb-header__drawer-link-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-md);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-header__drawer-cta {
+    padding: var(--space-4) var(--gutter);
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+
+  /* Collapse to burger below 900px, or earlier when the nav no longer fits (set by the script). */
+  @media (max-width: 899.98px) {
+    .sb-header__nav,
+    .sb-header__cta,
+    .sb-header__panel {
+      display: none;
+    }
+    .sb-header__burger {
+      display: flex;
+    }
+  }
+  .sb-header[data-collapsed='true'] .sb-header__nav,
+  .sb-header[data-collapsed='true'] .sb-header__cta,
+  .sb-header[data-collapsed='true'] .sb-header__panel {
+    display: none;
+  }
+  .sb-header[data-collapsed='true'] .sb-header__burger {
+    display: flex;
+  }
+  @media (min-width: 900px) {
+    .sb-header:not([data-collapsed='true']) .sb-header__drawer {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const BREAKPOINT_NAV = 900;
+
+  document.querySelectorAll<HTMLElement>('[data-header]').forEach((root) => {
+    const nav = root.querySelector<HTMLElement>('[data-header-nav]')!;
+    const burger = root.querySelector<HTMLButtonElement>('[data-drawer-toggle]')!;
+    const drawer = root.querySelector<HTMLElement>('[data-drawer]')!;
+    const toggles = [...root.querySelectorAll<HTMLButtonElement>('[data-panel-toggle]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-panel]')];
+    let collapseBelow = 0;
+
+    const isCollapsed = () => window.innerWidth < Math.max(BREAKPOINT_NAV, collapseBelow);
+
+    /** Collapse to the burger when the primary nav overflows at widths ≥ 900px. */
+    const measure = () => {
+      if (window.innerWidth >= Math.max(BREAKPOINT_NAV, collapseBelow) && nav.scrollWidth > nav.clientWidth + 1) {
+        collapseBelow = window.innerWidth + 1;
+      }
+      root.dataset.collapsed = isCollapsed() && window.innerWidth >= BREAKPOINT_NAV ? 'true' : 'false';
+      if (!isCollapsed()) closeDrawer();
+      if (isCollapsed()) closePanel();
+    };
+
+    const closePanel = (returnFocus = false) => {
+      toggles.forEach((t) => {
+        if (t.getAttribute('aria-expanded') === 'true' && returnFocus) t.focus();
+        t.setAttribute('aria-expanded', 'false');
+      });
+      panels.forEach((p) => (p.hidden = true));
+    };
+    const openPanel = (index: string) => {
+      closePanel();
+      const t = toggles.find((x) => x.dataset.panelToggle === index);
+      const p = root.querySelector<HTMLElement>(`#sb-panel-${index}`);
+      if (!t || !p) return;
+      t.setAttribute('aria-expanded', 'true');
+      p.hidden = false;
+    };
+
+    toggles.forEach((t) =>
+      t.addEventListener('click', () => {
+        const index = t.dataset.panelToggle!;
+        if (t.getAttribute('aria-expanded') === 'true') closePanel();
+        else openPanel(index);
+      }),
+    );
+
+    const showLevel = (level: string) => {
+      drawer.querySelectorAll<HTMLElement>('[data-drawer-level]').forEach((el) => {
+        el.hidden = el.dataset.drawerLevel !== level;
+      });
+      drawer.querySelector<HTMLElement>(`[data-drawer-level="${level}"] a, [data-drawer-level="${level}"] button`)?.focus();
+    };
+    function openDrawer() {
+      drawer.hidden = false;
+      // Sit directly under the header bar even when an announcement bar is above it.
+      const bottom = Math.max(0, Math.round(root.querySelector('.sb-header__bar')!.getBoundingClientRect().bottom));
+      drawer.style.top = `${bottom}px`;
+      drawer.style.height = `calc(100dvh - ${bottom}px)`;
+      burger.setAttribute('aria-expanded', 'true');
+      burger.setAttribute('aria-label', 'Close menu');
+      document.body.style.overflow = 'hidden';
+      showLevel('top');
+    }
+    function closeDrawer(returnFocus = false) {
+      if (drawer.hidden) return;
+      drawer.hidden = true;
+      burger.setAttribute('aria-expanded', 'false');
+      burger.setAttribute('aria-label', 'Open menu');
+      document.body.style.overflow = '';
+      if (returnFocus) burger.focus();
+    }
+    burger.addEventListener('click', () => (drawer.hidden ? openDrawer() : closeDrawer()));
+    drawer.querySelectorAll<HTMLElement>('[data-open-level]').forEach((b) =>
+      b.addEventListener('click', () => showLevel(b.dataset.openLevel!)),
+    );
+    drawer.querySelector('[data-back-level]')?.addEventListener('click', () => showLevel('top'));
+    drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => closeDrawer()));
+    drawer.querySelectorAll('[data-waitlist-open]').forEach((b) => b.addEventListener('click', () => closeDrawer()));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (toggles.some((t) => t.getAttribute('aria-expanded') === 'true')) closePanel(true);
+      else if (!drawer.hidden) closeDrawer(true);
+    });
+    document.addEventListener('mousedown', (e) => {
+      if (!root.contains(e.target as Node)) closePanel();
+    });
+
+    window.addEventListener('resize', measure);
+    measure();
+  });
+</script>

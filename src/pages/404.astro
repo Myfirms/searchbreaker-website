@@ -1,0 +1,59 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Button from '../components/astro/primitives/Button.astro';
+import Section from '../components/astro/foundation/Section.astro';
+---
+
+<PageLayout title="Page not found · SearchBreaker" noindex stickyCta={false} announcementBar={false} source="404">
+  <Section labelledby="sb-404-title" tone="muted">
+    <div class="nf">
+      <span class="nf__code">404</span>
+      <h1 class="nf__title" id="sb-404-title">This page does not exist</h1>
+      <p class="nf__text">
+        The link may be old, or the page may not be published yet. Go back to the homepage or join the waitlist to hear
+        when new pages and features go live.
+      </p>
+      <div class="nf__actions">
+        <Button label="Back to the homepage" href="/" arrow />
+        <Button variant="secondary" readiness="waitlist" waitlistSource="404" />
+      </div>
+    </div>
+  </Section>
+</PageLayout>
+
+<style>
+  .nf {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    padding-block: var(--space-10);
+    max-width: 40rem;
+  }
+  .nf__code {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-mono-caps);
+    color: var(--color-accent);
+  }
+  .nf__title {
+    margin: 0;
+    font-size: var(--display-compact);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+    font-weight: var(--font-weight-semibold);
+    text-wrap: balance;
+  }
+  .nf__text {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>
