@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto">
+<div style="box-sizing:border-box;border:1px solid var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-surface-raised);padding:var(--card-pad);display:flex;flex-wrap:wrap;gap:var(--space-8) var(--space-12)">
+<header style="flex:1 1 300px;display:flex;flex-direction:column;gap:var(--space-4)">
+<span style="display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)"><dc-import name="Icon" icon="info" size="16" hint-size="16px,16px"></dc-import>{{ eyebrow }}</span>
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ true }}"><p style="margin:0;font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p></sc-if>
+</header>
+<ul style="flex:1.6 1 460px;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:var(--space-6)">
+<sc-for list="{{ items }}" as="it" hint-placeholder-count="4"><li style="display:flex;flex-direction:column;gap:var(--space-2);padding-top:var(--space-4);border-top:1px solid var(--color-border)">
+<h3 style="margin:0;font-size:var(--text-lg);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold)">{{ it.title }}</h3>
+<p style="margin:0;font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ it.text }}</p>
+</li></sc-for></ul>
+<sc-if value="{{ hasFootnote }}" hint-placeholder-val="{{ false }}"><p style="flex:1 1 100%;margin:0;padding-top:var(--space-4);border-top:1px solid var(--color-border);font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-muted)">{{ footnote }}</p></sc-if>
+</div></div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;520px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;,&quot;accent&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;eyebrow&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Limitations&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;What a match score can and cannot tell you&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lead&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{ title: string; text: string }[]&quot;},&quot;footnote&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  uid = 'sblc' + Math.random().toString(36).slice(2, 7);
+  renderVals() {
+    const p = this.props;
+    return {
+      headingId: this.uid,
+      tone: p.tone || 'default',
+      eyebrow: p.eyebrow || 'Limitations',
+      heading: p.heading || 'What a match score can and cannot tell you',
+      lead: p.lead, hasLead: !!p.lead,
+      items: p.items || [
+        { title: 'It does not predict interviews', text: 'Hiring decisions depend on people and on factors that are not in the job text.' },
+        { title: 'It only sees what you entered', text: 'Experience missing from your profile lowers the score, even if you have it.' },
+        { title: 'Job descriptions are incomplete', text: 'Many requirements are unstated or flexible. The score cannot see them.' },
+        { title: 'It is not an ATS result', text: 'Employers configure their systems differently. No outside tool can replicate them.' }
+      ],
+      footnote: p.footnote, hasFootnote: !!p.footnote
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+---
+import type { Availability } from '../../../lib/types';
+
+interface Props {
+  state: Availability | 'illustrative';
+  variant?: 'filled' | 'outline';
+  /** Override the default label. */
+  label?: string;
+  /** Appended after " · ", e.g. "verified on 2026-09-14". */
+  detail?: string;
+}
+
+const LABELS: Record<string, string> = {
+  live: 'Live',
+  preview: 'Preview',
+  concept: 'Concept',
+  planned: 'Planned',
+  illustrative: 'Illustrative data',
+};
+
+const { state, variant = 'filled', label, detail } = Astro.props;
+const st = LABELS[state] ? state : 'concept';
+const base = label ?? LABELS[st];
+const text = detail ? `${base} · ${detail}` : base;
+---
+
+<span class="sb-badge" data-availability={st} data-badge-variant={variant}>
+  <span class="sb-visually-hidden">Availability: </span>
+  {st === 'live' && (
+    <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="4" fill="currentColor" /></svg>
+  )}
+  {st === 'preview' && (
+    <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true">
+      <circle cx="7" cy="7" r="4.25" fill="none" stroke="currentColor" stroke-width="1.5" />
+      <path d="M7 2.75a4.25 4.25 0 0 1 0 8.5z" fill="currentColor" />
+    </svg>
+  )}
+  {st === 'concept' && (
+    <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2.5L11.5 7 7 11.5 2.5 7z" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+  )}
+  {st === 'planned' && (
+    <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true">
+      <circle cx="7" cy="7" r="4.25" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2" />
+    </svg>
+  )}
+  {st === 'illustrative' && (
+    <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true">
+      <rect x="2.75" y="2.75" width="8.5" height="8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 1.5" />
+    </svg>
+  )}
+  {text}
+</span>
+
+<style>
+  .sb-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: var(--badge-height);
+    padding: 0 var(--badge-pad-x);
+    border-radius: var(--badge-radius);
+    border: 1px var(--av-border-style) var(--av-border);
+    background: var(--av-bg);
+    color: var(--av-fg);
+    font-family: var(--badge-font);
+    font-size: var(--badge-text);
+    letter-spacing: var(--badge-tracking);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .sb-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+</style>

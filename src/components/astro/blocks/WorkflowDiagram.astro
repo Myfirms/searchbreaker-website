@@ -1,0 +1,160 @@
+---
+import type { Availability, SectionTone } from '../../../lib/types';
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Icon from '../primitives/Icon.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface WorkflowNode {
+  /** ≤ 3 words. */
+  label: string;
+  /** Only for published pages. */
+  href?: string;
+  availability: Availability;
+  /** ≤ 8 words. */
+  text?: string;
+}
+export interface WorkflowDiagramProps {
+  heading: string;
+  lead?: string;
+  /** 4-7 nodes. */
+  nodes: WorkflowNode[];
+  note?: string;
+  tone?: SectionTone;
+}
+
+const { heading, lead, nodes, note, tone = 'default' } = Astro.props as WorkflowDiagramProps;
+const id = makeId('sb-wd', heading);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-wd">
+    <SectionHeader {heading} {id} {lead} />
+    <ol class="sb-wd__list">
+      {nodes.map((n, i) => (
+        <li class="sb-wd__item">
+          <div class="sb-wd__node">
+            <div class="sb-wd__meta">
+              <span class="sb-wd__num">{String(i + 1).padStart(2, '0')}</span>
+              <AvailabilityBadge state={n.availability} />
+            </div>
+            {n.href ? <a class="sb-wd__label sb-wd__label--link" href={n.href}>{n.label}</a> : <span class="sb-wd__label">{n.label}</span>}
+            {n.text && <p class="sb-wd__text">{n.text}</p>}
+          </div>
+          {i < nodes.length - 1 && (
+            <span class="sb-wd__connector" aria-hidden="true">
+              <span class="sb-wd__arrow sb-wd__arrow--right"><Icon icon="arrow-right" size={16} /></span>
+              <span class="sb-wd__arrow sb-wd__arrow--down"><Icon icon="arrow-down" size={16} /></span>
+            </span>
+          )}
+        </li>
+      ))}
+    </ol>
+    {note && <p class="sb-wd__note">{note}</p>}
+  </div>
+</Section>
+
+<style>
+  .sb-wd {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .sb-wd__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sb-wd__item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+  }
+  .sb-wd__node {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+  }
+  .sb-wd__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+  .sb-wd__num {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+  }
+  .sb-wd__label {
+    font-size: var(--text-md);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+  .sb-wd__label--link {
+    text-decoration: underline;
+    text-decoration-color: var(--color-border-strong);
+    text-underline-offset: 4px;
+  }
+  .sb-wd__label--link:hover {
+    color: var(--color-text);
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+  }
+  .sb-wd__text {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+  }
+  .sb-wd__connector {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 1.75rem;
+    color: var(--color-text-muted);
+  }
+  .sb-wd__arrow--right {
+    display: none;
+  }
+  .sb-wd__note {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  @media (min-width: 1200px) {
+    .sb-wd__list {
+      flex-direction: row;
+    }
+    .sb-wd__item {
+      flex: 1 1 0;
+      flex-direction: row;
+    }
+    .sb-wd__connector {
+      width: 1.75rem;
+      height: auto;
+    }
+    .sb-wd__arrow--right {
+      display: block;
+    }
+    .sb-wd__arrow--down {
+      display: none;
+    }
+  }
+</style>

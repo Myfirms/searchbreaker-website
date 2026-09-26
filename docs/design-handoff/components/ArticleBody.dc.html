@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" style="container-type:inline-size;container-name:article;background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:0 var(--gutter) var(--section-pad-y-tight)">
+<div data-article-layout="true" style="max-width:var(--container-max);margin:0 auto">
+<sc-if value="{{ hasToc }}" hint-placeholder-val="{{ true }}"><aside data-toc="sidebar" style="position:sticky;top:var(--space-6)"><dc-import name="TableOfContents" variant="sidebar" items="{{ tocItems }}" title="{{ tocTitle }}" hint-size="100%,200px"></dc-import></aside></sc-if>
+<article data-article-main="true" style="min-width:0;max-width:var(--measure-article);display:flex;flex-direction:column;gap:var(--space-5)">
+<sc-if value="{{ hasToc }}" hint-placeholder-val="{{ true }}"><div data-toc="collapsible"><dc-import name="TableOfContents" variant="collapsible" items="{{ tocItems }}" title="{{ tocTitle }}" hint-size="100%,44px"></dc-import></div></sc-if>
+<sc-for list="{{ blockList }}" as="b" hint-placeholder-count="8">
+<sc-if value="{{ b.isH2 }}" hint-placeholder-val="{{ false }}"><h2 id="{{ b.id }}" style="margin:0;padding-top:var(--space-6);scroll-margin-top:var(--space-6);font-size:var(--article-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ b.text }}</h2></sc-if>
+<sc-if value="{{ b.isH3 }}" hint-placeholder-val="{{ false }}"><h3 id="{{ b.id }}" style="margin:0;padding-top:var(--space-2);font-size:var(--article-h3);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold)">{{ b.text }}</h3></sc-if>
+<sc-if value="{{ b.isP }}" hint-placeholder-val="{{ true }}"><p style="margin:0;font-size:var(--article-text);line-height:var(--leading-body);text-wrap:pretty">{{ b.text }}</p></sc-if>
+<sc-if value="{{ b.isUl }}" hint-placeholder-val="{{ false }}"><ul style="margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--article-text);line-height:var(--leading-body)"><sc-for list="{{ b.items }}" as="li" hint-placeholder-count="3"><li style="padding-left:var(--space-1)">{{ li }}</li></sc-for></ul></sc-if>
+<sc-if value="{{ b.isSteps }}" hint-placeholder-val="{{ false }}"><ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-5)"><sc-for list="{{ b.steps }}" as="s" hint-placeholder-count="5"><li style="display:grid;grid-template-columns:36px minmax(0,1fr);gap:var(--space-4)"><span aria-hidden="true" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-accent);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:var(--text-sm);font-weight:var(--font-weight-medium);color:var(--color-accent)">{{ s.num }}</span><div style="display:flex;flex-direction:column;gap:var(--space-1);padding-top:4px"><h3 style="margin:0;font-size:var(--article-h3);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold)">{{ s.title }}</h3><p style="margin:0;font-size:var(--article-text);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ s.text }}</p></div></li></sc-for></ol></sc-if>
+<sc-if value="{{ b.isTable }}" hint-placeholder-val="{{ false }}"><figure style="margin:0;display:flex;flex-direction:column;gap:var(--space-2)"><div style="overflow-x:auto;border:1px solid var(--color-border);border-radius:var(--radius-md)"><div role="table" aria-label="{{ b.caption }}" style="min-width:520px">
+<div role="row" style="display:grid;grid-template-columns:{{ b.gridCols }};background:var(--color-surface);border-bottom:1px solid var(--color-border-strong)"><sc-for list="{{ b.columns }}" as="h" hint-placeholder-count="3"><span role="columnheader" style="padding:var(--space-3) var(--space-4);font-size:var(--text-sm);font-weight:var(--font-weight-semibold)">{{ h }}</span></sc-for></div>
+<sc-for list="{{ b.rows }}" as="r" hint-placeholder-count="4"><div role="row" style="display:grid;grid-template-columns:{{ b.gridCols }};border-bottom:1px solid var(--color-border)"><sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="3"><span role="cell" style="padding:var(--space-3) var(--space-4);font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)">{{ cell }}</span></sc-for></div></sc-for>
+</div></div><sc-if value="{{ b.hasCaption }}" hint-placeholder-val="{{ true }}"><figcaption style="font-size:var(--text-sm);color:var(--color-text-muted)">{{ b.caption }}</figcaption></sc-if></figure></sc-if>
+<sc-if value="{{ b.isQuote }}" hint-placeholder-val="{{ false }}"><blockquote style="margin:0;padding:var(--space-2) 0 var(--space-2) var(--space-6);border-left:2px solid var(--color-border-strong);display:flex;flex-direction:column;gap:var(--space-2)"><p style="margin:0;font-size:var(--text-xl);line-height:var(--leading-snug)">{{ b.text }}</p><sc-if value="{{ b.hasCite }}" hint-placeholder-val="{{ true }}"><cite style="font-style:normal;font-size:var(--text-sm);color:var(--color-text-muted)">{{ b.cite }}</cite></sc-if></blockquote></sc-if>
+<sc-if value="{{ b.isCallout }}" hint-placeholder-val="{{ false }}"><dc-import name="Callout" variant="{{ b.variant }}" title="{{ b.title }}" text="{{ b.text }}" hint-size="100%,110px"></dc-import></sc-if>
+</sc-for>
+</article>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;1400px&quot;},&quot;toc&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;blocks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;ArticleBlock[]&quot;}}">
+class Component extends DCLogic {
+  static DEFAULT = [
+    { type: 'h2', id: 'why', text: 'Why tailoring matters' },
+    { type: 'p', text: 'Recruiters and applicant tracking systems both compare your resume with the job description. A tailored resume makes the overlap easy to see. It needs no new experience, only clearer wording and ordering of what you already did.' },
+    { type: 'h2', id: 'steps', text: 'Tailor your resume in five steps' },
+    { type: 'steps', steps: [
+      { title: 'List the job’s requirements', text: 'Copy the must-have and nice-to-have items into two lists. Skip generic phrases like “team player”.' },
+      { title: 'Match each requirement to evidence', text: 'For each item, find a role, project or result that shows it. Mark gaps honestly.' },
+      { title: 'Reorder, then reword', text: 'Move the most relevant roles and bullets up. Use the job’s terms where they describe the same work.' },
+      { title: 'Cut what does not support this job', text: 'Shorten or remove bullets that do not relate to the requirements.' },
+      { title: 'Check every claim', text: 'Read each line and confirm you can explain it in an interview.' }
+    ] },
+    { type: 'callout', variant: 'warning', title: 'Never add experience you do not have', text: 'Using the job’s wording is fine when it describes real work. Adding skills or results you cannot back up can end an interview process.' },
+    { type: 'h2', id: 'compare', text: 'Tailoring vs rewriting from scratch' },
+    { type: 'table', caption: 'When to tailor and when to rewrite', columns: ['', 'Tailoring', 'Rewriting'], rows: [
+      ['Starting point', 'Your existing resume', 'A blank page'],
+      ['Effort per job', 'Small edits to wording and order', 'A full rewrite'],
+      ['Risk of errors', 'Low: facts stay the same', 'Higher: new wording can drift from facts'],
+      ['Best for', 'Roles similar to your recent work', 'A major career change']
+    ] },
+    { type: 'h2', id: 'keywords', text: 'Use keywords without stuffing' },
+    { type: 'p', text: 'Repeat a term only where it describes something you did. A list of keywords without context rarely helps, and recruiters notice it.' },
+    { type: 'ul', items: ['Use the job’s exact term once, where it fits a real bullet.', 'Keep your own wording elsewhere so the resume still reads naturally.', 'Do not hide keywords in white text or tiny fonts.'] },
+    { type: 'callout', variant: 'tip', title: 'Keep a master list of facts', text: 'Write down every role, result and skill once. Tailoring then becomes selecting and rewording, not remembering.' }
+  ];
+  renderVals() {
+    const p = this.props;
+    const blocks = p.blocks || Component.DEFAULT;
+    const toc = p.toc !== false;
+    const tocItems = blocks.filter(b => b.type === 'h2' && b.id).map(b => ({ id: b.id, label: b.tocLabel || b.text }));
+    const t = (x) => ({ isH2: x === 'h2', isH3: x === 'h3', isP: x === 'p', isUl: x === 'ul', isSteps: x === 'steps', isTable: x === 'table', isQuote: x === 'quote', isCallout: x === 'callout' });
+    return {
+      tone: p.tone || 'default',
+      hasToc: toc && tocItems.length > 1,
+      tocItems, tocTitle: p.tocTitle || 'On this page',
+      blockList: blocks.map(b => ({
+        ...b, ...t(b.type),
+        steps: (b.steps || []).map((s, i) => ({ ...s, num: String(i + 1) })),
+        rows: (b.rows || []).map(r => ({ cells: r })),
+        gridCols: b.columns ? 'minmax(120px,0.8fr) repeat(' + (b.columns.length - 1) + ',minmax(0,1fr))' : '',
+        hasCaption: !!b.caption, hasCite: !!b.cite
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

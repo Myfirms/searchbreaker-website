@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section ref="{{ setRoot }}" data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-10)">
+<header style="display:flex;flex-direction:column;gap:var(--space-4);max-width:720px">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p></sc-if>
+</header>
+<div style="border:1px dashed var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-surface-raised);overflow:hidden">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:40px;padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-border)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ frameLabel }}</span><dc-import name="AvailabilityBadge" state="illustrative" hint-size="130px,22px"></dc-import></div>
+
+<sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><div role="table" aria-label="{{ frameLabel }}">
+<div role="row" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) 150px;gap:var(--space-6);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--color-border);font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)"><span role="columnheader">Job requirement</span><span role="columnheader">Confirmed evidence</span><span role="columnheader">Status</span></div>
+<sc-for list="{{ rowList }}" as="r" hint-placeholder-count="5"><div role="row" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) 150px;gap:var(--space-6);padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--color-border);align-items:start">
+<span role="cell" style="font-size:var(--text-md);line-height:var(--leading-snug);font-weight:var(--font-weight-medium)">{{ r.requirement }}</span>
+<span role="cell" style="display:flex;flex-direction:column;gap:var(--space-1);font-size:var(--text-md);line-height:var(--leading-snug);color:var(--color-text-secondary)"><span>{{ r.evidence }}</span><sc-if value="{{ r.hasNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:var(--text-sm);color:var(--color-text-muted)">{{ r.note }}</span></sc-if></span>
+<span role="cell" style="display:flex"><dc-import name="StatusChip" status="{{ r.status }}" hint-size="110px,26px"></dc-import></span>
+</div></sc-for></div></sc-if>
+
+<sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><ul style="list-style:none;margin:0;padding:0">
+<sc-for list="{{ rowList }}" as="r" hint-placeholder-count="5"><li style="display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);border-bottom:1px solid var(--color-border)">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-3)"><span style="font-size:var(--text-md);line-height:var(--leading-snug);font-weight:var(--font-weight-medium)">{{ r.requirement }}</span><dc-import name="StatusChip" status="{{ r.status }}" hint-size="100px,26px"></dc-import></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">Evidence</span><span style="font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)">{{ r.evidence }}</span><sc-if value="{{ r.hasNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:var(--text-sm);color:var(--color-text-muted)">{{ r.note }}</span></sc-if></div>
+</li></sc-for></ul></sc-if>
+
+<p style="margin:0;padding:var(--space-4) var(--space-5);font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-muted)">{{ footnote }}</p>
+</div>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;720px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;See which requirements your experience covers&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;EvidenceRow[]&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbre' + Math.random().toString(36).slice(2, 7);
+  rootRef = { current: null };
+  state = { w: 1200 };
+  setRoot = (el) => { if (el) this.rootRef.current = el; };
+  measure = () => { const el = this.rootRef.current; if (!el || !el.isConnected) return; const w = el.offsetWidth; if (w && Math.abs(w - this.state.w) > 1) this.setState({ w }); };
+  componentDidMount() { requestAnimationFrame(this.measure); this.t = setTimeout(this.measure, 120); this.iv = setInterval(this.measure, 400); window.addEventListener('resize', this.measure); }
+  componentWillUnmount() { clearTimeout(this.t); clearInterval(this.iv); window.removeEventListener('resize', this.measure); }
+  renderVals() {
+    const p = this.props;
+    const rows = p.rows || [
+      { requirement: '5+ years of product management in B2B software', evidence: '6 years as a product manager at Northwind Logistics and Brightline.', status: 'confirmed' },
+      { requirement: 'Experience with payments or billing products', evidence: 'Led the invoicing redesign at Northwind Logistics.', note: 'Invoicing is related to billing. Payment processing is not in your profile.', status: 'partial' },
+      { requirement: 'SQL for self-serve analysis', evidence: 'No confirmed evidence in your profile.', status: 'gap' },
+      { requirement: 'Comfortable working in regulated industries', evidence: 'Healthcare logistics clients at Brightline.', note: 'The job does not say which regulations apply.', status: 'unclear' },
+      { requirement: 'Has managed product managers', evidence: 'Managed 2 product managers at Brightline, 2023–2025.', status: 'confirmed' }
+    ];
+    const mobile = this.state.w < 768;
+    return {
+      setRoot: this.setRoot, headingId: this.uid,
+      tone: p.tone || 'default',
+      heading: p.heading || 'See which requirements your experience covers',
+      lead: p.lead, hasLead: !!p.lead,
+      frameLabel: p.frameLabel || 'Requirement breakdown · Senior Product Manager, Payments',
+      isDesktop: !mobile, isMobile: mobile,
+      rowList: rows.map(r => ({ ...r, hasNote: !!r.note })),
+      footnote: p.footnote || 'Status uses only the facts you confirmed in your profile. It is not a prediction of interview chances.'
+    };
+  }
+}
+</script>
+</body>
+</html>

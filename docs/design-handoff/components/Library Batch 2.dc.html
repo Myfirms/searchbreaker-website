@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;background:#EEF2EF}a{color:var(--color-link)}a:hover{color:var(--color-link-hover)}</style>
+</helmet>
+<div style="background:var(--color-surface);color:var(--color-text);font-family:var(--font-sans);min-height:100vh;padding:var(--section-pad-y-tight) var(--gutter)">
+<main style="max-width:1480px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-16)">
+
+<header style="display:flex;flex-direction:column;gap:var(--space-3)">
+<span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">SearchBreaker · Stage C · Batch 2 of 3</span>
+<h1 style="margin:0;font-size:var(--display-page);line-height:var(--leading-display);letter-spacing:var(--tracking-display);font-weight:var(--font-weight-semibold)">Block library: product sections</h1>
+<p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary)">FeatureGrid, WorkflowDiagram, BeforeAfterDiff, RequirementEvidencePanel, IssueFixExample, JobFeedCard, PipelineBoard and StatusStates. All example data is fictional and labeled Illustrative. <a href="Library.dc.html">Batch 1</a></p>
+</header>
+
+<section id="featuregrid" data-screen-label="FeatureGrid" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">FeatureGrid <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">2 columns with icons · 3 columns with availability and links.</p></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · 2 COLUMNS · TONE MUTED</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="FeatureGrid" tone="muted" hint-size="100%,420px"></dc-import></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · 3 COLUMNS · LINKS</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="FeatureGrid" heading="See why an opening appears" columns="3" items="{{ finderItems }}" hint-size="100%,460px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="FeatureGrid" heading="See why an opening appears" columns="3" items="{{ finderItems }}" hint-size="100%,900px"></dc-import></div></div>
+</div></section>
+
+<section id="workflowdiagram" data-screen-label="WorkflowDiagram" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">WorkflowDiagram <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Whole-product pipeline. Nodes link only to published pages; the first two have no page yet.</p></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="WorkflowDiagram" lead="Six stages share one verified profile. Each stage shows what is available today." hint-size="100%,400px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="WorkflowDiagram" lead="Six stages share one verified profile. Each stage shows what is available today." hint-size="100%,1100px"></dc-import></div></div>
+</section>
+
+<section id="diff" data-screen-label="BeforeAfterDiff" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">BeforeAfterDiff <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">States: proposed · editing · accepted · edited · rejected, each with Undo. Try the buttons.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · PROPOSED</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="BeforeAfterDiff" lead="Each proposed edit shows the job requirement it answers and the profile fact it comes from." hint-size="100%,760px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · ACCEPTED</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="BeforeAfterDiff" state="accepted" hint-size="100%,1100px"></dc-import></div></div>
+</div></section>
+
+<section id="evidence" data-screen-label="RequirementEvidencePanel" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">RequirementEvidencePanel <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Statuses: confirmed · partial · gap · unclear. Table on desktop, stacked on mobile. No numeric score.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="RequirementEvidencePanel" hint-size="100%,720px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="RequirementEvidencePanel" hint-size="100%,1100px"></dc-import></div></div>
+</div></section>
+
+<section id="issuefix" data-screen-label="IssueFixExample" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">IssueFixExample <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="IssueFixExample" hint-size="100%,600px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="IssueFixExample" hint-size="100%,1100px"></dc-import></div></div>
+</div></section>
+
+<section id="jobfeed" data-screen-label="JobFeedCard" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">JobFeedCard <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">States: default · saved · skipped (with Undo). Shown as a list.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-3);flex:1 1 640px;min-width:0;max-width:760px"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · LIST</span>
+<dc-import name="JobFeedCard" hint-size="100%,320px"></dc-import>
+<dc-import name="JobFeedCard" job="{{ job2 }}" state="saved" hint-size="100%,320px"></dc-import>
+<dc-import name="JobFeedCard" job="{{ job3 }}" state="skipped" hint-size="100%,60px"></dc-import>
+</div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><dc-import name="JobFeedCard" hint-size="100%,480px"></dc-import></div>
+</div></section>
+
+<section id="pipeline" data-screen-label="PipelineBoard" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">PipelineBoard <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Board ⇄ table toggle. Each card shows the resume version and next action.</p></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · BOARD</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="PipelineBoard" lead="Every application, the resume version you sent and the next step, in one place." hint-size="100%,620px"></dc-import></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · TABLE</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="PipelineBoard" view="table" hint-size="100%,600px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · BOARD (swipe)</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="PipelineBoard" hint-size="100%,640px"></dc-import></div></div>
+</div></section>
+
+<section id="statusstates" data-screen-label="StatusStates" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">StatusStates + StatusChip <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="StatusStates" lead="Every application record shows exactly one state, with an icon and a label." hint-size="100%,380px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="StatusStates" hint-size="100%,800px"></dc-import></div></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-4);padding:var(--space-5);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+<dc-import name="StatusChip" status="confirmed" hint-size="110px,26px"></dc-import><dc-import name="StatusChip" status="partial" hint-size="90px,26px"></dc-import><dc-import name="StatusChip" status="gap" hint-size="70px,26px"></dc-import><dc-import name="StatusChip" status="unclear" hint-size="90px,26px"></dc-import><dc-import name="StatusChip" status="prepared" hint-size="100px,26px"></dc-import><dc-import name="StatusChip" status="reviewed" hint-size="100px,26px"></dc-import><dc-import name="StatusChip" status="submitted" hint-size="110px,26px"></dc-import><dc-import name="StatusChip" status="failed" hint-size="80px,26px"></dc-import>
+</div>
+<div data-surface="dark" style="display:flex;flex-wrap:wrap;gap:var(--space-4);padding:var(--space-5);background:var(--color-bg);border-radius:var(--radius-md)">
+<dc-import name="StatusChip" status="confirmed" hint-size="110px,26px"></dc-import><dc-import name="StatusChip" status="partial" hint-size="90px,26px"></dc-import><dc-import name="StatusChip" status="gap" hint-size="70px,26px"></dc-import><dc-import name="StatusChip" status="unclear" hint-size="90px,26px"></dc-import><dc-import name="StatusChip" status="prepared" hint-size="100px,26px"></dc-import><dc-import name="StatusChip" status="reviewed" hint-size="100px,26px"></dc-import><dc-import name="StatusChip" status="submitted" hint-size="110px,26px"></dc-import><dc-import name="StatusChip" status="failed" hint-size="80px,26px"></dc-import>
+</div>
+</section>
+
+</main></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      finderItems: [
+        { title: 'Match context', text: 'Each opening lists which of your target-role criteria it meets.', icon: 'check-circle', availability: 'preview', href: '/features/job-matcher', linkLabel: 'See how matching works' },
+        { title: 'Date and source', text: 'You see when the job was posted and where it was found, so you can judge freshness.', icon: 'calendar', availability: 'preview' },
+        { title: 'Missing information', text: 'Gaps like salary or visa details are listed, not guessed.', icon: 'help', availability: 'concept' }
+      ],
+      job2: { title: 'Product Lead, Billing', company: 'Arcadia Health', location: 'Remote (EU)', workMode: 'Remote', postedAt: '5 days ago', source: 'LinkedIn', url: '#posting', matches: ['Billing domain matches your invoicing work', 'Lead level fits your target'], missing: ['Visa sponsorship not mentioned'] },
+      job3: { title: 'Product Manager, Ads', company: 'Verto Media', location: 'Hamburg', workMode: 'On-site', postedAt: '1 day ago', source: 'Company careers page', matches: [], missing: [] }
+    };
+  }
+}
+</script>
+</body>
+</html>

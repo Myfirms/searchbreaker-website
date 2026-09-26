@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-wrap:wrap;gap:var(--space-8) var(--space-16)">
+<header style="flex:1 1 280px;display:flex;flex-direction:column;gap:var(--space-4);align-self:flex-start">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary)">{{ lead }}</p></sc-if>
+</header>
+<div style="flex:2 1 520px;border-top:1px solid var(--color-border)">
+<sc-for list="{{ faqList }}" as="f" hint-placeholder-count="4"><details open="{{ f.isOpen }}" onToggle="{{ f.onToggle }}" style="border-bottom:1px solid var(--color-border)">
+<summary style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:var(--touch-target);padding:var(--space-4) 0;cursor:pointer;font-size:var(--text-lg);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold);border-radius:var(--radius-xs)"><span>{{ f.q }}</span><span style="flex:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text)"><dc-import name="Icon" icon="{{ f.icon }}" size="16" hint-size="16px,16px"></dc-import></span></summary>
+<p style="margin:0;padding:0 var(--space-12) var(--space-5) 0;max-width:var(--measure-body);font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ f.a }}</p>
+</details></sc-for>
+</div>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;560px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Questions&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;defaultOpen&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number | null&quot;},&quot;faqs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{ q: string; a: string }[]&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbfaq' + Math.random().toString(36).slice(2, 7);
+  state = { open: null };
+  componentDidMount() {
+    const d = this.props.defaultOpen;
+    this.setState({ open: new Set(d == null || d === '' ? [] : [Number(d)]) });
+  }
+  renderVals() {
+    const p = this.props;
+    const open = this.state.open || new Set();
+    const faqs = p.faqs || [
+      { q: 'Is this another job board?', a: 'No. SearchBreaker does not host job listings. It helps you find openings from existing sources, assess fit and manage your applications in one workspace.' },
+      { q: 'Will AI invent experience?', a: 'No. Resumes and applications use only facts you entered and confirmed. Each proposed edit shows which profile fact it comes from, and you can reject any of them.' },
+      { q: 'Will it submit applications without my consent?', a: 'No. Submission always needs your explicit approval. Auto-apply, when available, runs only under rules you set and can be paused at any time.' },
+      { q: 'Is SearchBreaker available now?', a: 'Not yet. It is in private testing. Join the waitlist to get an invite when the workflow you need is ready.' }
+    ];
+    return {
+      headingId: this.uid,
+      tone: p.tone || 'default',
+      heading: p.heading || 'Questions',
+      lead: p.lead, hasLead: !!p.lead,
+      faqList: faqs.map((f, i) => ({
+        q: f.q, a: f.a, isOpen: open.has(i), icon: open.has(i) ? 'minus' : 'plus',
+        onToggle: (e) => {
+          const isOpen = e.currentTarget.open;
+          this.setState(s => { const n = new Set(s.open || []); isOpen ? n.add(i) : n.delete(i); return { open: n }; });
+        }
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

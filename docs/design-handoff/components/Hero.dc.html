@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section ref="{{ rootRef }}" data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:var(--space-12);align-items:center">
+<div style="display:flex;flex-direction:column;gap:var(--space-6);align-items:flex-start;max-width:640px">
+<sc-if value="{{ hasBadge }}" hint-placeholder-val="{{ true }}"><dc-import name="AvailabilityBadge" state="{{ badge.state }}" label="{{ badge.label }}" detail="{{ badge.detail }}" variant="outline" hint-size="200px,22px"></dc-import></sc-if>
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}"><h1 id="{{ headingId }}" style="margin:0;font-size:var(--display-home);line-height:var(--leading-display);letter-spacing:var(--tracking-display);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ headline }}</h1></sc-if>
+<sc-if value="{{ isFeature }}" hint-placeholder-val="{{ false }}"><h1 id="{{ headingId }}" style="margin:0;font-size:var(--display-page);line-height:var(--leading-display);letter-spacing:var(--tracking-display);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ headline }}</h1></sc-if>
+<p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-xl);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p>
+<div style="display:flex;flex-direction:{{ ctaDir }};flex-wrap:wrap;gap:var(--space-3);width:100%">
+<dc-import name="Button" readiness="{{ primaryCta.readiness }}" label="{{ primaryCta.label }}" href="{{ primaryCta.href }}" size="lg" full-width="{{ mobile }}" on-activate="{{ onPrimary }}" hint-size="190px,52px"></dc-import>
+<sc-if value="{{ hasSecondary }}" hint-placeholder-val="{{ true }}"><dc-import name="Button" variant="secondary" label="{{ secondaryCta.label }}" href="{{ secondaryCta.href }}" size="lg" full-width="{{ mobile }}" hint-size="240px,52px"></dc-import></sc-if>
+</div>
+<sc-if value="{{ hasReassurance }}" hint-placeholder-val="{{ true }}"><p style="margin:0;display:flex;gap:var(--space-2);align-items:center;font-size:var(--text-sm);color:var(--color-text-muted)"><dc-import name="Icon" icon="lock" size="16" hint-size="16px,16px"></dc-import>{{ reassurance }}</p></sc-if>
+</div>
+<sc-if value="{{ hasMedia }}" hint-placeholder-val="{{ true }}"><dc-import name="ProductShot" src="{{ media.src }}" alt="{{ media.alt }}" state="{{ media.state }}" label="{{ media.label }}" caption="{{ media.caption }}" aspect="{{ media.aspect }}" hint-size="100%,380px"></dc-import></sc-if>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;640px&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;feature&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;'home' | 'feature'&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;,&quot;accent&quot;],&quot;default&quot;:&quot;muted&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;headline&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lead&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;primaryCta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;CtaConfig&quot;},&quot;secondaryCta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;LinkCta&quot;},&quot;badge&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;BadgeConfig&quot;},&quot;media&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;ProductShotProps&quot;},&quot;onCta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  uid = 'sbhero' + Math.random().toString(36).slice(2, 7);
+  state = { w: 1200 };
+  componentDidMount() {
+    const el = this.rootRef.current; if (!el) return;
+    this.setState({ w: el.offsetWidth });
+    this.ro = new ResizeObserver(e => { const w = e[0].contentRect.width; if (Math.abs(w - this.state.w) > 1) this.setState({ w }); });
+    this.ro.observe(el);
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  renderVals() {
+    const p = this.props;
+    const mobile = this.state.w < 640;
+    const v = p.variant || 'home';
+    return {
+      rootRef: this.rootRef, headingId: this.uid,
+      tone: p.tone || 'muted',
+      isHome: v === 'home', isFeature: v === 'feature',
+      badge: p.badge, hasBadge: !!p.badge,
+      headline: p.headline || 'AI job search built around your whole application workflow',
+      lead: p.lead || 'SearchBreaker turns your verified experience into a controlled workflow: find relevant jobs, tailor materials and track every application. You review everything before anything is sent.',
+      primaryCta: p.primaryCta || { readiness: 'waitlist' },
+      secondaryCta: p.secondaryCta, hasSecondary: !!p.secondaryCta,
+      reassurance: p.reassurance, hasReassurance: !!p.reassurance,
+      media: p.media, hasMedia: !!p.media,
+      mobile, ctaDir: mobile ? 'column' : 'row',
+      onPrimary: p.onCta
+    };
+  }
+}
+</script>
+</body>
+</html>

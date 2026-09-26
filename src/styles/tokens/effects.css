@@ -1,0 +1,43 @@
+/* SearchBreaker · Radius, borders, shadows, focus, motion. Corners stay small: no pills. */
+:root {
+  --radius-xs: 2px;  /* badges */
+  --radius-sm: 4px;  /* buttons, inputs, chips */
+  --radius-md: 6px;  /* cards, product shots */
+  --radius-lg: 8px;  /* panels, dialogs */
+
+  --border-width: 1px;
+  --border-width-strong: 1.5px;
+
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px rgb(14 27 24 / 0.06);
+  --shadow-md: 0 4px 12px rgb(14 27 24 / 0.08), 0 1px 2px rgb(14 27 24 / 0.06);
+  --shadow-lg: 0 16px 40px rgb(14 27 24 / 0.14), 0 2px 6px rgb(14 27 24 / 0.08);
+
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
+  --icon-stroke: 1.5;
+  --icon-size-sm: 16px;
+  --icon-size-md: 20px;
+  --icon-size-lg: 24px;
+
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+[data-theme="dark"],
+[data-surface="dark"] {
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 16px 40px rgb(0 0 0 / 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

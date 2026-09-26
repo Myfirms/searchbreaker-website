@@ -1,0 +1,94 @@
+---
+import type { Availability, SectionTone } from '../../../lib/types';
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface WorkflowStep {
+  /** ≤ 5 words. */
+  title: string;
+  /** ≤ 25 words. */
+  text: string;
+  availability?: Availability;
+}
+export interface WorkflowStepsProps {
+  heading: string;
+  lead?: string;
+  eyebrow?: string;
+  /** 3-6 steps. Numbers are generated. */
+  steps: WorkflowStep[];
+  tone?: SectionTone;
+}
+
+const { heading, lead, eyebrow, steps, tone = 'default' } = Astro.props as WorkflowStepsProps;
+const id = makeId('sb-ws', heading);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-ws">
+    <SectionHeader {heading} {id} {lead} {eyebrow} />
+    <ol class="sb-ws__list">
+      {steps.map((step, i) => (
+        <li class="sb-ws__item">
+          <div class="sb-ws__meta">
+            <span class="sb-ws__num">{String(i + 1).padStart(2, '0')}</span>
+            {step.availability && <AvailabilityBadge state={step.availability} />}
+          </div>
+          <h3 class="sb-ws__title">{step.title}</h3>
+          <p class="sb-ws__text">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Section>
+
+<style>
+  .sb-ws {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+  .sb-ws__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.75rem), 1fr));
+    gap: var(--space-8) var(--space-6);
+  }
+  .sb-ws__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border-strong);
+  }
+  .sb-ws__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 1.375rem;
+  }
+  .sb-ws__num {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+  }
+  .sb-ws__title {
+    margin: 0;
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-heading);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-ws__text {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+</style>

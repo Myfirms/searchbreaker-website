@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" style="container-type:inline-size;container-name:article;background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--space-6) var(--gutter) var(--section-pad-y-tight)">
+<div style="max-width:var(--container-max);margin:0 auto">
+<div data-article-col="true" style="display:flex;flex-direction:column;gap:var(--space-3);padding-top:var(--space-5);border-top:1px solid var(--color-border)">
+<dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:var(--space-4)">
+<sc-for list="{{ facts }}" as="f" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:var(--space-1)"><dt style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ f.label }}</dt><dd style="margin:0;font-size:var(--text-sm);line-height:var(--leading-snug)">{{ f.value }}</dd></div></sc-for>
+</dl>
+<a href="{{ policyHref }}" style="align-self:flex-start;display:inline-flex;align-items:center;min-height:var(--touch-target);font-size:var(--text-sm);color:var(--color-link);text-underline-offset:var(--link-underline-offset)">{{ policyLabel }}</a>
+</div></div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;180px&quot;},&quot;author&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;SearchBreaker team&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;updated&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2026-09-14&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;reviewer&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{ name: string; role?: string } | undefined&quot;},&quot;reviewedOn&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const facts = [{ label: 'Written by', value: p.author || 'SearchBreaker team' }, { label: 'Updated', value: p.updated || '2026-09-14' }];
+    if (p.reviewer) facts.push({ label: 'Reviewed by', value: p.reviewer.name + (p.reviewer.role ? ', ' + p.reviewer.role : '') + (p.reviewedOn ? ' · ' + p.reviewedOn : '') });
+    return {
+      tone: p.tone || 'default',
+      facts,
+      policyLabel: p.policyLabel || 'How we write and review guides',
+      policyHref: p.policyHref || '/editorial-policy'
+    };
+  }
+}
+</script>
+</body>
+</html>

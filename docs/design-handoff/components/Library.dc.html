@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;background:#EEF2EF}a{color:var(--color-link)}a:hover{color:var(--color-link-hover)}</style>
+</helmet>
+<div style="background:var(--color-surface);color:var(--color-text);font-family:var(--font-sans);min-height:100vh;padding:var(--section-pad-y-tight) var(--gutter)">
+<main style="max-width:1480px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-16)">
+
+<header style="display:flex;flex-direction:column;gap:var(--space-3)">
+<span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">SearchBreaker · Stage C · Batch 1 of 3</span>
+<h1 style="margin:0;font-size:var(--display-page);line-height:var(--leading-display);letter-spacing:var(--tracking-display);font-weight:var(--font-weight-semibold)">Block library</h1>
+<p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary)">Global blocks plus Hero, ProductShot, WorkflowSteps, ControlPoints, LimitationsCallout, FaqAccordion and FinalCta. Each block is shown at fluid desktop width and at 390px. Every “Join the waitlist” button opens the live WaitlistDialog.</p>
+<p style="margin:0;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-text-muted)">[G] global · [S] section · files: components/&lt;Block&gt;.dc.html · .d.ts · .prompt.md</p>
+</header>
+
+<section id="header" data-screen-label="Header" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">Header <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[G]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">States: default · Product dropdown open · mobile closed · drawer · drawer level 2. Esc and outside click close the dropdown.</p></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · DEFAULT · current = Resume Tailoring</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg)"><dc-import name="Header" nav-items="{{ nav }}" cta="{{ waitlistCta }}" current="/features/resume-tailoring" on-cta="{{ openDialog }}" hint-size="100%,65px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · PRODUCT DROPDOWN OPEN</span><div style="position:relative;height:400px;border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg)"><dc-import name="Header" nav-items="{{ nav }}" cta="{{ waitlistCta }}" initial-open="product" on-cta="{{ openDialog }}" hint-size="100%,65px"></dc-import></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6)">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · CLOSED</span><div style="position:relative;height:180px;border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg)"><dc-import name="Header" nav-items="{{ nav }}" cta="{{ waitlistCta }}" drawer-height="560px" on-cta="{{ openDialog }}" hint-size="100%,65px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · DRAWER</span><div style="position:relative;height:640px;border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg)"><dc-import name="Header" nav-items="{{ nav }}" cta="{{ waitlistCta }}" initial-open="drawer" drawer-height="576px" on-cta="{{ openDialog }}" hint-size="100%,65px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · DRAWER · PRODUCT LEVEL</span><div style="position:relative;height:640px;border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg)"><dc-import name="Header" nav-items="{{ nav }}" cta="{{ waitlistCta }}" initial-open="drawer-product" drawer-height="576px" on-cta="{{ openDialog }}" hint-size="100%,65px"></dc-import></div></div>
+</div></section>
+
+<section id="announcement" data-screen-label="AnnouncementBar + Breadcrumbs" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">AnnouncementBar · Breadcrumbs <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[G]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">AnnouncementBar is optional and dismissible. Breadcrumbs collapse to a back link below 640px.</p></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);padding-bottom:var(--space-4)"><dc-import name="AnnouncementBar" dismissible="{{ true }}" on-activate="{{ openDialog }}" hint-size="100%,44px"></dc-import><dc-import name="Breadcrumbs" items="{{ crumbsFeature }}" hint-size="100%,44px"></dc-import><dc-import name="Breadcrumbs" items="{{ crumbsGuide }}" hint-size="100%,44px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);padding-bottom:var(--space-4)"><dc-import name="AnnouncementBar" dismissible="{{ true }}" on-activate="{{ openDialog }}" hint-size="100%,64px"></dc-import><dc-import name="Breadcrumbs" items="{{ crumbsGuide }}" hint-size="100%,56px"></dc-import></div></div>
+</section>
+
+<section id="hero" data-screen-label="Hero" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">Hero <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Variants: home (display-home) · feature (display-page). Readiness: waitlist · live. Media optional.</p></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · HOME · WAITLIST · CONCEPT MEDIA</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="Hero" variant="home" badge="{{ heroBadge }}" primary-cta="{{ waitlistCta }}" secondary-cta="{{ heroSecondary }}" media="{{ homeMedia }}" on-cta="{{ openDialog }}" hint-size="100%,640px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · FEATURE · ILLUSTRATIVE MEDIA · TONE DEFAULT</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="Hero" variant="feature" tone="default" headline="Tailor your resume to each job without starting over" lead="{{ featureLead }}" badge="{{ heroBadge }}" primary-cta="{{ waitlistCta }}" secondary-cta="{{ featureSecondary }}" media="{{ featureMedia }}" reassurance="You approve every change before it is saved." on-cta="{{ openDialog }}" hint-size="100%,600px"></dc-import></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · HOME · WAITLIST</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="Hero" variant="home" badge="{{ heroBadge }}" primary-cta="{{ waitlistCta }}" secondary-cta="{{ heroSecondary }}" media="{{ homeMedia }}" on-cta="{{ openDialog }}" hint-size="100%,900px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · FEATURE · READINESS LIVE (future state)</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="Hero" variant="feature" headline="Tailor your resume to each job without starting over" lead="{{ featureLead }}" badge="{{ liveBadge }}" primary-cta="{{ liveCta }}" secondary-cta="{{ featureSecondary }}" media="{{ liveMedia }}" hint-size="100%,900px"></dc-import></div></div>
+</div></section>
+
+<section id="productshot" data-screen-label="ProductShot" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">ProductShot <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Four states. Live has a solid frame and no note; illustrative is dashed. Slots show until real images are supplied.</p></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:var(--space-6);padding:var(--space-6);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+<dc-import name="ProductShot" state="live" label="Application pipeline" alt="Pipeline board with five columns" caption="Real screenshot of the live product." hint-size="100%,300px"></dc-import>
+<dc-import name="ProductShot" state="preview" label="Job feed" alt="List of job openings with fit notes" caption="Build from private testing." hint-size="100%,300px"></dc-import>
+<dc-import name="ProductShot" state="concept" label="Resume diff" alt="Concept of a resume edit review screen" caption="Planned review screen for proposed edits." hint-size="100%,300px"></dc-import>
+<dc-import name="ProductShot" state="illustrative" label="Match breakdown" alt="Example requirement-to-evidence table" caption="Example of a requirement breakdown." hint-size="100%,300px"></dc-import>
+</div></section>
+
+<section id="workflow" data-screen-label="WorkflowSteps" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">WorkflowSteps <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Ordered stages with per-step availability. Stacks to one column on mobile.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="WorkflowSteps" heading="Job search automation with you in control" lead="Four stages share one verified profile. Each stage shows what is available today." hint-size="100%,480px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="WorkflowSteps" heading="Job search automation with you in control" lead="Four stages share one verified profile. Each stage shows what is available today." hint-size="100%,900px"></dc-import></div></div>
+</div></section>
+
+<section id="control" data-screen-label="ControlPoints" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">ControlPoints <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Approval and decision points. Tone muted shown.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · TONE MUTED</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="ControlPoints" tone="muted" lead="SearchBreaker prepares drafts and suggestions. Every step that changes your materials or contacts an employer waits for you." hint-size="100%,560px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="ControlPoints" tone="muted" lead="SearchBreaker prepares drafts and suggestions. Every step that changes your materials or contacts an employer waits for you." hint-size="100%,900px"></dc-import></div></div>
+</div></section>
+
+<section id="limitations" data-screen-label="LimitationsCallout" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">LimitationsCallout <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Same H2 tier and section padding as benefit blocks. Two content examples.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · MATCH SCORE</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="LimitationsCallout" lead="A match score compares the job description with the experience you confirmed. It is a reading aid, not a prediction." hint-size="100%,520px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · AUTO-APPLY SUPPORT</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="LimitationsCallout" tone="muted" heading="Where auto-apply is supported" lead="Auto-apply is planned. Support will be listed per platform with a verified-on date." items="{{ autoApplyLimits }}" footnote="Until a platform is verified, SearchBreaker prepares the application and you submit it yourself." hint-size="100%,900px"></dc-import></div></div>
+</div></section>
+
+<section id="faq" data-screen-label="FaqAccordion" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">FaqAccordion <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Native details/summary. Enter/Space toggles; multiple items can be open.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · FIRST OPEN</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="FaqAccordion" default-open="0" hint-size="100%,520px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · ALL CLOSED</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="FaqAccordion" default-open="" hint-size="100%,560px"></dc-import></div></div>
+</div></section>
+
+<section id="finalcta" data-screen-label="FinalCta" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">FinalCta <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Surface dark (default) · light accent. Readiness-aware.</p></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · DARK</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="FinalCta" secondary-cta="{{ heroSecondary }}" on-cta="{{ openDialog }}" hint-size="100%,340px"></dc-import></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · LIGHT · TONE ACCENT</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="FinalCta" surface="light" tone="accent" heading="Tailor your next application from verified facts" text="Resume tailoring is in private testing. Join the waitlist to get an invite." on-cta="{{ openDialog }}" hint-size="100%,340px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · DARK</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="FinalCta" secondary-cta="{{ heroSecondary }}" on-cta="{{ openDialog }}" hint-size="100%,480px"></dc-import></div></div>
+</div></section>
+
+<section id="waitlist" data-screen-label="WaitlistDialog + WaitlistForm" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">WaitlistDialog + WaitlistForm <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[G]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Dialog on desktop, bottom sheet below 640px. Try the live form: an address containing “taken” returns duplicate, “fail” returns a server error.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · DIALOG · IDLE</span><div style="position:relative;height:720px;border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg)"><dc-import name="WaitlistDialog" layout="contained" source="library-preview" hint-size="100%,720px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · SHEET · VALIDATION ERRORS</span><div style="position:relative;height:720px;border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg)"><dc-import name="WaitlistDialog" layout="contained" source="library-preview" initial-status="invalid" hint-size="100%,720px"></dc-import></div></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:var(--space-6)">
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">SUBMITTING</span><div style="padding:var(--space-6);background:var(--color-surface-raised);border:1px solid var(--color-border);border-radius:var(--radius-md)"><dc-import name="WaitlistForm" initial-status="submitting" show-role="{{ false }}" hint-size="100%,300px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">SERVER ERROR</span><div style="padding:var(--space-6);background:var(--color-surface-raised);border:1px solid var(--color-border);border-radius:var(--radius-md)"><dc-import name="WaitlistForm" initial-status="error" show-role="{{ false }}" hint-size="100%,380px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">SUCCESS</span><div style="padding:var(--space-6);background:var(--color-surface-raised);border:1px solid var(--color-border);border-radius:var(--radius-md)"><dc-import name="WaitlistForm" initial-status="success" hint-size="100%,160px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DUPLICATE</span><div style="padding:var(--space-6);background:var(--color-surface-raised);border:1px solid var(--color-border);border-radius:var(--radius-md)"><dc-import name="WaitlistForm" initial-status="duplicate" hint-size="100%,200px"></dc-import></div></div>
+</div></section>
+
+<section id="sticky" data-screen-label="StickyMobileCta" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">StickyMobileCta <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[G]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Mobile only (below 900px). Fixed to the bottom in production; shown static here.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6)">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · WAITLIST</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg)"><dc-import name="StickyMobileCta" readiness="waitlist" position="static" on-activate="{{ openDialog }}" hint-size="100%,70px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · LIVE · WITH TEXT</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg)"><dc-import name="StickyMobileCta" readiness="live" label="Start profile" text="Resume tailoring is live." position="static" hint-size="100%,70px"></dc-import></div></div>
+</div></section>
+
+<section id="footer" data-screen-label="Footer" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">Footer <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[G]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Site map, honest status note, legal links. No social proof.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="Footer" hint-size="100%,420px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="Footer" hint-size="100%,900px"></dc-import></div></div>
+</div></section>
+
+</main>
+<dc-import name="WaitlistDialog" open="{{ dialogOpen }}" layout="fixed" source="{{ dialogSource }}" on-close="{{ closeDialog }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { dialogOpen: false };
+  renderVals() {
+    const nav = [
+      { label: 'Product', children: [
+        { label: 'How it works', href: '/how-it-works', description: 'The full workflow from verified profile to follow-up.', availability: 'concept' },
+        { label: 'Job Finder', href: '/features/ai-job-finder', description: 'Find openings that fit your target roles.', availability: 'preview' },
+        { label: 'Job Matching', href: '/features/job-matcher', description: 'Compare job requirements with your confirmed experience.', availability: 'preview' },
+        { label: 'Resume Tailoring', href: '/features/resume-tailoring', description: 'Adapt your resume to each job from verified facts.', availability: 'preview' },
+        { label: 'Autofill and Auto Apply', href: '/features/job-application-autofill', description: 'Fill applications from your profile. You decide when to submit.', availability: 'planned' },
+        { label: 'Application Tracker', href: '/features/job-application-tracker', description: 'Every application, resume version and next step in one pipeline.', availability: 'concept' }
+      ] },
+      { label: 'Job Finder', href: '/features/ai-job-finder' },
+      { label: 'Job Matching', href: '/features/job-matcher' },
+      { label: 'Resume Tailoring', href: '/features/resume-tailoring' },
+      { label: 'Auto Apply', href: '/features/auto-apply' },
+      { label: 'Tracker', href: '/features/job-application-tracker' },
+      { label: 'Resources', href: '/guides' }
+    ];
+    return {
+      nav,
+      waitlistCta: { readiness: 'waitlist' },
+      liveCta: { readiness: 'live', label: 'Start profile', href: '/signup' },
+      heroBadge: { state: 'preview', detail: 'in private testing' },
+      liveBadge: { state: 'live', detail: 'verified on 2026-09-14' },
+      heroSecondary: { label: 'See how the search works', href: '/how-it-works' },
+      featureSecondary: { label: 'See what changes for a job', href: '#diff' },
+      featureLead: 'Start from the facts in your verified profile. SearchBreaker proposes edits for each job description, shows where every change comes from, and waits for your approval.',
+      homeMedia: { state: 'concept', label: 'Application pipeline', alt: 'Concept of the application pipeline board', caption: 'Pipeline view with the resume version and next action on each card.' },
+      featureMedia: { state: 'illustrative', label: 'Proposed edits', alt: 'Example of proposed resume edits with source facts', caption: 'Each edit links to the profile fact it comes from.' },
+      liveMedia: { state: 'live', label: 'Proposed edits', alt: 'Resume tailoring screen', caption: 'Real screenshot slot for the live release.' },
+      crumbsFeature: [{ label: 'Home', href: '/' }, { label: 'Features', href: '/features' }, { label: 'Resume Tailoring' }],
+      crumbsGuide: [{ label: 'Home', href: '/' }, { label: 'Guides', href: '/guides' }, { label: 'How to tailor a resume to a job description' }],
+      autoApplyLimits: [
+        { title: 'No platform is verified yet', text: 'Each job platform is tested separately. Unverified platforms are not supported.' },
+        { title: 'Some forms need you', text: 'Custom questions, assessments and CAPTCHAs always go back to you.' },
+        { title: 'Rules are yours', text: 'Auto-apply will only run on jobs that match rules you set and approve.' }
+      ],
+      dialogOpen: this.state.dialogOpen,
+      dialogSource: 'library-cta',
+      openDialog: () => this.setState({ dialogOpen: true }),
+      closeDialog: () => this.setState({ dialogOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

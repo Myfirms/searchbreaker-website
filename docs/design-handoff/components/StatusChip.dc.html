@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<span data-status="{{ status }}" style="display:inline-flex;align-items:center;gap:6px;box-sizing:border-box;height:26px;padding:0 var(--space-2);border-radius:var(--radius-xs);background:var(--st-bg);color:var(--st-fg);font-family:var(--font-sans);font-size:var(--text-sm);font-weight:var(--font-weight-medium);line-height:1;white-space:nowrap"><dc-import name="Icon" icon="{{ icon }}" size="16" hint-size="16px,16px"></dc-import>{{ text }}</span>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;200px&quot;,&quot;height&quot;:&quot;48px&quot;},&quot;status&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;confirmed&quot;,&quot;partial&quot;,&quot;gap&quot;,&quot;unclear&quot;,&quot;prepared&quot;,&quot;reviewed&quot;,&quot;submitted&quot;,&quot;failed&quot;],&quot;default&quot;:&quot;confirmed&quot;,&quot;tsType&quot;:&quot;EvidenceStatus | ApplicationStatus&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  static M = {
+    confirmed: ['Confirmed', 'check-circle'], partial: ['Partial', 'circle-half'], gap: ['Gap', 'x-circle'], unclear: ['Unclear', 'help'],
+    prepared: ['Prepared', 'file'], reviewed: ['Reviewed', 'eye'], submitted: ['Submitted', 'send'], failed: ['Failed', 'alert']
+  };
+  renderVals() {
+    const st = Component.M[this.props.status] ? this.props.status : 'unclear';
+    return { status: st, text: this.props.label || Component.M[st][0], icon: Component.M[st][1] };
+  }
+}
+</script>
+</body>
+</html>

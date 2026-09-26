@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-8)">
+<header style="display:flex;flex-direction:column;gap:var(--space-4);max-width:720px">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p></sc-if>
+</header>
+<dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:var(--space-4)">
+<sc-for list="{{ stateList }}" as="s" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:var(--space-3);box-sizing:border-box;padding:var(--space-5);background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--card-radius)">
+<dt style="display:flex"><dc-import name="StatusChip" status="{{ s.id }}" label="{{ s.label }}" hint-size="120px,26px"></dc-import></dt>
+<dd style="margin:0;font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ s.description }}</dd>
+</div></sc-for></dl>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;380px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Every application has one clear status&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;states&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;StatusStateItem[]&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbss' + Math.random().toString(36).slice(2, 7);
+  renderVals() {
+    const p = this.props;
+    return {
+      headingId: this.uid,
+      tone: p.tone || 'default',
+      heading: p.heading || 'Every application has one clear status',
+      lead: p.lead, hasLead: !!p.lead,
+      stateList: p.states || [
+        { id: 'prepared', description: 'Materials are ready. Nothing has been sent.' },
+        { id: 'reviewed', description: 'You checked and approved the materials for this job.' },
+        { id: 'submitted', description: 'The application was sent, by you or under rules you approved.' },
+        { id: 'failed', description: 'Submission did not complete. The record says why and what to do next.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

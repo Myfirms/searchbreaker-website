@@ -1,0 +1,48 @@
+---
+import type { ApplicationStatus, EvidenceStatus } from '../../../lib/types';
+import Icon, { type IconKey } from './Icon.astro';
+
+interface Props {
+  status: EvidenceStatus | ApplicationStatus;
+  /** ≤ 2 words. */
+  label?: string;
+}
+
+const MAP: Record<string, [string, IconKey]> = {
+  confirmed: ['Confirmed', 'check-circle'],
+  partial: ['Partial', 'circle-half'],
+  gap: ['Gap', 'x-circle'],
+  unclear: ['Unclear', 'help'],
+  prepared: ['Prepared', 'file'],
+  reviewed: ['Reviewed', 'eye'],
+  submitted: ['Submitted', 'send'],
+  failed: ['Failed', 'alert'],
+};
+
+const { status, label } = Astro.props;
+const st = MAP[status] ? status : 'unclear';
+const [defaultLabel, icon] = MAP[st];
+---
+
+<span class="sb-chip" data-status={st}>
+  <Icon icon={icon} size={16} />
+  {label ?? defaultLabel}
+</span>
+
+<style>
+  .sb-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 1.625rem;
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-xs);
+    background: var(--st-bg);
+    color: var(--st-fg);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+  }
+</style>

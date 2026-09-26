@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" style="container-type:inline-size;container-name:article;background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--space-6) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto">
+<div data-article-col="true" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-6);border-radius:var(--radius-md);background:var(--color-surface-accent)">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-accent)">{{ eyebrow }}</span><dc-import name="AvailabilityBadge" state="{{ availability }}" variant="outline" hint-size="90px,22px"></dc-import></div>
+<p style="margin:0;font-size:var(--text-xl);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ title }}</p>
+<p style="margin:0;font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ text }}</p>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2) var(--space-4)">
+<sc-if value="{{ isLive }}" hint-placeholder-val="{{ false }}"><dc-import name="Button" readiness="live" label="{{ cta.label }}" href="{{ cta.href }}" hint-size="140px,44px"></dc-import></sc-if>
+<dc-import name="Button" variant="secondary" label="{{ linkLabel }}" href="{{ href }}" arrow="{{ true }}" hint-size="240px,44px"></dc-import>
+<sc-if value="{{ isWaitlist }}" hint-placeholder-val="{{ true }}"><dc-import name="Button" variant="link" readiness="waitlist" on-activate="{{ onCta }}" hint-size="140px,44px"></dc-import></sc-if>
+</div></div></div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;300px&quot;},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;href&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;/features/resume-tailoring&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;linkLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;See how resume tailoring works&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;availability&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;live&quot;,&quot;preview&quot;,&quot;concept&quot;,&quot;planned&quot;],&quot;default&quot;:&quot;preview&quot;,&quot;tsType&quot;:&quot;Availability&quot;},&quot;cta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;CtaConfig&quot;},&quot;onCta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const cta = p.cta || { readiness: 'waitlist' };
+    return {
+      tone: p.tone || 'default',
+      eyebrow: p.eyebrow || 'Try it in SearchBreaker',
+      availability: p.availability || 'preview',
+      title: p.title || 'Tailor each resume from verified facts',
+      text: p.text || 'SearchBreaker maps job requirements to the experience you confirmed and proposes edits you approve one by one.',
+      linkLabel: p.linkLabel || 'See how resume tailoring works',
+      href: p.href || '/features/resume-tailoring',
+      cta, isLive: cta.readiness === 'live', isWaitlist: cta.readiness !== 'live',
+      onCta: p.onCta
+    };
+  }
+}
+</script>
+</body>
+</html>

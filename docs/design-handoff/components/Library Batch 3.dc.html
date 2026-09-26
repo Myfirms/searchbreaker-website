@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;background:#EEF2EF}a{color:var(--color-link)}a:hover{color:var(--color-link-hover)}</style>
+</helmet>
+<div style="background:var(--color-surface);color:var(--color-text);font-family:var(--font-sans);min-height:100vh;padding:var(--section-pad-y-tight) var(--gutter)">
+<main style="max-width:1480px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-16)">
+
+<header style="display:flex;flex-direction:column;gap:var(--space-3)">
+<span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">SearchBreaker · Stage C · Batch 3 of 3</span>
+<h1 style="margin:0;font-size:var(--display-page);line-height:var(--leading-display);letter-spacing:var(--tracking-display);font-weight:var(--font-weight-semibold)">Block library: comparison and article blocks</h1>
+<p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary)">ComparisonTable, SupportMatrix, AudienceCards and RelatedLinks, then the article set: ArticleHero, TableOfContents, ArticleBody, KeyTakeaways, InlineCta, Callout and AuthorReviewed. <a href="Library.dc.html">Batch 1</a> · <a href="Library Batch 2.dc.html">Batch 2</a></p>
+</header>
+
+<section id="comparison" data-screen-label="ComparisonTable" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">ComparisonTable <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">2 columns with an emphasised row · 4 columns · stacked on mobile.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · 2 COLUMNS</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="ComparisonTable" lead="Both use your verified profile. The difference is who sends the application." hint-size="100%,560px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · STACKED</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="ComparisonTable" hint-size="100%,1100px"></dc-import></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · 4 COLUMNS · /features/job-search-automation</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="ComparisonTable" tone="muted" heading="What each stage automates" columns="{{ fourCols }}" rows="{{ fourRows }}" hint-size="100%,520px"></dc-import></div></div>
+</section>
+
+<section id="support" data-screen-label="SupportMatrix" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">SupportMatrix <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Verified rows only, each with a date. The empty state is the launch default. Platform names are fictional.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · WITH ROWS</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="SupportMatrix" hint-size="100%,480px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390 · WITH ROWS</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="SupportMatrix" hint-size="100%,760px"></dc-import></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP · EMPTY STATE (launch default)</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="SupportMatrix" heading="Where auto-apply is supported" rows="{{ noRows }}" illustrative="{{ false }}" hint-size="100%,480px"></dc-import></div></div>
+</section>
+
+<section id="audience" data-screen-label="AudienceCards + RelatedLinks" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">AudienceCards · RelatedLinks <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[S]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">Each audience card has an honest caveat. RelatedLinks put the next workflow stage first.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 700px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="AudienceCards" tone="muted" hint-size="100%,440px"></dc-import><dc-import name="RelatedLinks" hint-size="100%,280px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden"><dc-import name="AudienceCards" tone="muted" hint-size="100%,900px"></dc-import><dc-import name="RelatedLinks" hint-size="100%,600px"></dc-import></div></div>
+</div></section>
+
+<section id="article" data-screen-label="Article blocks" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">Article blocks, stacked <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[A]</span></h2><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-secondary)">ArticleHero → ArticleBody (with TableOfContents) → KeyTakeaways → InlineCta → AuthorReviewed. All share one text column; the TOC is a sticky sidebar at 900px and wider and collapses above the body below that. Click TOC items to jump.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1 1 900px;min-width:0"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">DESKTOP</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-bg)"><dc-import name="ArticleHero" hint-size="100%,380px"></dc-import><dc-import name="ArticleBody" hint-size="100%,1800px"></dc-import><dc-import name="KeyTakeaways" hint-size="100%,260px"></dc-import><dc-import name="InlineCta" on-cta="{{ noop }}" hint-size="100%,260px"></dc-import><dc-import name="AuthorReviewed" reviewer="{{ reviewer }}" reviewed-on="2026-09-14" hint-size="100%,160px"></dc-import></div></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:390px;flex:none"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">390</span><div style="border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-bg)"><dc-import name="ArticleHero" hint-size="100%,480px"></dc-import><dc-import name="ArticleBody" hint-size="100%,3000px"></dc-import><dc-import name="KeyTakeaways" hint-size="100%,360px"></dc-import><dc-import name="InlineCta" hint-size="100%,360px"></dc-import><dc-import name="AuthorReviewed" hint-size="100%,200px"></dc-import></div></div>
+</div></section>
+
+<section id="callout" data-screen-label="Callout + TableOfContents" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1)"><h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">Callout · TableOfContents <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[A]</span></h2></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:var(--space-4);padding:var(--space-6);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+<dc-import name="Callout" variant="tip" title="Keep a master list of facts" hint-size="100%,120px"></dc-import>
+<dc-import name="Callout" variant="warning" title="Never add experience you do not have" text="Adding skills or results you cannot back up can end an interview process." hint-size="100%,120px"></dc-import>
+<dc-import name="Callout" variant="note" text="Most job descriptions mix requirements and wishes. Treat nice-to-have items as optional." hint-size="100%,100px"></dc-import>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);padding:var(--space-6);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:240px"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">SIDEBAR</span><dc-import name="TableOfContents" variant="sidebar" hint-size="100%,200px"></dc-import></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);width:342px"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">COLLAPSIBLE</span><dc-import name="TableOfContents" variant="collapsible" hint-size="100%,44px"></dc-import></div>
+</div>
+<div data-surface="dark" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:var(--space-4);padding:var(--space-6);background:var(--color-bg);border-radius:var(--radius-md)">
+<dc-import name="Callout" variant="tip" title="Dark surface" hint-size="100%,120px"></dc-import>
+<dc-import name="Callout" variant="warning" title="Dark surface" text="Tokens re-resolve inside data-surface=&quot;dark&quot;." hint-size="100%,120px"></dc-import>
+<dc-import name="Callout" variant="note" text="Same component, no overrides." hint-size="100%,100px"></dc-import>
+</div>
+</section>
+
+<section id="future" data-screen-label="Future" style="display:flex;flex-direction:column;gap:var(--space-2);max-width:720px">
+<h2 style="margin:0;font-size:var(--text-h3);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">Future blocks <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);font-weight:400">[F]</span></h2>
+<p style="margin:0;font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary)">AlternativesHero, CompareTable (3+ columns), ProsCons, VerdictBox, ToolEmbed and TemplateDownload are not designed. <code style="font-family:var(--font-mono);font-size:.9em">components/_future.md</code> maps each one to the existing tokens and blocks it would reuse.</p>
+</section>
+
+</main></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      fourCols: [{ key: 's', label: 'Search' }, { key: 'p', label: 'Preparation' }, { key: 'a', label: 'Autofill' }, { key: 'x', label: 'Submission' }],
+      fourRows: [
+        { label: 'What is automated', values: { s: 'Collecting openings that fit your rules', p: 'Drafting tailored resumes and answers', a: 'Filling form fields from your profile', x: 'Sending the application' } },
+        { label: 'What you do', emphasis: true, values: { s: 'Set roles, locations and sources', p: 'Review and approve each edit', a: 'Check fields and press submit', x: 'Approve rules; pause any time' } },
+        { label: 'You review first', values: { s: { text: 'Yes, you pick jobs', mark: 'yes' }, p: { text: 'Always', mark: 'yes' }, a: { text: 'Always', mark: 'yes' }, x: { text: 'Per rule', mark: 'partial' } } },
+        { label: 'Availability', values: { s: 'Preview', p: 'Preview', a: 'Planned', x: 'Planned' } }
+      ],
+      noRows: [],
+      reviewer: { name: 'Reviewer name', role: 'Recruiting lead (to be confirmed)' },
+      noop: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<sc-if value="{{ isLink }}" hint-placeholder-val="{{ false }}"><a href="{{ href }}" onClick="{{ handleClick }}" data-variant="{{ variant }}" data-size="{{ size }}" data-full="{{ full }}" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);box-sizing:border-box;height:var(--btn-h);width:var(--btn-width);padding:0 var(--btn-px);font-family:var(--button-font);font-size:var(--btn-fs);font-weight:var(--button-weight);line-height:1;white-space:nowrap;border-radius:var(--button-radius);border:1px solid var(--btn-border);background:var(--btn-bg);color:var(--btn-fg);text-decoration:var(--btn-decoration);text-underline-offset:var(--link-underline-offset);cursor:var(--btn-cursor);transition:background-color var(--duration-fast) var(--ease-standard),color var(--duration-fast) var(--ease-standard)" style-hover="background:var(--btn-bg-hover);color:var(--btn-fg-hover);text-decoration-thickness:2px" style-active="background:var(--btn-bg-active)">{{ text }}<sc-if value="{{ arrow }}" hint-placeholder-val="{{ false }}"><dc-import name="Icon" icon="arrow-right" size="16" hint-size="16px,16px"></dc-import></sc-if></a></sc-if>
+<sc-if value="{{ isButton }}" hint-placeholder-val="{{ true }}"><button type="{{ type }}" onClick="{{ handleClick }}" aria-disabled="{{ ariaDisabled }}" aria-busy="{{ ariaBusy }}" aria-label="{{ ariaLabel }}" data-variant="{{ variant }}" data-size="{{ size }}" data-full="{{ full }}" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);box-sizing:border-box;height:var(--btn-h);width:var(--btn-width);padding:0 var(--btn-px);font-family:var(--button-font);font-size:var(--btn-fs);font-weight:var(--button-weight);line-height:1;white-space:nowrap;border-radius:var(--button-radius);border:1px solid var(--btn-border);background:var(--btn-bg);color:var(--btn-fg);text-decoration:var(--btn-decoration);text-underline-offset:var(--link-underline-offset);cursor:var(--btn-cursor);transition:background-color var(--duration-fast) var(--ease-standard),color var(--duration-fast) var(--ease-standard)" style-hover="background:var(--btn-bg-hover);color:var(--btn-fg-hover);text-decoration-thickness:2px" style-active="background:var(--btn-bg-active)"><sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6" opacity=".35"></circle><path d="M14 8a6 6 0 0 0-6-6" stroke-linecap="round"></path></svg></sc-if>{{ text }}<sc-if value="{{ arrow }}" hint-placeholder-val="{{ false }}"><dc-import name="Icon" icon="arrow-right" size="16" hint-size="16px,16px"></dc-import></sc-if></button></sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;320px&quot;,&quot;height&quot;:&quot;80px&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;primary&quot;,&quot;secondary&quot;,&quot;ghost&quot;,&quot;link&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;'primary' | 'secondary' | 'ghost' | 'link'&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;sm&quot;,&quot;md&quot;,&quot;lg&quot;],&quot;default&quot;:&quot;md&quot;,&quot;tsType&quot;:&quot;'sm' | 'md' | 'lg'&quot;},&quot;readiness&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;waitlist&quot;,&quot;live&quot;],&quot;default&quot;:&quot;waitlist&quot;,&quot;tsType&quot;:&quot;'waitlist' | 'live' | undefined&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;loading&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;arrow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onActivate&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(e: MouseEvent) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const r = p.readiness;
+    const base = r === 'live' ? (p.label || 'Start profile') : r === 'waitlist' ? 'Join the waitlist' : (p.label || 'Button');
+    const blocked = !!(p.disabled || p.loading);
+    return {
+      text: p.loading ? (p.loadingLabel || base) : base,
+      variant: p.variant || 'primary',
+      size: p.size || 'md',
+      full: p.fullWidth ? 'true' : 'false',
+      href: p.href,
+      isLink: !!p.href && !blocked,
+      isButton: !p.href || blocked,
+      type: p.type || 'button',
+      ariaDisabled: p.disabled ? 'true' : undefined,
+      ariaBusy: p.loading ? 'true' : undefined,
+      ariaLabel: p.ariaLabel,
+      loading: !!p.loading,
+      arrow: !!p.arrow,
+      handleClick: (e) => {
+        if (blocked) { e.preventDefault(); return; }
+        if (p.onActivate) { if (p.href && r === 'waitlist') e.preventDefault(); p.onActivate(e); }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

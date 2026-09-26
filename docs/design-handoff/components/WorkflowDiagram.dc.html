@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section ref="{{ setRoot }}" data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-10)">
+<header style="display:flex;flex-direction:column;gap:var(--space-4);max-width:720px">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p></sc-if>
+</header>
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:{{ dir }};align-items:stretch">
+<sc-for list="{{ nodeList }}" as="n" hint-placeholder-count="6"><li style="display:flex;flex-direction:{{ dir }};align-items:stretch;flex:{{ nodeFlex }};min-width:0">
+<div style="flex:1 1 auto;min-width:0;box-sizing:border-box;display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);border:1px solid var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-surface-raised)">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);flex-wrap:wrap"><span style="font-family:var(--font-mono);font-size:var(--text-sm);font-weight:var(--font-weight-medium);color:var(--color-accent)">{{ n.num }}</span><dc-import name="AvailabilityBadge" state="{{ n.availability }}" hint-size="80px,22px"></dc-import></div>
+<sc-if value="{{ n.hasHref }}" hint-placeholder-val="{{ false }}"><a href="{{ n.href }}" style="font-size:var(--text-md);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold);color:var(--color-text);text-decoration:underline;text-decoration-color:var(--color-border-strong);text-underline-offset:4px" style-hover="text-decoration-color:var(--color-accent);text-decoration-thickness:2px">{{ n.label }}</a></sc-if>
+<sc-if value="{{ n.noHref }}" hint-placeholder-val="{{ true }}"><span style="font-size:var(--text-md);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold)">{{ n.label }}</span></sc-if>
+<sc-if value="{{ n.hasText }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)">{{ n.text }}</p></sc-if>
+</div>
+<sc-if value="{{ n.connector }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="flex:none;display:flex;align-items:center;justify-content:center;width:{{ connW }};height:{{ connH }};color:var(--color-text-muted)"><dc-import name="Icon" icon="{{ connIcon }}" size="16" hint-size="16px,16px"></dc-import></span></sc-if>
+</li></sc-for></ol>
+<sc-if value="{{ hasNote }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted)">{{ note }}</p></sc-if>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;420px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;,&quot;accent&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;How the search works&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lead&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;nodes&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;WorkflowNode[]&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbwd' + Math.random().toString(36).slice(2, 7);
+  rootRef = { current: null };
+  state = { w: 1200 };
+  setRoot = (el) => { if (el) this.rootRef.current = el; };
+  measure = () => { const el = this.rootRef.current; if (!el || !el.isConnected) return; const w = el.offsetWidth; if (w && Math.abs(w - this.state.w) > 1) this.setState({ w }); };
+  componentDidMount() { requestAnimationFrame(this.measure); this.t = setTimeout(this.measure, 120); this.iv = setInterval(this.measure, 400); window.addEventListener('resize', this.measure); }
+  componentWillUnmount() { clearTimeout(this.t); clearInterval(this.iv); window.removeEventListener('resize', this.measure); }
+  renderVals() {
+    const p = this.props;
+    const nodes = p.nodes || [
+      { label: 'Verified profile', availability: 'preview', text: 'Your confirmed roles, results and skills.' },
+      { label: 'Target roles', availability: 'preview', text: 'Titles, level, location and work mode.' },
+      { label: 'Job discovery', href: '/features/ai-job-finder', availability: 'preview', text: 'Openings from sources you choose.' },
+      { label: 'Fit assessment', href: '/features/job-matcher', availability: 'preview', text: 'Requirements against your evidence.' },
+      { label: 'Tailored materials', href: '/features/resume-tailoring', availability: 'preview', text: 'Resume and answers you approve.' },
+      { label: 'Application record', href: '/features/job-application-tracker', availability: 'concept', text: 'Status, version and next step.' }
+    ];
+    const horiz = this.state.w >= 1000;
+    return {
+      setRoot: this.setRoot, headingId: this.uid,
+      tone: p.tone || 'default',
+      heading: p.heading || 'How the search works',
+      lead: p.lead, hasLead: !!p.lead,
+      note: p.note, hasNote: !!p.note,
+      dir: horiz ? 'row' : 'column',
+      nodeFlex: horiz ? '1 1 0' : '0 0 auto',
+      connW: horiz ? '28px' : '100%', connH: horiz ? 'auto' : '28px',
+      connIcon: horiz ? 'arrow-right' : 'arrow-down',
+      nodeList: nodes.map((n, i) => ({ ...n, num: String(i + 1).padStart(2, '0'), hasHref: !!n.href, noHref: !n.href, hasText: !!n.text, connector: i < nodes.length - 1 }))
+    };
+  }
+}
+</script>
+</body>
+</html>

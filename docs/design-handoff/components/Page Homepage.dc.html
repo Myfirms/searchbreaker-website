@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>AI Job Search Platform · SearchBreaker</title>
+<link rel="icon" href="../assets/logo/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;background:#FFFFFF}a{color:var(--color-link)}a:hover{color:var(--color-link-hover)}</style>
+</helmet>
+<div data-screen-label="Homepage" style="background:var(--color-bg);min-height:100vh;padding-bottom:{{ stickyPad }}">
+<dc-import name="Header" cta="{{ cta }}" current="/" on-cta="{{ openHeader }}" hint-size="100%,65px"></dc-import>
+<main>
+<dc-import name="AnnouncementBar" dismissible="{{ true }}" on-activate="{{ openAnnouncement }}" hint-size="100%,44px"></dc-import>
+<dc-import name="Hero" variant="home" badge="{{ heroBadge }}" primary-cta="{{ cta }}" secondary-cta="{{ heroSecondary }}" media="{{ heroMedia }}" reassurance="You review everything before anything is sent." on-cta="{{ openHero }}" hint-size="100%,680px"></dc-import>
+<dc-import name="WorkflowDiagram" heading="How the search works" lead="Four stages share one verified profile. Each stage shows what is available today." nodes="{{ nodes }}" hint-size="100%,420px"></dc-import>
+<dc-import name="ControlPoints" tone="muted" heading="What you control" lead="SearchBreaker prepares drafts and suggestions. Every step that changes your materials or contacts an employer waits for you." points="{{ points }}" hint-size="100%,520px"></dc-import>
+<dc-import name="PipelineBoard" heading="See your application pipeline" lead="Every application, the resume version you sent and the next step, in one place." hint-size="100%,640px"></dc-import>
+<dc-import name="AudienceCards" tone="muted" heading="Who this helps" hint-size="100%,440px"></dc-import>
+<dc-import name="RelatedLinks" heading="Explore each stage" items="{{ featureLinks }}" hint-size="100%,300px"></dc-import>
+<dc-import name="FaqAccordion" tone="muted" heading="Questions" faqs="{{ faqs }}" default-open="0" hint-size="100%,520px"></dc-import>
+<dc-import name="FinalCta" heading="Run your job search as one controlled workflow" secondary-cta="{{ heroSecondary }}" on-cta="{{ openFinal }}" hint-size="100%,340px"></dc-import>
+</main>
+<dc-import name="Footer" hint-size="100%,420px"></dc-import>
+<sc-if value="{{ showSticky }}" hint-placeholder-val="{{ false }}"><dc-import name="StickyMobileCta" readiness="waitlist" on-activate="{{ openSticky }}" hint-size="100%,70px"></dc-import></sc-if>
+<dc-import name="WaitlistDialog" open="{{ dialogOpen }}" layout="fixed" source="{{ source }}" on-close="{{ closeDialog }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { dialogOpen: false, source: 'home', w: 1440 };
+  onResize = () => { const w = window.innerWidth; if (w !== this.state.w) this.setState({ w }); };
+  componentDidMount() { this.onResize(); window.addEventListener('resize', this.onResize); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  open = (source) => () => this.setState({ dialogOpen: true, source });
+  renderVals() {
+    const sticky = this.state.w < 900;
+    return {
+      cta: { readiness: 'waitlist' },
+      heroBadge: { state: 'preview', detail: 'in private testing' },
+      heroSecondary: { label: 'See how the search works', href: '/how-it-works' },
+      heroMedia: { state: 'concept', label: 'Application pipeline', alt: 'Concept of the application pipeline board with five stages', caption: 'Pipeline view with the resume version and next action on each card.' },
+      nodes: [
+        { label: 'Build a verified profile', availability: 'preview', text: 'Confirm your roles, results and skills once.' },
+        { label: 'Choose target roles', availability: 'preview', text: 'Set titles, level, location and work mode.' },
+        { label: 'Find and prioritize jobs', href: '/features/ai-job-finder', availability: 'preview', text: 'See openings with fit reasons and gaps.' },
+        { label: 'Prepare, review and track applications', href: '/features/resume-tailoring', availability: 'preview', text: 'Approve every edit and follow each application.' }
+      ],
+      points: [
+        { title: 'Edit your experience', text: 'Your profile is the only source for resumes and applications. Change or remove any fact at any time.', icon: 'edit' },
+        { title: 'Approve every material', text: 'Each tailored resume and answer waits for your review. Accept, edit or reject each proposed change.', icon: 'user-check' },
+        { title: 'Decide when to submit', text: 'Nothing is sent to an employer without an explicit action from you.', icon: 'send' }
+      ],
+      featureLinks: [
+        { kind: 'related', label: 'AI job finder', href: '/features/ai-job-finder', blurb: 'Find openings that fit your target roles.', availability: 'preview' },
+        { kind: 'related', label: 'Job matcher', href: '/features/job-matcher', blurb: 'Compare requirements with your confirmed experience.', availability: 'preview' },
+        { kind: 'related', label: 'Resume tailoring', href: '/features/resume-tailoring', blurb: 'Adapt your resume to each job from verified facts.', availability: 'preview' },
+        { kind: 'related', label: 'Application tracker', href: '/features/job-application-tracker', blurb: 'Every application and next step in one pipeline.', availability: 'concept' }
+      ],
+      faqs: [
+        { q: 'Is this another job board?', a: 'No. SearchBreaker does not host job listings. It helps you find openings from existing sources, assess fit and manage your applications in one workspace.' },
+        { q: 'Will AI invent experience?', a: 'No. Resumes and applications use only facts you entered and confirmed. Each proposed edit shows which profile fact it comes from, and you can reject any of them.' },
+        { q: 'Will it submit applications without my consent?', a: 'No. Submission always needs your explicit approval. Auto-apply, when available, runs only under rules you set and can be paused at any time.' },
+        { q: 'Is SearchBreaker available now?', a: 'Not yet. It is in private testing. Join the waitlist to get an invite when the workflow you need is ready.' }
+      ],
+      showSticky: sticky, stickyPad: sticky ? '76px' : '0',
+      dialogOpen: this.state.dialogOpen, source: this.state.source,
+      openHeader: this.open('home-header'), openAnnouncement: this.open('home-announcement'), openHero: this.open('home-hero'),
+      openFinal: this.open('home-final-cta'), openSticky: this.open('home-sticky'),
+      closeDialog: () => this.setState({ dialogOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

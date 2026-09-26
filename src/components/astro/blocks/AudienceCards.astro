@@ -1,0 +1,104 @@
+---
+import type { SectionTone } from '../../../lib/types';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface AudienceItem {
+  title: string;
+  /** ≤ 25 words. */
+  text: string;
+  /** ≤ 12 words. */
+  caveat?: string;
+}
+export interface AudienceCardsProps {
+  heading: string;
+  lead?: string;
+  /** 3 cards. */
+  items: AudienceItem[];
+  caveatLabel?: string;
+  tone?: SectionTone;
+}
+
+const { heading, lead, items, caveatLabel = 'Keep in mind', tone = 'default' } = Astro.props as AudienceCardsProps;
+const id = makeId('sb-ac', heading);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-ac">
+    <SectionHeader {heading} {id} {lead} />
+    <ul class="sb-ac__grid">
+      {items.map((it) => (
+        <li class="sb-ac__card">
+          <h3 class="sb-ac__title">{it.title}</h3>
+          <p class="sb-ac__text">{it.text}</p>
+          {it.caveat && (
+            <div class="sb-ac__caveat">
+              <span class="sb-ac__caveat-label">{caveatLabel}</span>
+              <span class="sb-ac__caveat-text">{it.caveat}</span>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .sb-ac {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .sb-ac__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
+    gap: var(--space-4);
+  }
+  .sb-ac__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--card-pad);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+  }
+  .sb-ac__title {
+    margin: 0;
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-heading);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-ac__text {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .sb-ac__caveat {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+  }
+  .sb-ac__caveat-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-ac__caveat-text {
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+  }
+</style>

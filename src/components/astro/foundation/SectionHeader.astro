@@ -1,0 +1,63 @@
+---
+interface Props {
+  heading: string;
+  /** id for the heading; the parent Section points aria-labelledby at it. */
+  id: string;
+  eyebrow?: string;
+  lead?: string;
+  /** h3 tier for compact sections (RelatedLinks). */
+  size?: 'h2' | 'h3';
+  /** Lead text size: `lg` (default) or `md` (FaqAccordion). */
+  leadSize?: 'lg' | 'md';
+}
+
+const { heading, id, eyebrow, lead, size = 'h2', leadSize = 'lg' } = Astro.props;
+---
+
+<header class="sb-sh">
+  {eyebrow && <span class="sb-sh__eyebrow">{eyebrow}</span>}
+  <h2 id={id} class:list={['sb-sh__heading', `sb-sh__heading--${size}`]}>{heading}</h2>
+  {lead && <p class:list={['sb-sh__lead', `sb-sh__lead--${leadSize}`]}>{lead}</p>}
+</header>
+
+<style>
+  .sb-sh {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 45rem;
+  }
+  .sb-sh__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-sh__heading {
+    margin: 0;
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    font-weight: var(--font-weight-semibold);
+    text-wrap: balance;
+  }
+  .sb-sh__heading--h2 {
+    font-size: var(--text-h2);
+  }
+  .sb-sh__heading--h3 {
+    font-size: var(--text-h3);
+  }
+  .sb-sh__lead {
+    margin: 0;
+    max-width: var(--measure-lead);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .sb-sh__lead--lg {
+    font-size: var(--text-lg);
+  }
+  .sb-sh__lead--md {
+    font-size: var(--text-md);
+  }
+</style>

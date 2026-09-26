@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>How to tailor a resume to a job description · SearchBreaker</title>
+<link rel="icon" href="../assets/logo/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;background:#FFFFFF}a{color:var(--color-link)}a:hover{color:var(--color-link-hover)}</style>
+</helmet>
+<div data-screen-label="Guide · Tailor resume" style="background:var(--color-bg);min-height:100vh">
+<dc-import name="Header" cta="{{ cta }}" current="/guides" on-cta="{{ openHeader }}" hint-size="100%,65px"></dc-import>
+<main>
+<dc-import name="Breadcrumbs" items="{{ crumbs }}" hint-size="100%,44px"></dc-import>
+<dc-import name="ArticleHero" hint-size="100%,380px"></dc-import>
+<dc-import name="ArticleBody" hint-size="100%,1800px"></dc-import>
+<dc-import name="KeyTakeaways" hint-size="100%,260px"></dc-import>
+<dc-import name="InlineCta" cta="{{ cta }}" on-cta="{{ openInline }}" hint-size="100%,260px"></dc-import>
+<dc-import name="FaqAccordion" heading="Questions about tailoring" faqs="{{ faqs }}" default-open="" hint-size="100%,440px"></dc-import>
+<dc-import name="RelatedLinks" tone="muted" heading="Related" items="{{ related }}" hint-size="100%,280px"></dc-import>
+<dc-import name="AuthorReviewed" updated="2026-09-14" hint-size="100%,160px"></dc-import>
+</main>
+<dc-import name="Footer" hint-size="100%,420px"></dc-import>
+<dc-import name="WaitlistDialog" open="{{ dialogOpen }}" layout="fixed" source="{{ source }}" on-close="{{ closeDialog }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { dialogOpen: false, source: 'guide-tailor-resume' };
+  open = (source) => () => this.setState({ dialogOpen: true, source });
+  renderVals() {
+    return {
+      cta: { readiness: 'waitlist' },
+      crumbs: [{ label: 'Home', href: '/' }, { label: 'Guides', href: '/guides' }, { label: 'How to tailor a resume to a job description' }],
+      faqs: [
+        { q: 'Should I tailor every application?', a: 'Tailor for every role you actively want. For very similar roles, small changes to the summary and the order of bullets are often enough.' },
+        { q: 'Is it okay to copy phrases from the job description?', a: 'Yes, where the phrase describes work you actually did. Copying requirements you do not meet misleads the reader.' },
+        { q: 'Does tailoring help with applicant tracking systems?', a: 'Clear headings, plain text and the job’s own terms make a resume easier to parse. No method guarantees how a specific system will read it.' }
+      ],
+      related: [
+        { kind: 'related', label: 'Resume tailoring in SearchBreaker', href: '/features/resume-tailoring', blurb: 'Proposed edits linked to your verified facts.', availability: 'preview' },
+        { kind: 'related', label: 'Job matcher', href: '/features/job-matcher', blurb: 'Map requirements to your evidence before you edit.', availability: 'preview' }
+      ],
+      dialogOpen: this.state.dialogOpen, source: this.state.source,
+      openHeader: this.open('guide-header'), openInline: this.open('guide-inline-cta'),
+      closeDialog: () => this.setState({ dialogOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

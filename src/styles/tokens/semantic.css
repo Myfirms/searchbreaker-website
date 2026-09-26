@@ -1,0 +1,107 @@
+/* SearchBreaker · Level 2 · Semantic tokens (role names).
+   Light is primary. Dark is complete and switchable per page (data-theme) or per section (data-surface). */
+:root,
+[data-theme="light"],
+[data-surface="light"] {
+  color-scheme: light;
+  --color-bg: var(--sb-white);
+  --color-surface: var(--sb-mist-100);
+  --color-surface-raised: var(--sb-white);
+  --color-surface-sunken: var(--sb-mist-50);
+  --color-surface-accent: var(--sb-mint-100);
+
+  --color-text: var(--sb-ink-900);
+  --color-text-secondary: var(--sb-grey-700);
+  --color-text-muted: var(--sb-grey-600);
+  --color-text-inverse: var(--sb-white);
+
+  --color-border: var(--sb-mist-300);
+  --color-border-strong: var(--sb-grey-500);   /* 3.5:1 on white: input borders */
+  --color-border-inverse: var(--sb-ink-900);
+
+  --color-accent: var(--sb-teal-800);
+  --color-accent-hover: var(--sb-teal-900);
+  --color-accent-active: var(--sb-teal-950);
+  --color-accent-subtle: var(--sb-mint-100);
+  --color-on-accent: var(--sb-white);
+  --color-accent-graphic: var(--sb-teal-300);  /* illustration only, never text */
+
+  --color-link: var(--sb-teal-800);
+  --color-link-hover: var(--sb-teal-950);
+  --color-focus: var(--sb-teal-800);
+  --color-focus-halo: var(--sb-white);
+
+  --color-success: var(--sb-green-700);
+  --color-success-subtle: var(--sb-green-50);
+  --color-warning: var(--sb-amber-700);
+  --color-warning-subtle: var(--sb-amber-50);
+  --color-error: var(--sb-red-700);
+  --color-error-subtle: var(--sb-red-50);
+
+  --color-disabled-bg: var(--sb-mist-300);
+  --color-disabled-text: var(--sb-grey-600);
+  --color-disabled-border: var(--sb-mist-300);
+  --color-overlay: rgb(14 27 24 / 0.48);
+
+  /* Availability (AvailabilityBadge) */
+  --color-state-live-fg: var(--sb-green-700);
+  --color-state-live-bg: var(--sb-green-50);
+  --color-state-preview-fg: var(--sb-amber-700);
+  --color-state-preview-bg: var(--sb-amber-50);
+  --color-state-concept-fg: var(--sb-teal-800);
+  --color-state-concept-bg: var(--sb-mint-100);
+  --color-state-planned-fg: var(--sb-grey-600);
+  --color-state-planned-bg: var(--sb-mist-100);
+}
+
+[data-theme="dark"],
+[data-surface="dark"] {
+  color-scheme: dark;
+  --color-bg: var(--sb-night-950);
+  --color-surface: var(--sb-night-900);
+  --color-surface-raised: var(--sb-night-850);
+  --color-surface-sunken: var(--sb-night-950);
+  --color-surface-accent: var(--sb-teal-sub-dark);
+
+  --color-text: var(--sb-night-100);
+  --color-text-secondary: var(--sb-night-300);
+  --color-text-muted: var(--sb-night-400);
+  --color-text-inverse: var(--sb-night-950);
+
+  --color-border: var(--sb-night-700);
+  --color-border-strong: var(--sb-night-500);
+  --color-border-inverse: var(--sb-night-100);
+
+  --color-accent: var(--sb-teal-300);
+  --color-accent-hover: var(--sb-teal-200);
+  --color-accent-active: var(--sb-teal-400);
+  --color-accent-subtle: var(--sb-teal-sub-dark);
+  --color-on-accent: var(--sb-night-950);
+  --color-accent-graphic: var(--sb-teal-300);
+
+  --color-link: var(--sb-teal-300);
+  --color-link-hover: var(--sb-teal-200);
+  --color-focus: var(--sb-teal-300);
+  --color-focus-halo: var(--sb-night-950);
+
+  --color-success: var(--sb-green-400);
+  --color-success-subtle: var(--sb-green-950);
+  --color-warning: var(--sb-amber-300);
+  --color-warning-subtle: var(--sb-amber-950);
+  --color-error: var(--sb-red-400);
+  --color-error-subtle: var(--sb-red-950);
+
+  --color-disabled-bg: var(--sb-night-800);
+  --color-disabled-text: var(--sb-night-500);
+  --color-disabled-border: var(--sb-night-700);
+  --color-overlay: rgb(0 0 0 / 0.64);
+
+  --color-state-live-fg: var(--sb-green-400);
+  --color-state-live-bg: var(--sb-green-950);
+  --color-state-preview-fg: var(--sb-amber-300);
+  --color-state-preview-bg: var(--sb-amber-950);
+  --color-state-concept-fg: var(--sb-teal-300);
+  --color-state-concept-bg: var(--sb-teal-sub-dark);
+  --color-state-planned-fg: var(--sb-night-400);
+  --color-state-planned-bg: var(--sb-night-800);
+}

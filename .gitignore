@@ -1,0 +1,23 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+
+# environment variables (never commit keys)
+.env
+.env.production
+
+# generated images/drafts — regenerable from manifests, reviewed before use
+docs/images/generated/
+scripts/.cache/
+
+# OS / editor
+.DS_Store
+desktop.ini
+.idea/

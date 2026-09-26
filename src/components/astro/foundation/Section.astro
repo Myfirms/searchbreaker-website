@@ -1,0 +1,44 @@
+---
+import type { SectionTone } from '../../../lib/types';
+
+interface Props {
+  /** id of the heading that labels this section (aria-labelledby). */
+  labelledby?: string;
+  tone?: SectionTone;
+  /** `dark` flips every token inside via data-surface. */
+  surface?: 'light' | 'dark';
+  /** Use the tight vertical padding (RelatedLinks-style sections). */
+  tight?: boolean;
+  id?: string;
+}
+
+const { labelledby, tone = 'default', surface, tight = false, id } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={['sb-section', { 'sb-section--tight': tight }]}
+  data-tone={tone}
+  data-surface={surface}
+  aria-labelledby={labelledby}
+>
+  <div class="sb-section__inner">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .sb-section {
+    background: var(--section-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    padding: var(--section-pad-y) var(--gutter);
+  }
+  .sb-section--tight {
+    padding: var(--section-pad-y-tight) var(--gutter);
+  }
+  .sb-section__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+</style>

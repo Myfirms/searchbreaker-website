@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<nav ref="{{ rootRef }}" aria-label="Breadcrumb" data-tone="{{ tone }}" style="background:var(--section-bg);font-family:var(--font-sans);padding:var(--space-3) var(--gutter) 0">
+<div style="max-width:var(--container-max);margin:0 auto">
+<sc-if value="{{ showTrail }}" hint-placeholder-val="{{ true }}"><ol style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-1) var(--space-2);font-size:var(--text-sm)">
+<sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="3"><li style="display:flex;align-items:center;gap:var(--space-2)">
+<sc-if value="{{ c.isLink }}" hint-placeholder-val="{{ true }}"><a href="{{ c.href }}" style="display:inline-flex;align-items:center;min-height:32px;color:var(--color-text-secondary);text-decoration:none" style-hover="color:var(--color-text);text-decoration:underline;text-underline-offset:3px">{{ c.label }}</a><span style="display:flex;color:var(--color-text-muted)"><dc-import name="Icon" icon="chevron-right" size="16" hint-size="16px,16px"></dc-import></span></sc-if>
+<sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}"><span aria-current="page" style="color:var(--color-text);font-weight:var(--font-weight-medium)">{{ c.label }}</span></sc-if>
+</li></sc-for></ol></sc-if>
+<sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}"><a href="{{ parent.href }}" style="display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--touch-target);font-size:var(--text-sm);font-weight:var(--font-weight-medium);color:var(--color-text-secondary);text-decoration:none"><dc-import name="Icon" icon="arrow-left" size="16" hint-size="16px,16px"></dc-import>{{ parent.label }}</a></sc-if>
+</div></nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;60px&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{ label: string; href?: string }[]&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;'default' | 'muted'&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  state = { w: 1200 };
+  componentDidMount() {
+    const el = this.rootRef.current; if (!el) return;
+    this.setState({ w: el.offsetWidth });
+    this.ro = new ResizeObserver(e => { const w = e[0].contentRect.width; if (Math.abs(w - this.state.w) > 1) this.setState({ w }); });
+    this.ro.observe(el);
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  renderVals() {
+    const items = this.props.items || [{ label: 'Home', href: '/' }, { label: 'Features', href: '/features' }, { label: 'Resume Tailoring' }];
+    const n = items.length;
+    const compact = this.state.w < 640 && n > 2;
+    return {
+      rootRef: this.rootRef,
+      tone: this.props.tone || 'default',
+      crumbs: items.map((it, i) => ({ label: it.label, href: it.href, isLink: i < n - 1, isCurrent: i === n - 1 })),
+      showTrail: !compact, showBack: compact,
+      parent: items[n - 2] || items[0]
+    };
+  }
+}
+</script>
+</body>
+</html>

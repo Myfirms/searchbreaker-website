@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+{{ svg }}
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;48px&quot;,&quot;height&quot;:&quot;48px&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;search&quot;,&quot;check&quot;,&quot;check-circle&quot;,&quot;arrow-right&quot;,&quot;arrow-left&quot;,&quot;chevron-down&quot;,&quot;chevron-up&quot;,&quot;chevron-right&quot;,&quot;menu&quot;,&quot;close&quot;,&quot;info&quot;,&quot;alert&quot;,&quot;lock&quot;,&quot;file&quot;,&quot;calendar&quot;,&quot;external&quot;,&quot;edit&quot;,&quot;eye&quot;,&quot;pause&quot;,&quot;skip&quot;,&quot;send&quot;,&quot;user-check&quot;,&quot;shield&quot;,&quot;plus&quot;,&quot;minus&quot;],&quot;default&quot;:&quot;info&quot;,&quot;tsType&quot;:&quot;IconName&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;16&quot;,&quot;20&quot;,&quot;24&quot;],&quot;default&quot;:&quot;20&quot;,&quot;tsType&quot;:&quot;16 | 20 | 24&quot;}}">
+class Component extends DCLogic {
+  static P = {
+    'search': ['M5 11a6 6 0 1 0 12 0a6 6 0 1 0 -12 0', 'M20 20l-4.5-4.5'],
+    'check': ['M5 12.5l4.5 4.5L19 7.5'],
+    'check-circle': ['M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0', 'M8 12.5l2.8 2.8L16.5 9.5'],
+    'arrow-right': ['M5 12h14M13 6l6 6-6 6'],
+    'arrow-left': ['M19 12H5M11 6l-6 6 6 6'],
+    'chevron-down': ['M6 9l6 6 6-6'],
+    'chevron-up': ['M6 15l6-6 6 6'],
+    'chevron-right': ['M9 6l6 6-6 6'],
+    'menu': ['M4 7h16M4 12h16M4 17h16'],
+    'close': ['M6 6l12 12M18 6L6 18'],
+    'info': ['M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0', 'M12 11v5M12 8h.01'],
+    'alert': ['M12 4l9 16H3z', 'M12 10v4M12 17h.01'],
+    'lock': ['M6.5 11h11a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1 -1.5 1.5h-11a1.5 1.5 0 0 1 -1.5 -1.5v-6a1.5 1.5 0 0 1 1.5 -1.5z', 'M8 11V8a4 4 0 0 1 8 0v3'],
+    'file': ['M6 3h8l4 4v14H6z', 'M14 3v4h4M9 13h6M9 17h6'],
+    'calendar': ['M5.5 5h13a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1 -1.5 1.5h-13a1.5 1.5 0 0 1 -1.5 -1.5v-12a1.5 1.5 0 0 1 1.5 -1.5z', 'M4 10h16M8 3v4M16 3v4'],
+    'external': ['M14 4h6v6M20 4l-9 9M18 14v6H4V6h6'],
+    'edit': ['M4 20h4L19 9l-4-4L4 16z', 'M13.5 6.5l4 4'],
+    'eye': ['M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z', 'M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0'],
+    'pause': ['M9 5v14M15 5v14'],
+    'skip': ['M5 5l10 7-10 7z', 'M19 5v14'],
+    'send': ['M4 12l16-8-6 16-3-7z', 'M11 13l9-9'],
+    'user-check': ['M3 20a6 6 0 0 1 12 0', 'M6 9a3 3 0 1 0 6 0a3 3 0 1 0 -6 0', 'M16 11l2 2 4-4'],
+    'shield': ['M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z'],
+    'plus': ['M12 5v14M5 12h14'],
+    'minus': ['M5 12h14'],
+    'arrow-down': ['M12 5v14M6 13l6 6 6-6'],
+    'circle-half': ['M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0', 'M12 3v18'],
+    'x-circle': ['M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0', 'M9 9l6 6M15 9l-6 6'],
+    'help': ['M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0', 'M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7', 'M12 17h.01'],
+    'board': ['M4 5h4v14H4zM10 5h4v10h-4zM16 5h4v7h-4z'],
+    'table': ['M4 5h16v14H4z', 'M4 10h16M4 15h16M10 5v14']
+  };
+  renderVals() {
+    const p = this.props;
+    const s = Number(p.size) || 20;
+    const paths = Component.P[p.icon] || Component.P.info;
+    return {
+      svg: React.createElement('svg', {
+        width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
+        strokeWidth: p.strokeWidth || 1.5, strokeLinecap: 'round', strokeLinejoin: 'round',
+        'aria-hidden': 'true', focusable: 'false', style: { display: 'block', flex: 'none' }
+      }, paths.map((d, i) => React.createElement('path', { d, key: i })))
+    };
+  }
+}
+</script>
+</body>
+</html>

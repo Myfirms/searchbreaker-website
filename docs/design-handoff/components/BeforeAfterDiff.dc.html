@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-10)">
+<header style="display:flex;flex-direction:column;gap:var(--space-4);max-width:720px">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p></sc-if>
+</header>
+<div style="border:1px dashed var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-surface-raised);overflow:hidden">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:40px;padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-border)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ frameLabel }}</span><dc-import name="AvailabilityBadge" state="illustrative" hint-size="130px,22px"></dc-import></div>
+<div style="padding:var(--card-pad);display:flex;flex-direction:column;gap:var(--space-6)">
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">Job requirement</span><p style="margin:0;padding:var(--space-3) var(--space-4);border-radius:var(--radius-sm);background:var(--color-surface);font-size:var(--text-md);line-height:var(--leading-snug)">“{{ requirement }}”</p></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:var(--space-4)">
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">Before</span><p style="margin:0;flex:1 1 auto;padding:var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-sm);font-size:var(--text-md);line-height:var(--leading-body)"><sc-for list="{{ beforeSegs }}" as="seg" hint-placeholder-count="2"><sc-if value="{{ seg.isRemoved }}" hint-placeholder-val="{{ false }}"><del style="background:var(--color-error-subtle);color:var(--color-text);text-decoration-color:var(--color-error)">{{ seg.text }}</del></sc-if><sc-if value="{{ seg.isSame }}" hint-placeholder-val="{{ true }}"><span>{{ seg.text }}</span></sc-if></sc-for></p></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-accent)">{{ afterLabel }}</span>
+<sc-if value="{{ showDiffAfter }}" hint-placeholder-val="{{ true }}"><p style="margin:0;flex:1 1 auto;padding:var(--space-4);border:1px solid var(--color-accent);border-radius:var(--radius-sm);font-size:var(--text-md);line-height:var(--leading-body)"><sc-for list="{{ afterSegs }}" as="seg" hint-placeholder-count="3"><sc-if value="{{ seg.isAdded }}" hint-placeholder-val="{{ false }}"><ins style="background:var(--color-success-subtle);color:var(--color-text);text-decoration-color:var(--color-success);text-underline-offset:3px">{{ seg.text }}</ins></sc-if><sc-if value="{{ seg.isSame }}" hint-placeholder-val="{{ true }}"><span>{{ seg.text }}</span></sc-if></sc-for></p></sc-if>
+<sc-if value="{{ showEditedAfter }}" hint-placeholder-val="{{ false }}"><p style="margin:0;flex:1 1 auto;padding:var(--space-4);border:1px solid var(--color-accent);border-radius:var(--radius-sm);font-size:var(--text-md);line-height:var(--leading-body)">{{ editedText }}</p></sc-if>
+<sc-if value="{{ editing }}" hint-placeholder-val="{{ false }}"><label for="{{ editId }}" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Edit proposed line</label><textarea id="{{ editId }}" value="{{ draft }}" onChange="{{ onDraft }}" rows="4" style="box-sizing:border-box;width:100%;padding:var(--space-3) var(--input-pad-x);font-family:inherit;font-size:var(--text-md);line-height:var(--leading-body);color:var(--input-fg);background:var(--input-bg);border:1px solid var(--input-border-focus);border-radius:var(--input-radius);resize:vertical"></textarea></sc-if>
+</div></div>
+<div style="display:flex;gap:var(--space-3);padding:var(--space-4);border-radius:var(--radius-sm);background:var(--color-accent-subtle)"><span style="display:flex;color:var(--color-accent)"><dc-import name="Icon" icon="file" size="20" hint-size="20px,20px"></dc-import></span><div style="display:flex;flex-direction:column;gap:var(--space-1)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-accent)">Source · {{ provenance.source }}</span><span style="font-size:var(--text-sm);line-height:var(--leading-snug)">{{ provenance.fact }}</span><sc-if value="{{ hasConfirmed }}" hint-placeholder-val="{{ true }}"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-secondary)">Confirmed by you on {{ provenance.confirmedOn }}</span></sc-if></div></div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3);padding-top:var(--space-4);border-top:1px solid var(--color-border)">
+<sc-if value="{{ isProposed }}" hint-placeholder-val="{{ true }}"><div role="group" aria-label="Review this edit" style="display:flex;flex-wrap:wrap;gap:var(--space-2)"><dc-import name="Button" size="sm" label="Accept" on-activate="{{ accept }}" hint-size="80px,36px"></dc-import><dc-import name="Button" size="sm" variant="secondary" label="Edit" on-activate="{{ startEdit }}" hint-size="64px,36px"></dc-import><dc-import name="Button" size="sm" variant="ghost" label="Reject" on-activate="{{ reject }}" hint-size="72px,36px"></dc-import></div></sc-if>
+<sc-if value="{{ editing }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;gap:var(--space-2)"><dc-import name="Button" size="sm" label="Save edit" on-activate="{{ saveEdit }}" hint-size="96px,36px"></dc-import><dc-import name="Button" size="sm" variant="ghost" label="Cancel" on-activate="{{ cancelEdit }}" hint-size="72px,36px"></dc-import></div></sc-if>
+<sc-if value="{{ isDecided }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3)"><dc-import name="StatusChip" status="{{ decisionStatus }}" label="{{ decisionLabel }}" hint-size="110px,26px"></dc-import><span style="font-size:var(--text-sm);color:var(--color-text-secondary)">{{ decisionText }}</span><dc-import name="Button" size="sm" variant="link" label="Undo" on-activate="{{ undo }}" hint-size="56px,36px"></dc-import></div></sc-if>
+<span style="display:flex;gap:var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted)"><ins style="background:var(--color-success-subtle);color:var(--color-text);text-decoration-color:var(--color-success)">added</ins><del style="background:var(--color-error-subtle);color:var(--color-text);text-decoration-color:var(--color-error)">removed</del></span>
+</div>
+</div></div>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;760px&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;proposed&quot;,&quot;editing&quot;,&quot;accepted&quot;,&quot;edited&quot;,&quot;rejected&quot;],&quot;default&quot;:&quot;proposed&quot;,&quot;tsType&quot;:&quot;DiffState&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;See what changes for this job&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;requirement&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;before&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;DiffSegment[]&quot;},&quot;after&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;DiffSegment[]&quot;},&quot;provenance&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Provenance&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbba' + Math.random().toString(36).slice(2, 7);
+  state = { status: null, draft: '', edited: '' };
+  componentDidMount() { this.setState({ status: this.props.state || 'proposed' }); }
+  renderVals() {
+    const p = this.props;
+    const st = this.state.status || p.state || 'proposed';
+    const before = p.before || [{ text: 'Worked on redesigning', kind: 'removed' }, { text: ' the invoicing flow for enterprise customers.' }];
+    const after = p.after || [{ text: 'Redesigned', kind: 'added' }, { text: ' the invoicing flow for enterprise customers' }, { text: ', cutting failed invoice payments from 7% to 3% in two quarters', kind: 'added' }, { text: '.' }];
+    const afterPlain = after.map(s => s.text).join('');
+    const prov = p.provenance || { source: 'Profile · Northwind Logistics · Product Manager', fact: 'Failed invoice payments fell from 7% to 3% after the invoicing redesign (Q3–Q4 2024).', confirmedOn: '2026-08-02' };
+    const version = p.resumeVersion || 'Resume v3';
+    const map = {
+      accepted: ['submitted', 'Accepted', 'Added to ' + version + '.'],
+      edited: ['reviewed', 'Edited', 'Your version was saved to ' + version + '.'],
+      rejected: ['unclear', 'Rejected', 'The original line stays in your resume.']
+    };
+    const d = map[st] || map.accepted;
+    return {
+      headingId: this.uid, editId: this.uid + '-edit',
+      tone: p.tone || 'default',
+      heading: p.heading || 'See what changes for this job',
+      lead: p.lead, hasLead: !!p.lead,
+      frameLabel: p.frameLabel || 'Proposed edit · Senior Product Manager, Payments',
+      requirement: p.requirement || 'Experience reducing checkout or payment failure rates.',
+      beforeSegs: before.map(s => ({ text: s.text, isRemoved: s.kind === 'removed', isSame: s.kind !== 'removed' })),
+      afterSegs: after.map(s => ({ text: s.text, isAdded: s.kind === 'added', isSame: s.kind !== 'added' })),
+      afterLabel: st === 'edited' ? 'Your edit' : st === 'rejected' ? 'Proposed (rejected)' : 'Proposed',
+      showDiffAfter: st === 'proposed' || st === 'accepted' || st === 'rejected',
+      showEditedAfter: st === 'edited',
+      editedText: this.state.edited || afterPlain,
+      editing: st === 'editing',
+      draft: this.state.draft,
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      provenance: prov, hasConfirmed: !!prov.confirmedOn,
+      isProposed: st === 'proposed', isDecided: st === 'accepted' || st === 'rejected' || st === 'edited',
+      decisionStatus: d[0], decisionLabel: d[1], decisionText: d[2],
+      accept: () => this.setState({ status: 'accepted' }),
+      reject: () => this.setState({ status: 'rejected' }),
+      startEdit: () => this.setState({ status: 'editing', draft: this.state.edited || afterPlain }),
+      saveEdit: () => this.setState({ status: 'edited', edited: this.state.draft }),
+      cancelEdit: () => this.setState({ status: 'proposed' }),
+      undo: () => this.setState({ status: 'proposed', edited: '' })
+    };
+  }
+}
+</script>
+</body>
+</html>

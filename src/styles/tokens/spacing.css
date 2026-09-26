@@ -1,0 +1,40 @@
+/* SearchBreaker · Spacing, layout, breakpoints. Base unit 4px. */
+:root {
+  --space-0: 0;
+  --space-0-5: 0.125rem; /* 2 */
+  --space-1: 0.25rem;    /* 4 */
+  --space-2: 0.5rem;     /* 8 */
+  --space-3: 0.75rem;    /* 12 */
+  --space-4: 1rem;       /* 16 */
+  --space-5: 1.25rem;    /* 20 */
+  --space-6: 1.5rem;     /* 24 */
+  --space-8: 2rem;       /* 32 */
+  --space-10: 2.5rem;    /* 40 */
+  --space-12: 3rem;      /* 48 */
+  --space-16: 4rem;      /* 64 */
+  --space-20: 5rem;      /* 80 */
+  --space-24: 6rem;      /* 96 */
+  --space-32: 8rem;      /* 128 */
+
+  /* Layout */
+  --container-max: 75rem;       /* 1200 content */
+  --container-wide: 90rem;      /* 1440 full-bleed frames */
+  --container-narrow: 45rem;    /* 720 article column */
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2rem);            /* 16 → 32 */
+  --section-pad-y: clamp(3rem, 1.9rem + 4.6vw, 7rem);     /* 48 → 112 */
+  --section-pad-y-tight: clamp(2rem, 1.5rem + 2vw, 4rem); /* 32 → 64 */
+  --stack-gap: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+  --grid-min: 17.5rem; /* auto-fit minmax(var(--grid-min), 1fr) */
+
+  --touch-target: 2.75rem; /* 44 */
+
+  /* Breakpoints (reference only; custom properties can't be used in @media).
+     Use exactly these values:
+     480 small mobile · 640 mobile · 768 tablet · 900 nav collapse · 1200 desktop · 1440 wide */
+  --bp-sm: 480px;
+  --bp-mobile: 640px;
+  --bp-tablet: 768px;
+  --bp-nav: 900px;
+  --bp-desktop: 1200px;
+  --bp-wide: 1440px;
+}

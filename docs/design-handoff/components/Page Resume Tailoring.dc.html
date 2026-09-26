@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Tailor your resume to each job · SearchBreaker</title>
+<link rel="icon" href="../assets/logo/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;background:#FFFFFF}a{color:var(--color-link)}a:hover{color:var(--color-link-hover)}</style>
+</helmet>
+<div data-screen-label="Feature · Resume Tailoring" style="background:var(--color-bg);min-height:100vh;padding-bottom:{{ stickyPad }}">
+<dc-import name="Header" cta="{{ cta }}" current="/features/resume-tailoring" on-cta="{{ openHeader }}" hint-size="100%,65px"></dc-import>
+<main>
+<dc-import name="Breadcrumbs" tone="muted" items="{{ crumbs }}" hint-size="100%,44px"></dc-import>
+<dc-import name="Hero" variant="feature" headline="Tailor your resume to each job without starting over" lead="{{ heroLead }}" badge="{{ heroBadge }}" primary-cta="{{ cta }}" secondary-cta="{{ heroSecondary }}" media="{{ heroMedia }}" reassurance="You approve every change before it is saved." on-cta="{{ openHero }}" hint-size="100%,620px"></dc-import>
+<dc-import name="FeatureGrid" heading="Start from verified experience" lead="Tailoring works from facts you confirmed once, so every version stays true to your record." hint-size="100%,420px"></dc-import>
+<div id="diff"><dc-import name="BeforeAfterDiff" tone="muted" heading="See what changes for this job" lead="Each proposed edit shows the job requirement it answers and the profile fact it comes from." hint-size="100%,760px"></dc-import></div>
+<dc-import name="ControlPoints" heading="Review every proposed edit" lead="Nothing reaches your resume until you accept it." points="{{ reviewPoints }}" hint-size="100%,520px"></dc-import>
+<dc-import name="FeatureGrid" tone="muted" heading="Save the version you used" lead="Each application keeps the exact resume you sent, so follow-ups and interviews start from the right text." columns="3" items="{{ versionItems }}" hint-size="100%,420px"></dc-import>
+<dc-import name="LimitationsCallout" heading="What tailoring cannot do" lead="Tailoring improves how your real experience is presented. It does not change the experience itself." items="{{ limits }}" hint-size="100%,500px"></dc-import>
+<dc-import name="FaqAccordion" tone="muted" heading="Questions about resume tailoring" faqs="{{ faqs }}" default-open="0" hint-size="100%,480px"></dc-import>
+<dc-import name="RelatedLinks" heading="Next in your workflow" items="{{ related }}" hint-size="100%,280px"></dc-import>
+<dc-import name="FinalCta" heading="Tailor your next application from verified facts" text="Resume tailoring is in private testing. Join the waitlist to get an invite." on-cta="{{ openFinal }}" hint-size="100%,340px"></dc-import>
+</main>
+<dc-import name="Footer" hint-size="100%,420px"></dc-import>
+<sc-if value="{{ showSticky }}" hint-placeholder-val="{{ false }}"><dc-import name="StickyMobileCta" readiness="waitlist" on-activate="{{ openSticky }}" hint-size="100%,70px"></dc-import></sc-if>
+<dc-import name="WaitlistDialog" open="{{ dialogOpen }}" layout="fixed" source="{{ source }}" on-close="{{ closeDialog }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { dialogOpen: false, source: 'resume-tailoring', w: 1440 };
+  onResize = () => { const w = window.innerWidth; if (w !== this.state.w) this.setState({ w }); };
+  componentDidMount() { this.onResize(); window.addEventListener('resize', this.onResize); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  open = (source) => () => this.setState({ dialogOpen: true, source });
+  renderVals() {
+    const sticky = this.state.w < 900;
+    return {
+      cta: { readiness: 'waitlist' },
+      crumbs: [{ label: 'Home', href: '/' }, { label: 'Features', href: '/features' }, { label: 'Resume Tailoring' }],
+      heroLead: 'Start from the facts in your verified profile. SearchBreaker proposes edits for each job description, shows where every change comes from, and waits for your approval.',
+      heroBadge: { state: 'preview', detail: 'in private testing' },
+      heroSecondary: { label: 'See what changes for a job', href: '#diff' },
+      heroMedia: { state: 'illustrative', label: 'Proposed edits', alt: 'Example of proposed resume edits, each linked to a profile fact', caption: 'Each edit links to the profile fact it comes from.' },
+      reviewPoints: [
+        { title: 'Check facts and tone', text: 'Each edit is checked against your profile facts and flagged if the wording overstates them.', icon: 'shield' },
+        { title: 'Accept, edit or reject', text: 'Decide on each change separately. Rejected edits leave the original line in place.', icon: 'user-check' },
+        { title: 'Edit by hand at any time', text: 'Write your own version of any line. Your edits are never overwritten.', icon: 'edit' }
+      ],
+      versionItems: [
+        { title: 'Versioned resumes', text: 'Every tailored resume is saved as a numbered version with the job it was made for.', icon: 'file' },
+        { title: 'Linked to each application', text: 'Your application record shows which version you sent and when.', icon: 'calendar', href: '/features/job-application-tracker', linkLabel: 'See the application tracker' },
+        { title: 'Restore any version', text: 'Start a new application from an earlier version instead of from scratch.', icon: 'arrow-left' }
+      ],
+      limits: [
+        { title: 'It cannot add experience', text: 'If a requirement has no matching fact in your profile, tailoring marks it as a gap instead of filling it.' },
+        { title: 'It does not guarantee interviews', text: 'A clearer resume helps readers find your evidence. Hiring decisions depend on much more.' },
+        { title: 'It is not an ATS pass', text: 'Employers configure their systems differently. No tool can confirm how a resume will be parsed.' },
+        { title: 'It depends on your profile', text: 'Outdated or missing facts produce weaker suggestions. Keep your profile current.' }
+      ],
+      faqs: [
+        { q: 'Will it make things up?', a: 'No. Every proposed edit must cite a fact you confirmed in your profile. If there is no matching fact, the requirement is shown as a gap.' },
+        { q: 'Does it just stuff keywords?', a: 'No. It uses the job’s wording only where it describes a fact you already have, and it flags repeated terms.' },
+        { q: 'Can I undo changes?', a: 'Yes. You can undo any accepted edit, and every saved version can be restored.' },
+        { q: 'Is resume tailoring available now?', a: 'It is in private testing. Join the waitlist to get an invite.' }
+      ],
+      related: [
+        { kind: 'next', label: 'Autofill job applications', href: '/features/job-application-autofill', blurb: 'Fill application forms from the same verified profile.', availability: 'planned' },
+        { kind: 'related', label: 'Job matcher', href: '/features/job-matcher', blurb: 'See which requirements your experience covers before you tailor.', availability: 'preview' },
+        { kind: 'guide', label: 'How to tailor a resume to a job description', href: '/guides/tailor-resume-to-job-description', blurb: 'A step-by-step method you can use on your own.' }
+      ],
+      showSticky: sticky, stickyPad: sticky ? '76px' : '0',
+      dialogOpen: this.state.dialogOpen, source: this.state.source,
+      openHeader: this.open('tailoring-header'), openHero: this.open('tailoring-hero'), openFinal: this.open('tailoring-final-cta'), openSticky: this.open('tailoring-sticky'),
+      closeDialog: () => this.setState({ dialogOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

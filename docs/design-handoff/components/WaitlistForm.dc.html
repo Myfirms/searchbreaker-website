@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<div style="font-family:var(--font-sans);color:var(--color-text);display:flex;flex-direction:column;gap:var(--space-5)">
+<sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+<form noValidate="{{ true }}" onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:var(--space-5);margin:0">
+<sc-if value="{{ showServerError }}" hint-placeholder-val="{{ false }}"><div role="alert" style="display:flex;gap:var(--space-3);padding:var(--space-4);border-radius:var(--radius-sm);background:var(--color-error-subtle)"><span style="display:flex;color:var(--color-error)"><dc-import name="Icon" icon="alert" size="20" hint-size="20px,20px"></dc-import></span><div style="display:flex;flex-direction:column;gap:var(--space-1)"><strong style="font-size:var(--text-sm);font-weight:var(--font-weight-semibold)">We couldn't add you right now</strong><span style="font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)">Your details are still here. Try again in a minute.</span></div></div></sc-if>
+
+<div style="display:flex;flex-direction:column;gap:var(--space-2)">
+<label for="{{ emailId }}" style="font-size:var(--text-sm);font-weight:var(--font-weight-medium)">Email</label>
+<input ref="{{ emailRef }}" id="{{ emailId }}" name="email" type="email" autoComplete="email" inputMode="email" placeholder="name@example.com" value="{{ email }}" onChange="{{ onEmail }}" aria-invalid="{{ emailInvalid }}" aria-describedby="{{ emailDescId }}" data-field-state="{{ emailState }}" style="box-sizing:border-box;width:100%;height:var(--input-height);padding:0 var(--input-pad-x);font-family:inherit;font-size:var(--text-md);color:var(--input-fg);background:var(--input-bg);border:var(--field-border-width) solid var(--field-border);border-radius:var(--input-radius)" style-hover="border-color:var(--field-border-hover)" style-focus="border-color:var(--input-border-focus)">
+<sc-if value="{{ hasEmailError }}" hint-placeholder-val="{{ false }}"><span id="{{ emailDescId }}" style="display:flex;gap:6px;align-items:flex-start;font-size:var(--text-xs);line-height:var(--leading-snug);color:var(--color-error)"><dc-import name="Icon" icon="alert" size="16" hint-size="16px,16px"></dc-import>{{ emailError }}</span></sc-if>
+<sc-if value="{{ noEmailError }}" hint-placeholder-val="{{ true }}"><span id="{{ emailDescId }}" style="font-size:var(--text-xs);color:var(--color-text-muted)">We only use it for waitlist updates.</span></sc-if>
+</div>
+
+<sc-if value="{{ showRole }}" hint-placeholder-val="{{ true }}"><div style="display:flex;flex-direction:column;gap:var(--space-2)">
+<label for="{{ roleId }}" style="font-size:var(--text-sm);font-weight:var(--font-weight-medium)">Target role level <span style="font-weight:var(--font-weight-regular);color:var(--color-text-muted)">(optional)</span></label>
+<div style="position:relative">
+<select id="{{ roleId }}" name="role" value="{{ role }}" onChange="{{ onRole }}" style="box-sizing:border-box;width:100%;height:var(--input-height);padding:0 40px 0 var(--input-pad-x);appearance:none;-webkit-appearance:none;font-family:inherit;font-size:var(--text-md);color:var(--input-fg);background:var(--input-bg);border:1px solid var(--input-border);border-radius:var(--input-radius);cursor:pointer" style-hover="border-color:var(--input-border-hover)" style-focus="border-color:var(--input-border-focus)"><option value="">Choose one</option><sc-for list="{{ roleOptions }}" as="opt" hint-placeholder-count="4"><option value="{{ opt }}">{{ opt }}</option></sc-for></select>
+<span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;display:flex;color:var(--color-text-secondary)"><dc-import name="Icon" icon="chevron-down" size="16" hint-size="16px,16px"></dc-import></span>
+</div></div></sc-if>
+
+<div style="display:flex;flex-direction:column;gap:var(--space-2)">
+<label style="display:flex;gap:var(--space-3);align-items:flex-start;font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary);cursor:pointer"><input type="checkbox" name="consent" checked="{{ consent }}" onChange="{{ onConsent }}" aria-invalid="{{ consentInvalid }}" aria-describedby="{{ consentDescId }}" style="width:20px;height:20px;margin:0;flex:none;accent-color:var(--color-accent);cursor:pointer"><span>{{ consentText }} <a href="{{ privacyHref }}" style="color:var(--color-link);text-underline-offset:var(--link-underline-offset)">Privacy policy</a></span></label>
+<sc-if value="{{ hasConsentError }}" hint-placeholder-val="{{ false }}"><span id="{{ consentDescId }}" style="display:flex;gap:6px;align-items:flex-start;padding-left:32px;font-size:var(--text-xs);color:var(--color-error)"><dc-import name="Icon" icon="alert" size="16" hint-size="16px,16px"></dc-import>Check this box to join the waitlist.</span></sc-if>
+</div>
+
+<input type="hidden" name="source" value="{{ source }}">
+<dc-import name="Button" type="submit" readiness="waitlist" size="lg" full-width="{{ true }}" loading="{{ submitting }}" loading-label="Joining…" hint-size="100%,52px"></dc-import>
+</form>
+</sc-if>
+
+<sc-if value="{{ showSuccess }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-5);border-radius:var(--radius-md);background:var(--color-success-subtle)">
+<span style="display:flex;align-items:center;gap:var(--space-2);color:var(--color-success);font-weight:var(--font-weight-semibold)"><dc-import name="Icon" icon="check-circle" size="24" hint-size="24px,24px"></dc-import><span style="font-size:var(--text-lg);color:var(--color-text)">You're on the waitlist</span></span>
+<p style="margin:0;font-size:var(--text-sm);line-height:var(--leading-body);color:var(--color-text-secondary)">We'll email <strong style="color:var(--color-text);font-weight:var(--font-weight-medium)">{{ email }}</strong> when your invite is ready. We don't share your address, and every message has an unsubscribe link.</p>
+</div></sc-if>
+
+<sc-if value="{{ showDuplicate }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-5);border-radius:var(--radius-md);background:var(--color-accent-subtle)">
+<span style="display:flex;align-items:center;gap:var(--space-2);color:var(--color-accent);font-weight:var(--font-weight-semibold)"><dc-import name="Icon" icon="info" size="24" hint-size="24px,24px"></dc-import><span style="font-size:var(--text-lg);color:var(--color-text)">This email is already on the waitlist</span></span>
+<p style="margin:0;font-size:var(--text-sm);line-height:var(--leading-body);color:var(--color-text-secondary)">You don't need to sign up again. We'll email <strong style="color:var(--color-text);font-weight:var(--font-weight-medium)">{{ email }}</strong> when your invite is ready.</p>
+<div><dc-import name="Button" variant="link" label="Use a different email" on-activate="{{ reset }}" hint-size="180px,44px"></dc-import></div>
+</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;420px&quot;,&quot;height&quot;:&quot;480px&quot;},&quot;initialStatus&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;invalid&quot;,&quot;submitting&quot;,&quot;error&quot;,&quot;success&quot;,&quot;duplicate&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;WaitlistStatus&quot;},&quot;source&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;home-hero&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showRole&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;consentText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSubmit&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(p: WaitlistPayload) =&gt; Promise&lt;'success' | 'duplicate' | 'error'&gt;&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbw' + Math.random().toString(36).slice(2, 7);
+  emailRef = React.createRef();
+  state = { email: '', role: '', consent: false, status: 'idle', errors: {} };
+  componentDidMount() {
+    const s = this.props.initialStatus;
+    if (s === 'invalid') this.setState({ email: 'alex.morgan@', errors: { email: 'Enter a full email address, like name@example.com.', consent: true } });
+    else if (s === 'submitting') this.setState({ email: 'alex.morgan@example.com', consent: true, status: 'submitting' });
+    else if (s === 'error') this.setState({ email: 'alex.morgan@example.com', consent: true, status: 'error' });
+    else if (s === 'success' || s === 'duplicate') this.setState({ email: 'alex.morgan@example.com', consent: true, status: s });
+  }
+  validate() {
+    const e = {};
+    const v = this.state.email.trim();
+    if (!v) e.email = 'Enter your email address.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) e.email = 'Enter a full email address, like name@example.com.';
+    if (!this.state.consent) e.consent = true;
+    return e;
+  }
+  submit = (ev) => {
+    ev.preventDefault();
+    if (this.state.status === 'submitting') return;
+    const errors = this.validate();
+    this.setState({ errors });
+    if (Object.keys(errors).length) { if (errors.email && this.emailRef.current) this.emailRef.current.focus(); return; }
+    this.setState({ status: 'submitting' });
+    const payload = { email: this.state.email.trim(), role: this.state.role || null, consent: true, source: this.props.source || 'unknown' };
+    const done = (r) => { this.setState({ status: r }); this.props.onResult && this.props.onResult(r, payload); };
+    if (this.props.onSubmit) Promise.resolve(this.props.onSubmit(payload)).then(r => done(r || 'success'), () => done('error'));
+    else setTimeout(() => done(/taken/.test(payload.email) ? 'duplicate' : /fail/.test(payload.email) ? 'error' : 'success'), 900);
+  };
+  renderVals() {
+    const p = this.props, s = this.state, er = s.errors;
+    return {
+      emailRef: this.emailRef,
+      emailId: this.uid + '-email', roleId: this.uid + '-role', emailDescId: this.uid + '-email-desc', consentDescId: this.uid + '-consent-desc',
+      showForm: s.status === 'idle' || s.status === 'submitting' || s.status === 'error',
+      showServerError: s.status === 'error',
+      showSuccess: s.status === 'success', showDuplicate: s.status === 'duplicate',
+      email: s.email, role: s.role, consent: s.consent,
+      onEmail: (e) => this.setState({ email: e.target.value, errors: { ...this.state.errors, email: undefined } }),
+      onRole: (e) => this.setState({ role: e.target.value }),
+      onConsent: (e) => this.setState({ consent: e.target.checked, errors: { ...this.state.errors, consent: undefined } }),
+      emailInvalid: er.email ? 'true' : undefined, emailState: er.email ? 'error' : 'default',
+      hasEmailError: !!er.email, noEmailError: !er.email, emailError: er.email,
+      consentInvalid: er.consent ? 'true' : undefined, hasConsentError: !!er.consent,
+      showRole: p.showRole !== false,
+      roleOptions: p.roleOptions || ['Mid-level', 'Senior', 'Lead / Principal', 'Manager / Director', 'Changing careers'],
+      consentText: p.consentText || 'I agree to receive email about the SearchBreaker waitlist. I can unsubscribe at any time.',
+      privacyHref: p.privacyHref || '/privacy',
+      source: p.source || 'unknown',
+      submitting: s.status === 'submitting',
+      submit: this.submit,
+      reset: () => this.setState({ status: 'idle', email: '', errors: {} })
+    };
+  }
+}
+</script>
+</body>
+</html>

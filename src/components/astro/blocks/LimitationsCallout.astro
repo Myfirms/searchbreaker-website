@@ -1,0 +1,120 @@
+---
+import type { SectionTone } from '../../../lib/types';
+import Icon from '../primitives/Icon.astro';
+import Section from '../foundation/Section.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface LimitationsCalloutProps {
+  /** Plain statement, e.g. "What a match score can and cannot tell you". */
+  heading: string;
+  eyebrow?: string;
+  lead?: string;
+  /** 2-5 items, text ≤ 25 words. */
+  items: { title: string; text: string }[];
+  footnote?: string;
+  tone?: SectionTone;
+}
+
+const { heading, eyebrow = 'Limitations', lead, items, footnote, tone = 'default' } = Astro.props as LimitationsCalloutProps;
+const id = makeId('sb-lc', heading);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-lc">
+    <header class="sb-lc__head">
+      <span class="sb-lc__eyebrow"><Icon icon="info" size={16} />{eyebrow}</span>
+      <h2 id={id} class="sb-lc__heading">{heading}</h2>
+      {lead && <p class="sb-lc__lead">{lead}</p>}
+    </header>
+    <ul class="sb-lc__list">
+      {items.map((it) => (
+        <li class="sb-lc__item">
+          <h3 class="sb-lc__title">{it.title}</h3>
+          <p class="sb-lc__text">{it.text}</p>
+        </li>
+      ))}
+    </ul>
+    {footnote && <p class="sb-lc__footnote">{footnote}</p>}
+  </div>
+</Section>
+
+<style>
+  .sb-lc {
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    padding: var(--card-pad);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-12);
+  }
+  .sb-lc__head {
+    flex: 1 1 18.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .sb-lc__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .sb-lc__heading {
+    margin: 0;
+    font-size: var(--text-h2);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    font-weight: var(--font-weight-semibold);
+    text-wrap: balance;
+  }
+  .sb-lc__lead {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .sb-lc__list {
+    flex: 1.6 1 28.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-6);
+  }
+  .sb-lc__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+  .sb-lc__title {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-lc__text {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .sb-lc__footnote {
+    flex: 1 1 100%;
+    margin: 0;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-muted);
+  }
+</style>

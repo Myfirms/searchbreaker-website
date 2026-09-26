@@ -1,0 +1,52 @@
+/* SearchBreaker · Level 1 · Primitive tokens (raw values). Never consume directly in components. */
+:root {
+  /* Neutrals: mist → ink (light) */
+  --sb-white: #FFFFFF;
+  --sb-mist-50: #F6F8F7;
+  --sb-mist-100: #EEF2EF;
+  --sb-mist-200: #E3E9E5;
+  --sb-mist-300: #D2DBD6;
+  --sb-grey-400: #A9B7B0;
+  --sb-grey-500: #7D8C86;
+  --sb-grey-600: #52605C;
+  --sb-grey-700: #34423E;
+  --sb-ink-900: #0E1B18;
+
+  /* Neutrals: night (dark) */
+  --sb-night-950: #0C1715;
+  --sb-night-900: #14221F;
+  --sb-night-850: #1A2926;
+  --sb-night-800: #1C2A27;
+  --sb-night-700: #2A3A36;
+  --sb-night-600: #43534E;
+  --sb-night-500: #5E6C67;
+  --sb-night-400: #8E9C97;
+  --sb-night-300: #BCC8C3;
+  --sb-night-100: #E6EEEA;
+
+  /* Accent: deep teal + mint */
+  --sb-teal-950: #063A43;
+  --sb-teal-900: #084A55;
+  --sb-teal-800: #0B5E6B;
+  --sb-teal-700: #11697A;
+  --sb-teal-400: #3FB0B3;
+  --sb-teal-300: #5FC7C9;
+  --sb-teal-200: #8BD8D9;
+  --sb-teal-sub-dark: #11393B;
+  --sb-mint-100: #DDEFE9;
+  --sb-mint-50: #EEF7F4;
+
+  /* Semantic hues */
+  --sb-green-700: #1B7A3A;
+  --sb-green-400: #4CC27A;
+  --sb-green-50: #E6F2E9;
+  --sb-green-950: #12301E;
+  --sb-amber-700: #8F5A00;
+  --sb-amber-300: #E5B454;
+  --sb-amber-50: #FBF1DE;
+  --sb-amber-950: #33260B;
+  --sb-red-700: #B42318;
+  --sb-red-400: #F2786D;
+  --sb-red-50: #FCE9E7;
+  --sb-red-950: #3A1714;
+}

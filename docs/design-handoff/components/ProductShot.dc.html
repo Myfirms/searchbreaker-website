@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<figure data-availability="{{ state }}" style="margin:0;width:100%;display:flex;flex-direction:column;gap:var(--space-3);font-family:var(--font-sans);color:var(--color-text)">
+<div style="border:1px var(--av-border-style) var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-surface-raised);overflow:hidden">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:40px;padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-border)">
+<span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ label }}</span>
+<dc-import name="AvailabilityBadge" state="{{ state }}" hint-size="90px,22px"></dc-import>
+</div>
+<sc-if value="{{ hasSrc }}" hint-placeholder-val="{{ false }}"><img src="{{ src }}" alt="{{ alt }}" style="display:block;width:100%;aspect-ratio:{{ aspect }};object-fit:cover;object-position:top left"></sc-if>
+<sc-if value="{{ noSrc }}" hint-placeholder-val="{{ true }}"><div role="img" aria-label="{{ alt }}" style="aspect-ratio:{{ aspect }};display:flex;align-items:center;justify-content:center;padding:var(--space-6);text-align:center;background-color:var(--color-surface-sunken);background-image:linear-gradient(var(--color-border) 1px,transparent 1px),linear-gradient(90deg,var(--color-border) 1px,transparent 1px);background-size:24px 24px"><span style="max-width:34ch;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-xs);background:var(--color-surface-raised);font-family:var(--font-mono);font-size:var(--text-xs);line-height:var(--leading-snug);color:var(--color-text-muted)">{{ placeholder }}</span></div></sc-if>
+</div>
+<figcaption style="display:flex;flex-direction:column;gap:2px;font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)">
+<sc-if value="{{ hasCaption }}" hint-placeholder-val="{{ true }}"><span>{{ caption }}</span></sc-if>
+<sc-if value="{{ hasNote }}" hint-placeholder-val="{{ true }}"><span style="font-size:var(--text-xs);color:var(--color-text-muted)">{{ stateNote }}</span></sc-if>
+</figcaption>
+</figure>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;560px&quot;,&quot;height&quot;:&quot;440px&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;live&quot;,&quot;preview&quot;,&quot;concept&quot;,&quot;illustrative&quot;],&quot;default&quot;:&quot;concept&quot;,&quot;tsType&quot;:&quot;'live' | 'preview' | 'concept' | 'illustrative'&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Application pipeline&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;src&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;alt&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;caption&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;aspect&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;16 / 10&quot;,&quot;4 / 3&quot;,&quot;1 / 1&quot;,&quot;3 / 4&quot;],&quot;default&quot;:&quot;16 / 10&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  static NOTES = {
+    live: '',
+    preview: 'Preview build. Details may change before release.',
+    concept: 'Concept design. Not a working product yet.',
+    illustrative: 'Illustrative data. Names, companies and numbers are fictional.'
+  };
+  renderVals() {
+    const p = this.props;
+    const st = ['live', 'preview', 'concept', 'illustrative'].includes(p.state) ? p.state : 'concept';
+    const note = p.stateNote != null ? p.stateNote : Component.NOTES[st];
+    return {
+      state: st,
+      label: p.label || 'Product screenshot',
+      src: p.src, alt: p.alt || '', hasSrc: !!p.src, noSrc: !p.src,
+      aspect: p.aspect || '16 / 10',
+      placeholder: p.placeholder || (st === 'live' ? 'Screenshot slot · add a real capture of the live product' : 'Visual slot · replace with the labeled ' + st + ' image'),
+      caption: p.caption, hasCaption: !!p.caption,
+      stateNote: note, hasNote: !!note
+    };
+  }
+}
+</script>
+</body>
+</html>

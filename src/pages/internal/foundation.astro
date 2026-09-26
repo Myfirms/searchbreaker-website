@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/astro/primitives/Button.astro';
+import AvailabilityBadge from '../../components/astro/primitives/AvailabilityBadge.astro';
+import StatusChip from '../../components/astro/primitives/StatusChip.astro';
+import Icon, { type IconKey } from '../../components/astro/primitives/Icon.astro';
+
+const icons: IconKey[] = [
+  'search', 'check', 'check-circle', 'arrow-right', 'arrow-left', 'chevron-down', 'chevron-up', 'chevron-right',
+  'menu', 'close', 'info', 'alert', 'lock', 'file', 'calendar', 'external', 'edit', 'eye', 'pause', 'skip', 'send',
+  'user-check', 'shield', 'plus', 'minus', 'arrow-down', 'circle-half', 'x-circle', 'help', 'board', 'table',
+];
+const colors = [
+  'color-bg', 'color-surface', 'color-surface-accent', 'color-text', 'color-text-secondary', 'color-text-muted',
+  'color-border', 'color-border-strong', 'color-accent', 'color-accent-hover', 'color-success', 'color-warning', 'color-error',
+];
+const variants = ['primary', 'secondary', 'ghost', 'link'] as const;
+const sizes = ['sm', 'md', 'lg'] as const;
+const availability = ['live', 'preview', 'concept', 'planned', 'illustrative'] as const;
+const statuses = ['confirmed', 'partial', 'gap', 'unclear', 'prepared', 'reviewed', 'submitted', 'failed'] as const;
+---
+
+<BaseLayout title="Foundations · SearchBreaker (internal)" noindex>
+  <main class="page">
+    <h1>Foundations</h1>
+    <p class="muted">Internal token and primitive preview. Never indexed.</p>
+
+    <section>
+      <h2>Type</h2>
+      <p class="display-home">Display home</p>
+      <p class="display-page">Display page</p>
+      <p class="display-compact">Display compact</p>
+      <p class="lead">Lead: SearchBreaker turns your verified experience into a controlled workflow.</p>
+      <p>Body: You review everything before anything is sent.</p>
+      <p class="mono">Mono: verified on 2026-09-14 · resume v3</p>
+    </section>
+
+    <section>
+      <h2>Color (light)</h2>
+      <div class="swatches">
+        {colors.map((c) => (
+          <div class="swatch">
+            <span class="chip" style={`background:var(--${c})`}></span>
+            <code>--{c}</code>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <h2>Button</h2>
+      {sizes.map((s) => (
+        <div class="row">
+          {variants.map((v) => <Button variant={v} size={s} label={`${v} ${s}`} />)}
+          <Button variant="primary" size={s} label="Disabled" disabled />
+          <Button variant="primary" size={s} label="Saving" loading loadingLabel="Joining…" />
+        </div>
+      ))}
+      <div class="row">
+        <Button readiness="waitlist" waitlistSource="foundation" />
+        <Button readiness="live" href="#" arrow />
+        <Button variant="secondary" label="See how tailoring works" href="#" arrow />
+      </div>
+    </section>
+
+    <section>
+      <h2>AvailabilityBadge</h2>
+      <div class="row">
+        {availability.map((a) => <AvailabilityBadge state={a} />)}
+        <AvailabilityBadge state="live" variant="outline" detail="verified on 2026-09-14" />
+      </div>
+    </section>
+
+    <section>
+      <h2>StatusChip</h2>
+      <div class="row">{statuses.map((s) => <StatusChip status={s} />)}</div>
+    </section>
+
+    <section>
+      <h2>Icon</h2>
+      <div class="row icons">
+        {icons.map((i) => (
+          <span class="icon-cell"><Icon icon={i} size={24} /><code>{i}</code></span>
+        ))}
+      </div>
+    </section>
+
+    <section data-surface="dark" class="dark">
+      <h2>Dark surface</h2>
+      <div class="row">
+        <Button label="Primary" />
+        <Button variant="secondary" label="Secondary" />
+        <Button variant="link" label="Link" href="#" />
+      </div>
+      <div class="row">
+        {availability.map((a) => <AvailabilityBadge state={a} />)}
+        {statuses.slice(0, 4).map((s) => <StatusChip status={s} />)}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--section-pad-y-tight) var(--gutter);
+  }
+  section {
+    margin-block: var(--space-12);
+  }
+  h1 {
+    font-size: var(--display-compact);
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-display);
+    margin: 0 0 var(--space-2);
+  }
+  h2 {
+    font-size: var(--text-h3);
+    letter-spacing: var(--tracking-heading);
+    line-height: var(--leading-heading);
+    margin: 0 0 var(--space-4);
+  }
+  .muted {
+    color: var(--color-text-muted);
+  }
+  .display-home { font-size: var(--display-home); letter-spacing: var(--tracking-display); line-height: var(--leading-display); margin: 0 0 var(--space-3); font-weight: var(--font-weight-semibold); }
+  .display-page { font-size: var(--display-page); letter-spacing: var(--tracking-display); line-height: var(--leading-display); margin: 0 0 var(--space-3); font-weight: var(--font-weight-semibold); }
+  .display-compact { font-size: var(--display-compact); letter-spacing: var(--tracking-display); line-height: var(--leading-display); margin: 0 0 var(--space-3); font-weight: var(--font-weight-semibold); }
+  .lead { font-size: var(--text-xl); color: var(--color-text-secondary); max-width: var(--measure-lead); }
+  .mono { font-family: var(--font-mono); font-size: var(--text-sm); }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    margin-bottom: var(--space-4);
+  }
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--grid-min), 1fr));
+    gap: var(--space-3);
+  }
+  .swatch {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+  }
+  .chip {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+  }
+  .icons {
+    gap: var(--space-4);
+  }
+  .icon-cell {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    width: 6rem;
+    font-size: var(--text-xs);
+  }
+  .dark {
+    background: var(--color-bg);
+    color: var(--color-text);
+    padding: var(--space-8) var(--gutter);
+    border-radius: var(--radius-lg);
+  }
+</style>

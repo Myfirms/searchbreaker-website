@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section ref="{{ rootRef }}" data-surface="{{ surface }}" data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--space-8) var(--space-12)">
+<div style="flex:1 1 480px;max-width:720px;display:flex;flex-direction:column;gap:var(--space-4)">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--display-compact);line-height:var(--leading-display);letter-spacing:var(--tracking-display);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasText }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ text }}</p></sc-if>
+</div>
+<div style="flex:0 1 auto;display:flex;flex-direction:column;gap:var(--space-3);align-items:flex-start;width:{{ actionsWidth }}">
+<div style="display:flex;flex-direction:{{ ctaDir }};flex-wrap:wrap;gap:var(--space-3);width:100%">
+<dc-import name="Button" readiness="{{ cta.readiness }}" label="{{ cta.label }}" href="{{ cta.href }}" size="lg" full-width="{{ mobile }}" on-activate="{{ onCta }}" hint-size="190px,52px"></dc-import>
+<sc-if value="{{ hasSecondary }}" hint-placeholder-val="{{ false }}"><dc-import name="Button" variant="secondary" label="{{ secondaryCta.label }}" href="{{ secondaryCta.href }}" size="lg" full-width="{{ mobile }}" hint-size="220px,52px"></dc-import></sc-if>
+</div>
+<sc-if value="{{ hasReassurance }}" hint-placeholder-val="{{ true }}"><p style="margin:0;display:flex;gap:var(--space-2);align-items:center;font-size:var(--text-sm);color:var(--color-text-muted)"><dc-import name="Icon" icon="lock" size="16" hint-size="16px,16px"></dc-import>{{ reassurance }}</p></sc-if>
+</div>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;380px&quot;},&quot;surface&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark' | 'light'&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;,&quot;accent&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;reassurance&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;You review everything before anything is sent.&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;CtaConfig&quot;},&quot;secondaryCta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;LinkCta&quot;},&quot;onCta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  uid = 'sbfc' + Math.random().toString(36).slice(2, 7);
+  state = { w: 1200 };
+  componentDidMount() {
+    const el = this.rootRef.current; if (!el) return;
+    this.setState({ w: el.offsetWidth });
+    this.ro = new ResizeObserver(e => { const w = e[0].contentRect.width; if (Math.abs(w - this.state.w) > 1) this.setState({ w }); });
+    this.ro.observe(el);
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  renderVals() {
+    const p = this.props;
+    const mobile = this.state.w < 640;
+    return {
+      rootRef: this.rootRef, headingId: this.uid,
+      surface: p.surface || 'dark',
+      tone: p.tone || 'default',
+      heading: p.heading || 'Run your job search as one controlled workflow',
+      text: p.text === undefined ? "Join the waitlist and we'll invite you as each stage moves from preview to live." : p.text,
+      hasText: !!(p.text === undefined ? true : p.text),
+      cta: p.cta || { readiness: 'waitlist' },
+      secondaryCta: p.secondaryCta, hasSecondary: !!p.secondaryCta,
+      reassurance: p.reassurance === undefined ? 'You review everything before anything is sent.' : p.reassurance,
+      hasReassurance: p.reassurance !== '',
+      mobile, ctaDir: mobile ? 'column' : 'row', actionsWidth: mobile ? '100%' : 'auto',
+      onCta: p.onCta
+    };
+  }
+}
+</script>
+</body>
+</html>

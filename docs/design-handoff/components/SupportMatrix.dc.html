@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section ref="{{ setRoot }}" data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-10)">
+<header style="display:flex;flex-direction:column;gap:var(--space-4);max-width:720px">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p></sc-if>
+</header>
+<div style="border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-raised);overflow:hidden">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-2) var(--space-3);min-height:40px;padding:var(--space-2) var(--space-4);border-bottom:1px solid var(--color-border)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ reviewedLine }}</span><sc-if value="{{ illustrative }}" hint-placeholder-val="{{ false }}"><dc-import name="AvailabilityBadge" state="illustrative" hint-size="130px,22px"></dc-import></sc-if></div>
+
+<sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-3);padding:var(--space-10) var(--space-6);background-color:var(--color-surface-sunken)">
+<dc-import name="StatusChip" status="unclear" label="Not yet tested" hint-size="130px,26px"></dc-import>
+<h3 style="margin:0;font-size:var(--text-xl);font-weight:var(--font-weight-semibold)">{{ emptyTitle }}</h3>
+<p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary)">{{ emptyText }}</p>
+<sc-if value="{{ hasEmptyLink }}" hint-placeholder-val="{{ false }}"><dc-import name="Button" variant="link" label="{{ emptyLinkLabel }}" href="{{ emptyHref }}" hint-size="200px,44px"></dc-import></sc-if>
+</div></sc-if>
+
+<sc-if value="{{ showTable }}" hint-placeholder-val="{{ true }}"><div role="table" aria-label="{{ heading }}">
+<div role="row" style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) 150px 130px;gap:var(--space-5);padding:var(--space-3) var(--space-5);border-bottom:1px solid var(--color-border);font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)"><span role="columnheader">{{ nameLabel }}</span><span role="columnheader">What works</span><span role="columnheader">Status</span><span role="columnheader">Verified on</span></div>
+<sc-for list="{{ rowList }}" as="r" hint-placeholder-count="3"><div role="row" style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) 150px 130px;gap:var(--space-5);align-items:start;padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--color-border)">
+<span role="cell" style="font-size:var(--text-md);font-weight:var(--font-weight-semibold)">{{ r.name }}</span>
+<span role="cell" style="display:flex;flex-direction:column;gap:var(--space-1);font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)"><span>{{ r.scope }}</span><sc-if value="{{ r.hasNote }}" hint-placeholder-val="{{ false }}"><span style="color:var(--color-text-muted)">{{ r.note }}</span></sc-if></span>
+<span role="cell" style="display:flex"><dc-import name="StatusChip" status="{{ r.chip }}" label="{{ r.chipLabel }}" hint-size="120px,26px"></dc-import></span>
+<span role="cell" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-text-secondary);padding-top:4px">{{ r.verifiedOn }}</span>
+</div></sc-for></div></sc-if>
+
+<sc-if value="{{ showList }}" hint-placeholder-val="{{ false }}"><ul style="list-style:none;margin:0;padding:0">
+<sc-for list="{{ rowList }}" as="r" hint-placeholder-count="3"><li style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-bottom:1px solid var(--color-border)">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-3)"><span style="font-size:var(--text-md);font-weight:var(--font-weight-semibold)">{{ r.name }}</span><dc-import name="StatusChip" status="{{ r.chip }}" label="{{ r.chipLabel }}" hint-size="110px,26px"></dc-import></div>
+<span style="font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)">{{ r.scope }}</span>
+<sc-if value="{{ r.hasNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:var(--text-sm);color:var(--color-text-muted)">{{ r.note }}</span></sc-if>
+<span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">Verified on {{ r.verifiedOn }}</span>
+</li></sc-for></ul></sc-if>
+
+<p style="margin:0;padding:var(--space-4) var(--space-5);font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-muted)">{{ footnote }}</p>
+</div>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;520px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Where autofill is supported&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lastReviewed&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2026-09-14&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;illustrative&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;SupportRow[]&quot;}}">
+class Component extends DCLogic {
+  static CHIP = { verified: ['confirmed', 'Verified'], partial: ['partial', 'Partly works'] };
+  uid = 'sbsm' + Math.random().toString(36).slice(2, 7);
+  rootRef = { current: null };
+  state = { w: 1200 };
+  setRoot = (el) => { if (el) this.rootRef.current = el; };
+  measure = () => { const el = this.rootRef.current; if (!el || !el.isConnected) return; const w = el.offsetWidth; if (w && Math.abs(w - this.state.w) > 1) this.setState({ w }); };
+  componentDidMount() { requestAnimationFrame(this.measure); this.t = setTimeout(this.measure, 120); this.iv = setInterval(this.measure, 400); window.addEventListener('resize', this.measure); }
+  componentWillUnmount() { clearTimeout(this.t); clearInterval(this.iv); window.removeEventListener('resize', this.measure); }
+  renderVals() {
+    const p = this.props;
+    const rows = (p.rows || [
+      { name: 'Northstar Careers', scope: 'Autofill of basic details, experience and education', status: 'verified', verifiedOn: '2026-09-10' },
+      { name: 'Portway ATS', scope: 'Autofill of basic details', note: 'Custom questions are not filled. You answer them yourself.', status: 'partial', verifiedOn: '2026-09-03' }
+    ]).filter(r => Component.CHIP[r.status] && r.verifiedOn);
+    const empty = rows.length === 0;
+    const mobile = this.state.w < 768;
+    return {
+      setRoot: this.setRoot, headingId: this.uid,
+      tone: p.tone || 'default',
+      heading: p.heading || 'Where autofill is supported',
+      lead: p.lead, hasLead: !!p.lead,
+      nameLabel: p.nameLabel || 'Platform',
+      illustrative: p.illustrative !== false,
+      reviewedLine: 'Last reviewed ' + (p.lastReviewed || '2026-09-14') + ' · verified items only',
+      isEmpty: empty, showTable: !empty && !mobile, showList: !empty && mobile,
+      rowList: rows.map(r => ({ ...r, chip: Component.CHIP[r.status][0], chipLabel: Component.CHIP[r.status][1], hasNote: !!r.note })),
+      emptyTitle: p.emptyTitle || 'No platforms are verified yet',
+      emptyText: p.emptyText || 'We test each platform before listing it. Until then, SearchBreaker prepares your answers and you fill in the form yourself.',
+      emptyLinkLabel: p.emptyLinkLabel || 'Read how we test platforms', emptyHref: p.emptyHref || '/guides/how-we-test-platforms', hasEmptyLink: p.emptyHref !== '',
+      footnote: p.footnote || 'Platforms not listed here are not supported. Support can change when a platform updates its forms; we re-test and update the date.'
+    };
+  }
+}
+</script>
+</body>
+</html>

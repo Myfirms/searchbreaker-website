@@ -1,0 +1,138 @@
+---
+export interface ProductShotProps {
+  state: 'live' | 'preview' | 'concept' | 'illustrative';
+  /** Real capture only; omitted renders a labeled slot. */
+  src?: string;
+  /** Describe what the screen shows. */
+  alt: string;
+  /** Frame title, e.g. "Application pipeline". */
+  label?: string;
+  caption?: string;
+  /** CSS aspect-ratio, default "16 / 10". */
+  aspect?: string;
+  /** Override the automatic state note ('' hides it; not allowed for concept/illustrative). */
+  stateNote?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+
+const NOTES: Record<string, string> = {
+  live: '',
+  preview: 'Preview build. Details may change before release.',
+  concept: 'Concept design. Not a working product yet.',
+  illustrative: 'Illustrative data. Names, companies and numbers are fictional.',
+};
+
+const props = Astro.props as ProductShotProps;
+const state = (['live', 'preview', 'concept', 'illustrative'] as const).includes(props.state) ? props.state : 'concept';
+const { src, alt = '', caption, aspect = '16 / 10', loading = 'lazy' } = props;
+const label = props.label ?? 'Product screenshot';
+const requestedNote = props.stateNote;
+const note =
+  requestedNote != null && (state === 'live' || state === 'preview') ? requestedNote : NOTES[state];
+const placeholder =
+  state === 'live'
+    ? 'Screenshot slot · add a real capture of the live product'
+    : `Visual slot · replace with the labeled ${state} image`;
+---
+
+<figure class="sb-shot" data-availability={state}>
+  <div class="sb-shot__frame">
+    <div class="sb-shot__bar">
+      <span class="sb-shot__label">{label}</span>
+      <AvailabilityBadge state={state} />
+    </div>
+    {src ? (
+      <img class="sb-shot__img" src={src} alt={alt} loading={loading} style={`aspect-ratio:${aspect}`} />
+    ) : (
+      <div class="sb-shot__slot" role="img" aria-label={alt} style={`aspect-ratio:${aspect}`}>
+        <span class="sb-shot__placeholder">{placeholder}</span>
+      </div>
+    )}
+  </div>
+  {(caption || note) && (
+    <figcaption class="sb-shot__caption">
+      {caption && <span>{caption}</span>}
+      {note && <span class="sb-shot__note">{note}</span>}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .sb-shot {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    font-family: var(--font-sans);
+    color: var(--color-text);
+  }
+  .sb-shot__frame {
+    border: 1px var(--av-border-style) var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    overflow: hidden;
+  }
+  .sb-shot__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-shot__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-mono-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sb-shot__img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+  .sb-shot__slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+    text-align: center;
+    background-color: var(--color-surface-sunken);
+    background-image:
+      linear-gradient(var(--color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .sb-shot__placeholder {
+    max-width: 34ch;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    background: var(--color-surface-raised);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+    color: var(--color-text-muted);
+  }
+  .sb-shot__caption {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+  }
+  .sb-shot__note {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+</style>

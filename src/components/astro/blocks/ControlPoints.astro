@@ -1,0 +1,98 @@
+---
+import type { IconName, SectionTone } from '../../../lib/types';
+import Icon from '../primitives/Icon.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface ControlPoint {
+  /** ≤ 6 words, starts with a verb. */
+  title: string;
+  /** ≤ 25 words. */
+  text: string;
+  icon?: IconName;
+}
+export interface ControlPointsProps {
+  heading: string;
+  lead?: string;
+  eyebrow?: string;
+  /** 3-5 points. */
+  points: ControlPoint[];
+  tone?: SectionTone;
+}
+
+const { heading, lead, eyebrow, points, tone = 'default' } = Astro.props as ControlPointsProps;
+const id = makeId('sb-cp', heading);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-cp">
+    <div class="sb-cp__head"><SectionHeader {heading} {id} {lead} {eyebrow} /></div>
+    <ul class="sb-cp__list">
+      {points.map((pt) => (
+        <li class="sb-cp__item">
+          <span class="sb-cp__icon"><Icon icon={pt.icon ?? 'check'} size={20} /></span>
+          <div class="sb-cp__body">
+            <h3 class="sb-cp__title">{pt.title}</h3>
+            <p class="sb-cp__text">{pt.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .sb-cp {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-10) var(--space-16);
+  }
+  .sb-cp__head {
+    flex: 1 1 18.75rem;
+    align-self: flex-start;
+  }
+  .sb-cp__list {
+    flex: 1.6 1 28.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .sb-cp__item {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .sb-cp__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-subtle);
+    color: var(--color-accent);
+  }
+  .sb-cp__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .sb-cp__title {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-cp__text {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+</style>

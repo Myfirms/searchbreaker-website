@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-12)">
+<header style="display:flex;flex-direction:column;gap:var(--space-4);max-width:720px">
+<sc-if value="{{ hasEyebrow }}" hint-placeholder-val="{{ false }}"><span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ eyebrow }}</span></sc-if>
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p></sc-if>
+</header>
+<ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:var(--space-8) var(--space-6)">
+<sc-for list="{{ stepList }}" as="step" hint-placeholder-count="4"><li style="display:flex;flex-direction:column;gap:var(--space-3);padding-top:var(--space-5);border-top:1px solid var(--color-border-strong)">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);min-height:22px"><span style="font-family:var(--font-mono);font-size:var(--text-sm);font-weight:var(--font-weight-medium);color:var(--color-accent)">{{ step.num }}</span><sc-if value="{{ step.hasAvailability }}" hint-placeholder-val="{{ true }}"><dc-import name="AvailabilityBadge" state="{{ step.availability }}" hint-size="80px,22px"></dc-import></sc-if></div>
+<h3 style="margin:0;font-size:var(--text-xl);line-height:var(--leading-snug);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">{{ step.title }}</h3>
+<p style="margin:0;font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ step.text }}</p>
+</li></sc-for></ol>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;520px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;,&quot;accent&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;How the search works&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lead&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;steps&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;WorkflowStep[]&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbws' + Math.random().toString(36).slice(2, 7);
+  renderVals() {
+    const p = this.props;
+    const steps = p.steps || [
+      { title: 'Discover jobs', text: 'Collect openings that fit your target roles from the sources you choose.', availability: 'preview' },
+      { title: 'Evaluate fit', text: 'Compare each job’s requirements with the experience you confirmed.', availability: 'preview' },
+      { title: 'Prepare materials', text: 'Tailor your resume and answers from verified facts, then review every edit.', availability: 'preview' },
+      { title: 'Track progress', text: 'Keep each application, resume version and next step in one pipeline.', availability: 'concept' }
+    ];
+    return {
+      headingId: this.uid,
+      tone: p.tone || 'default',
+      eyebrow: p.eyebrow, hasEyebrow: !!p.eyebrow,
+      heading: p.heading || 'How the search works',
+      lead: p.lead, hasLead: !!p.lead,
+      stepList: steps.map((s, i) => ({ ...s, num: String(i + 1).padStart(2, '0'), hasAvailability: !!s.availability }))
+    };
+  }
+}
+</script>
+</body>
+</html>

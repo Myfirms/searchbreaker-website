@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section ref="{{ setRoot }}" data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-10)">
+<header style="display:flex;flex-direction:column;gap:var(--space-4);max-width:720px">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p></sc-if>
+</header>
+
+<sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><div role="table" aria-label="{{ heading }}" style="border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-raised);overflow:hidden">
+<div role="row" style="display:grid;grid-template-columns:{{ gridCols }};border-bottom:1px solid var(--color-border-strong)"><span role="columnheader" style="padding:var(--space-4) var(--space-5)"></span><sc-for list="{{ colList }}" as="col" hint-placeholder-count="2"><span role="columnheader" style="padding:var(--space-4) var(--space-5);font-size:var(--text-md);font-weight:var(--font-weight-semibold)">{{ col.label }}</span></sc-for></div>
+<sc-for list="{{ rowList }}" as="r" hint-placeholder-count="5"><div role="row" data-emphasis="{{ r.emphasis }}" style="display:grid;grid-template-columns:{{ gridCols }};background:var(--row-bg);border-bottom:1px solid var(--color-border)">
+<span role="rowheader" style="padding:var(--space-4) var(--space-5);font-size:var(--text-sm);font-weight:var(--font-weight-semibold);line-height:var(--leading-snug)">{{ r.label }}</span>
+<sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="2"><span role="cell" style="display:flex;gap:var(--space-2);align-items:flex-start;padding:var(--space-4) var(--space-5);font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)"><sc-if value="{{ cell.hasMark }}" hint-placeholder-val="{{ false }}"><span data-status="{{ cell.markStatus }}" style="display:flex;color:var(--st-fg)"><dc-import name="Icon" icon="{{ cell.markIcon }}" size="16" hint-size="16px,16px"></dc-import><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">{{ cell.markText }}</span></span></sc-if><span style="color:var(--color-text)">{{ cell.text }}</span></span></sc-for>
+</div></sc-for>
+</div></sc-if>
+
+<sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:var(--space-4)">
+<sc-for list="{{ stacked }}" as="col" hint-placeholder-count="2"><section aria-label="{{ col.label }}" style="border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-raised);overflow:hidden">
+<h3 style="margin:0;padding:var(--space-4);font-size:var(--text-lg);font-weight:var(--font-weight-semibold);border-bottom:1px solid var(--color-border-strong)">{{ col.label }}</h3>
+<dl style="margin:0">
+<sc-for list="{{ col.entries }}" as="e" hint-placeholder-count="5"><div data-emphasis="{{ e.emphasis }}" style="display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-3) var(--space-4);background:var(--row-bg);border-bottom:1px solid var(--color-border)"><dt style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ e.label }}</dt><dd style="margin:0;display:flex;gap:var(--space-2);align-items:flex-start;font-size:var(--text-sm);line-height:var(--leading-snug)"><sc-if value="{{ e.hasMark }}" hint-placeholder-val="{{ false }}"><span data-status="{{ e.markStatus }}" style="display:flex;color:var(--st-fg)"><dc-import name="Icon" icon="{{ e.markIcon }}" size="16" hint-size="16px,16px"></dc-import><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">{{ e.markText }}</span></span></sc-if>{{ e.text }}</dd></div></sc-for>
+</dl></section></sc-for>
+</div></sc-if>
+
+<sc-if value="{{ hasCaption }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted)">{{ caption }}</p></sc-if>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;560px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;columns&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;ComparisonColumn[]&quot;},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;ComparisonRow[]&quot;}}">
+class Component extends DCLogic {
+  static MARK = { yes: ['confirmed', 'check', 'Yes: '], no: ['unclear', 'minus', 'No: '], partial: ['partial', 'circle-half', 'Partly: '] };
+  uid = 'sbct' + Math.random().toString(36).slice(2, 7);
+  rootRef = { current: null };
+  state = { w: 1200 };
+  setRoot = (el) => { if (el) this.rootRef.current = el; };
+  measure = () => { const el = this.rootRef.current; if (!el || !el.isConnected) return; const w = el.offsetWidth; if (w && Math.abs(w - this.state.w) > 1) this.setState({ w }); };
+  componentDidMount() { requestAnimationFrame(this.measure); this.t = setTimeout(this.measure, 120); this.iv = setInterval(this.measure, 400); window.addEventListener('resize', this.measure); }
+  componentWillUnmount() { clearTimeout(this.t); clearInterval(this.iv); window.removeEventListener('resize', this.measure); }
+  renderVals() {
+    const p = this.props;
+    const cols = p.columns || [{ key: 'autofill', label: 'Autofill' }, { key: 'auto', label: 'Auto apply' }];
+    const rows = p.rows || [
+      { label: 'What it does', values: { autofill: 'Fills application fields from your verified profile.', auto: 'Prepares and sends applications that match rules you set.' } },
+      { label: 'Who presses submit', emphasis: true, values: { autofill: 'You, every time.', auto: 'SearchBreaker, only under rules you approved. You can pause it at any time.' } },
+      { label: 'You review before sending', values: { autofill: { text: 'Always', mark: 'yes' }, auto: { text: 'Per rule: every application, or a daily summary', mark: 'partial' } } },
+      { label: 'Custom questions', values: { autofill: { text: 'Drafted for you to edit', mark: 'yes' }, auto: { text: 'Sent back to you, never guessed', mark: 'no' } } },
+      { label: 'Availability', values: { autofill: 'Planned', auto: 'Planned' } }
+    ];
+    const cell = (v) => { const o = typeof v === 'object' && v ? v : { text: v == null ? '—' : String(v) }; const m = Component.MARK[o.mark]; return { text: o.text, hasMark: !!m, markStatus: m ? m[0] : '', markIcon: m ? m[1] : '', markText: m ? m[2] : '' }; };
+    const mobile = this.state.w < 768;
+    return {
+      setRoot: this.setRoot, headingId: this.uid,
+      tone: p.tone || 'default',
+      heading: p.heading || 'Autofill vs auto apply: who presses submit',
+      lead: p.lead, hasLead: !!p.lead,
+      caption: p.caption, hasCaption: !!p.caption,
+      isDesktop: !mobile, isMobile: mobile,
+      gridCols: 'minmax(160px,0.8fr) repeat(' + cols.length + ',minmax(0,1fr))',
+      colList: cols,
+      rowList: rows.map(r => ({ label: r.label, emphasis: r.emphasis ? 'true' : 'false', cells: cols.map(c => cell(r.values[c.key])) })),
+      stacked: cols.map(c => ({ label: c.label, entries: rows.map(r => ({ label: r.label, emphasis: r.emphasis ? 'true' : 'false', ...cell(r.values[c.key]) })) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

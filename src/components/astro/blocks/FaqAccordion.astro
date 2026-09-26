@@ -1,0 +1,116 @@
+---
+import type { SectionTone } from '../../../lib/types';
+import Icon from '../primitives/Icon.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface FaqAccordionProps {
+  heading: string;
+  lead?: string;
+  /** 4-8 questions in the user's words; answers start with a direct answer, ≤ 60 words. */
+  faqs: { q: string; a: string }[];
+  /** Index of the question that starts open. */
+  defaultOpen?: number | null;
+  /** Emit FAQPage JSON-LD from the visible Q&A. Turn off if eligibility is not confirmed. */
+  jsonLd?: boolean;
+  tone?: SectionTone;
+}
+
+const { heading, lead, faqs, defaultOpen = null, jsonLd = true, tone = 'default' } = Astro.props as FaqAccordionProps;
+const id = makeId('sb-faq', heading);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-faq">
+    <div class="sb-faq__head"><SectionHeader {heading} {id} {lead} leadSize="md" /></div>
+    <div class="sb-faq__list">
+      {faqs.map((f, i) => (
+        <details class="sb-faq__item" open={defaultOpen === i}>
+          <summary class="sb-faq__summary">
+            <span>{f.q}</span>
+            <span class="sb-faq__toggle">
+              <span class="sb-faq__plus"><Icon icon="plus" size={16} /></span>
+              <span class="sb-faq__minus"><Icon icon="minus" size={16} /></span>
+            </span>
+          </summary>
+          <p class="sb-faq__answer">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+</Section>
+
+<style>
+  .sb-faq {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-16);
+  }
+  .sb-faq__head {
+    flex: 1 1 17.5rem;
+    align-self: flex-start;
+  }
+  .sb-faq__list {
+    flex: 2 1 32.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .sb-faq__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sb-faq__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: var(--touch-target);
+    padding: var(--space-4) 0;
+    cursor: pointer;
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-xs);
+  }
+  .sb-faq__toggle {
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+  .sb-faq__summary:hover .sb-faq__toggle {
+    background: var(--color-border);
+  }
+  .sb-faq__minus {
+    display: none;
+  }
+  .sb-faq__item[open] .sb-faq__plus {
+    display: none;
+  }
+  .sb-faq__item[open] .sb-faq__minus {
+    display: block;
+  }
+  .sb-faq__answer {
+    margin: 0;
+    padding: 0 var(--space-12) var(--space-5) 0;
+    max-width: var(--measure-body);
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+</style>

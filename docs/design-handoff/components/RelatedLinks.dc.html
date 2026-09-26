@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y-tight) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-6)">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h3);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">{{ heading }}</h2>
+<ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:var(--space-3)">
+<sc-for list="{{ items }}" as="it" hint-placeholder-count="3"><li style="display:flex"><a href="{{ it.href }}" style="flex:1 1 auto;box-sizing:border-box;display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-5);border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-raised);color:var(--color-text);text-decoration:none;transition:border-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard)" style-hover="border-color:var(--color-accent);box-shadow:var(--shadow-md)">
+<span style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);min-height:22px"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ it.kindLabel }}</span><sc-if value="{{ it.hasAvailability }}" hint-placeholder-val="{{ false }}"><dc-import name="AvailabilityBadge" state="{{ it.availability }}" hint-size="80px,22px"></dc-import></sc-if></span>
+<span style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);font-size:var(--text-lg);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold)">{{ it.label }}<span style="display:flex;color:var(--color-accent)"><dc-import name="Icon" icon="arrow-right" size="20" hint-size="20px,20px"></dc-import></span></span>
+<sc-if value="{{ it.hasBlurb }}" hint-placeholder-val="{{ true }}"><span style="font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)">{{ it.blurb }}</span></sc-if>
+</a></li></sc-for></ul>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;320px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Where to go next&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;RelatedLink[]&quot;}}">
+class Component extends DCLogic {
+  static KIND = { next: 'Next stage', related: 'Related', guide: 'Guide' };
+  uid = 'sbrl' + Math.random().toString(36).slice(2, 7);
+  renderVals() {
+    const p = this.props;
+    const items = p.items || [
+      { kind: 'next', label: 'Autofill job applications', href: '/features/job-application-autofill', blurb: 'Fill application forms from the same verified profile.', availability: 'planned' },
+      { kind: 'related', label: 'Match your experience to jobs', href: '/features/job-matcher', blurb: 'See which requirements your experience covers before you tailor.', availability: 'preview' },
+      { kind: 'guide', label: 'How to tailor a resume to a job description', href: '/guides/tailor-resume-to-job-description', blurb: 'A step-by-step method you can use with or without SearchBreaker.' }
+    ];
+    return {
+      headingId: this.uid,
+      tone: p.tone || 'default',
+      heading: p.heading || 'Where to go next',
+      items: items.map(i => ({ ...i, kindLabel: Component.KIND[i.kind] || 'Related', hasAvailability: !!i.availability, hasBlurb: !!i.blurb }))
+    };
+  }
+}
+</script>
+</body>
+</html>

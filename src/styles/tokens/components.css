@@ -1,0 +1,175 @@
+/* SearchBreaker · Level 3 · Component tokens. Consume semantic tokens only.
+   Declared on every theme/surface scope so they re-resolve inside data-surface="dark". */
+:root,
+[data-theme],
+[data-surface] {
+  /* Button */
+  --button-font: var(--font-sans);
+  --button-weight: var(--font-weight-medium);
+  --button-radius: var(--radius-sm);
+  --button-height-sm: 2.25rem;  /* 36 · desktop only */
+  --button-height-md: 2.75rem;  /* 44 */
+  --button-height-lg: 3.25rem;  /* 52 */
+  --button-pad-x-sm: var(--space-3);
+  --button-pad-x-md: var(--space-5);
+  --button-pad-x-lg: var(--space-6);
+  --button-text-sm: var(--text-sm);
+  --button-text-md: var(--text-sm);
+  --button-text-lg: var(--text-md);
+
+  --button-primary-bg: var(--color-accent);
+  --button-primary-bg-hover: var(--color-accent-hover);
+  --button-primary-bg-active: var(--color-accent-active);
+  --button-primary-fg: var(--color-on-accent);
+
+  --button-secondary-bg: transparent;
+  --button-secondary-bg-hover: var(--color-surface);
+  --button-secondary-bg-active: var(--color-border);
+  --button-secondary-fg: var(--color-text);
+  --button-secondary-border: var(--color-border-inverse);
+
+  --button-ghost-bg: transparent;
+  --button-ghost-bg-hover: var(--color-surface);
+  --button-ghost-bg-active: var(--color-border);
+  --button-ghost-fg: var(--color-text);
+
+  --button-link-fg: var(--color-link);
+  --button-link-fg-hover: var(--color-link-hover);
+
+  --button-disabled-bg: var(--color-disabled-bg);
+  --button-disabled-fg: var(--color-disabled-text);
+
+  /* Input */
+  --input-height: 2.75rem;
+  --input-pad-x: var(--space-3);
+  --input-radius: var(--radius-sm);
+  --input-bg: var(--color-surface-raised);
+  --input-fg: var(--color-text);
+  --input-placeholder: var(--color-text-muted);
+  --input-border: var(--color-border-strong);
+  --input-border-hover: var(--color-text-secondary);
+  --input-border-focus: var(--color-accent);
+  --input-border-error: var(--color-error);
+  --input-border-success: var(--color-success);
+  --input-disabled-bg: var(--color-surface);
+  --input-disabled-border: var(--color-disabled-border);
+  --checkbox-size: 1.25rem;
+  --checkbox-checked-bg: var(--color-accent);
+  --checkbox-checked-fg: var(--color-on-accent);
+
+  /* AvailabilityBadge */
+  --badge-font: var(--font-mono);
+  --badge-text: var(--text-2xs);
+  --badge-height: 1.375rem;
+  --badge-pad-x: var(--space-2);
+  --badge-radius: var(--radius-xs);
+  --badge-tracking: var(--tracking-mono-caps);
+
+  /* Tag / chip */
+  --chip-height: 2rem;
+  --chip-pad-x: var(--space-3);
+  --chip-radius: var(--radius-sm);
+  --chip-bg: var(--color-surface);
+  --chip-bg-hover: var(--color-border);
+  --chip-fg: var(--color-text-secondary);
+  --chip-selected-bg: var(--color-accent-subtle);
+  --chip-selected-fg: var(--color-accent);
+  --chip-selected-border: var(--color-accent);
+
+  /* Card / frame */
+  --card-bg: var(--color-surface-raised);
+  --card-border: var(--color-border);
+  --card-radius: var(--radius-md);
+  --card-pad: clamp(1.25rem, 1rem + 1vw, 2rem);
+  --card-shadow: var(--shadow-none);
+  --card-shadow-hover: var(--shadow-md);
+
+  /* Link */
+  --link-underline-offset: 3px;
+  --link-underline-thickness: 1px;
+  --link-underline-thickness-hover: 2px;
+}
+
+/* ---------- Section tone (data-tone on a section) ---------- */
+:root, [data-theme], [data-surface], [data-tone] { --section-bg: var(--color-bg); }
+[data-tone="muted"] { --section-bg: var(--color-surface); }
+[data-tone="accent"] { --section-bg: var(--color-surface-accent); }
+
+/* ---------- Button variants / sizes (data-variant, data-size, data-full) ---------- */
+[data-variant] { --btn-width: auto; --btn-cursor: pointer; --btn-decoration: none; --btn-border: transparent; }
+[data-variant="primary"] { --btn-bg: var(--button-primary-bg); --btn-bg-hover: var(--button-primary-bg-hover); --btn-bg-active: var(--button-primary-bg-active); --btn-fg: var(--button-primary-fg); --btn-fg-hover: var(--button-primary-fg); }
+[data-variant="secondary"] { --btn-bg: var(--button-secondary-bg); --btn-bg-hover: var(--button-secondary-bg-hover); --btn-bg-active: var(--button-secondary-bg-active); --btn-fg: var(--button-secondary-fg); --btn-fg-hover: var(--button-secondary-fg); --btn-border: var(--button-secondary-border); }
+[data-variant="ghost"] { --btn-bg: var(--button-ghost-bg); --btn-bg-hover: var(--button-ghost-bg-hover); --btn-bg-active: var(--button-ghost-bg-active); --btn-fg: var(--button-ghost-fg); --btn-fg-hover: var(--button-ghost-fg); }
+[data-variant="link"] { --btn-bg: transparent; --btn-bg-hover: transparent; --btn-bg-active: transparent; --btn-fg: var(--button-link-fg); --btn-fg-hover: var(--button-link-fg-hover); --btn-decoration: underline; }
+[data-size="sm"] { --btn-h: var(--button-height-sm); --btn-px: var(--button-pad-x-sm); --btn-fs: var(--button-text-sm); }
+[data-size="md"] { --btn-h: var(--button-height-md); --btn-px: var(--button-pad-x-md); --btn-fs: var(--button-text-md); }
+[data-size="lg"] { --btn-h: var(--button-height-lg); --btn-px: var(--button-pad-x-lg); --btn-fs: var(--button-text-lg); }
+[data-variant="link"][data-size], [data-variant="ghost"][data-size="md"] { --btn-px: var(--space-2); }
+[data-full="true"] { --btn-width: 100%; }
+[aria-busy="true"] { --btn-cursor: progress; }
+[data-variant][aria-disabled="true"] { --btn-bg: var(--button-disabled-bg); --btn-bg-hover: var(--button-disabled-bg); --btn-bg-active: var(--button-disabled-bg); --btn-fg: var(--button-disabled-fg); --btn-fg-hover: var(--button-disabled-fg); --btn-border: transparent; --btn-cursor: not-allowed; }
+[data-variant="link"][aria-disabled="true"], [data-variant="ghost"][aria-disabled="true"] { --btn-bg: transparent; --btn-bg-hover: transparent; --btn-bg-active: transparent; }
+
+/* ---------- Availability (data-availability, data-badge-variant) ---------- */
+[data-availability] { --av-border: transparent; --av-border-style: solid; }
+[data-availability="live"] { --av-fg: var(--color-state-live-fg); --av-bg: var(--color-state-live-bg); }
+[data-availability="preview"] { --av-fg: var(--color-state-preview-fg); --av-bg: var(--color-state-preview-bg); }
+[data-availability="concept"] { --av-fg: var(--color-state-concept-fg); --av-bg: var(--color-state-concept-bg); }
+[data-availability="planned"] { --av-fg: var(--color-state-planned-fg); --av-bg: var(--color-state-planned-bg); }
+[data-availability="illustrative"] { --av-fg: var(--color-text-muted); --av-bg: transparent; --av-border: var(--color-text-muted); --av-border-style: dashed; }
+[data-badge-variant="outline"] { --av-bg: var(--color-bg); --av-border: var(--av-fg); }
+
+/* ---------- Form field state (data-field-state) ---------- */
+:root, [data-theme], [data-surface] { --field-border: var(--input-border); --field-border-hover: var(--input-border-hover); --field-border-width: var(--border-width); }
+[data-field-state="error"] { --field-border: var(--input-border-error); --field-border-hover: var(--input-border-error); --field-border-width: var(--border-width-strong); }
+[data-field-state="success"] { --field-border: var(--input-border-success); --field-border-hover: var(--input-border-success); --field-border-width: var(--border-width-strong); }
+
+/* ---------- Nav current indicator ---------- */
+:root, [data-theme], [data-surface] { --nav-indicator: transparent; }
+[data-current="true"] { --nav-indicator: var(--color-accent); }
+
+/* ---------- Status chip (data-status) ---------- */
+[data-status="confirmed"], [data-status="submitted"] { --st-fg: var(--color-success); --st-bg: var(--color-success-subtle); }
+[data-status="partial"] { --st-fg: var(--color-warning); --st-bg: var(--color-warning-subtle); }
+[data-status="gap"], [data-status="failed"] { --st-fg: var(--color-error); --st-bg: var(--color-error-subtle); }
+[data-status="unclear"], [data-status="prepared"] { --st-fg: var(--color-text-muted); --st-bg: var(--color-surface); }
+[data-status="reviewed"] { --st-fg: var(--color-accent); --st-bg: var(--color-accent-subtle); }
+
+/* ---------- Grid columns (data-columns) ---------- */
+[data-columns="2"] { --grid-col-min: min(100%, 26rem); }
+[data-columns="3"] { --grid-col-min: min(100%, 17.5rem); }
+[data-columns="4"] { --grid-col-min: min(100%, 13.5rem); }
+
+/* ---------- Segmented toggle (data-pressed) ---------- */
+[data-pressed="true"] { --seg-bg: var(--color-text); --seg-fg: var(--color-bg); }
+[data-pressed="false"] { --seg-bg: transparent; --seg-fg: var(--color-text-secondary); }
+
+/* ---------- Job card state (data-jf-state) ---------- */
+[data-jf-state] { --jf-border: var(--color-border); }
+[data-jf-state="saved"] { --jf-border: var(--color-accent); }
+
+/* ---------- Callout (data-callout) ---------- */
+[data-callout="tip"] { --co-bg: var(--color-accent-subtle); --co-fg: var(--color-accent); }
+[data-callout="warning"] { --co-bg: var(--color-warning-subtle); --co-fg: var(--color-warning); }
+[data-callout="note"] { --co-bg: var(--color-surface); --co-fg: var(--color-text-secondary); }
+
+/* ---------- Emphasised table row (data-emphasis) ---------- */
+[data-emphasis="false"] { --row-bg: transparent; }
+[data-emphasis="true"] { --row-bg: var(--color-accent-subtle); }
+
+/* ---------- Article ---------- */
+:root { --article-text: var(--text-lg); --article-h2: var(--text-h3); --article-h3: var(--text-xl); --toc-width: 13.75rem; }
+
+/* ---------- Article layout (container query on sections with container-name: article) ---------- */
+:root { --measure-article: 46rem; }
+[data-article-col] { margin-left: 0; max-width: var(--measure-article); }
+[data-article-layout] { display: block; }
+[data-toc="sidebar"] { display: none; }
+[data-toc="collapsible"] { display: block; }
+@container article (min-width: 900px) {
+  [data-article-col] { margin-left: calc(var(--toc-width) + var(--space-16)); }
+  [data-article-layout] { display: grid; grid-template-columns: var(--toc-width) minmax(0, var(--measure-article)); gap: var(--space-16); align-items: start; }
+  [data-article-main] { grid-column: 2; }
+  [data-toc="sidebar"] { display: block; }
+  [data-toc="collapsible"] { display: none; }
+}

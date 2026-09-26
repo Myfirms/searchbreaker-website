@@ -1,0 +1,131 @@
+---
+import type { Availability, IconName, SectionTone } from '../../../lib/types';
+import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
+import Icon from '../primitives/Icon.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface FeatureItem {
+  /** ≤ 5 words. */
+  title: string;
+  /** ≤ 30 words. */
+  text: string;
+  icon?: IconName;
+  availability?: Availability;
+  /** Only published pages. */
+  href?: string;
+  /** Concrete label, default "See how it works". */
+  linkLabel?: string;
+}
+export interface FeatureGridProps {
+  heading: string;
+  lead?: string;
+  eyebrow?: string;
+  /** 2-6 items. */
+  items: FeatureItem[];
+  /** Minimum card width; the grid reflows with auto-fit. */
+  columns?: 2 | 3 | 4;
+  tone?: SectionTone;
+}
+
+const { heading, lead, eyebrow, items, columns, tone = 'default' } = Astro.props as FeatureGridProps;
+const id = makeId('sb-fg', heading);
+const cols = columns ?? (items.length === 2 || items.length === 4 ? 2 : 3);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-fg">
+    <SectionHeader {heading} {id} {lead} {eyebrow} />
+    <ul class="sb-fg__grid" data-columns={String(cols)}>
+      {items.map((it) => (
+        <li class="sb-fg__card">
+          {(it.icon || it.availability) && (
+            <div class="sb-fg__top">
+              {it.icon && <span class="sb-fg__icon"><Icon icon={it.icon} size={20} /></span>}
+              {it.availability && <AvailabilityBadge state={it.availability} />}
+            </div>
+          )}
+          <h3 class="sb-fg__title">{it.title}</h3>
+          <p class="sb-fg__text">{it.text}</p>
+          {it.href && (
+            <a class="sb-fg__link" href={it.href}>
+              {it.linkLabel ?? 'See how it works'}<Icon icon="arrow-right" size={16} />
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .sb-fg {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .sb-fg__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--grid-col-min), 1fr));
+    gap: var(--space-4);
+  }
+  .sb-fg__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--card-pad);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+  }
+  .sb-fg__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 2.5rem;
+  }
+  .sb-fg__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-subtle);
+    color: var(--color-accent);
+  }
+  .sb-fg__title {
+    margin: 0;
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-heading);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-fg__text {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .sb-fg__link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: var(--touch-target);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-link);
+    text-underline-offset: var(--link-underline-offset);
+  }
+  .sb-fg__link:hover {
+    color: var(--color-link-hover);
+    text-decoration-thickness: var(--link-underline-thickness-hover);
+  }
+</style>

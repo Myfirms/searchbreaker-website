@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<div ref="{{ rootRef }}" style="position:relative;font-family:var(--font-sans);color:var(--color-text)">
+<header style="background:var(--color-bg);border-bottom:1px solid var(--color-border)">
+<div style="max-width:var(--container-max);margin:0 auto;padding:0 var(--gutter);height:64px;display:flex;align-items:center;gap:var(--space-6)">
+<a href="{{ logoHref }}" aria-label="SearchBreaker home" style="display:flex;align-items:center;gap:10px;flex:none;text-decoration:none;color:var(--color-text);font-size:19px;font-weight:var(--font-weight-semibold);letter-spacing:-0.03em"><img src="../assets/logo/mark.svg" width="26" height="26" alt="">SearchBreaker</a>
+
+<sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+<nav ref="{{ navRef }}" aria-label="Primary" style="flex:1 1 auto;min-width:0;overflow:hidden">
+<ul style="list-style:none;margin:0;padding:0;display:flex;gap:0;align-items:center;width:max-content">
+<sc-for list="{{ navList }}" as="item" hint-placeholder-count="7"><li style="display:flex">
+<sc-if value="{{ item.hasChildren }}" hint-placeholder-val="{{ false }}"><button type="button" aria-expanded="{{ item.ariaExpanded }}" aria-controls="{{ panelId }}" onClick="{{ item.toggle }}" data-current="{{ item.current }}" style="display:flex;align-items:center;gap:4px;height:40px;padding:0 var(--space-2);border:0;background:transparent;border-radius:var(--radius-sm);font-family:inherit;font-size:var(--text-sm);font-weight:var(--font-weight-medium);color:var(--color-text);cursor:pointer;white-space:nowrap;box-shadow:inset 0 -2px 0 var(--nav-indicator)" style-hover="background:var(--color-surface)">{{ item.label }}<dc-import name="Icon" icon="{{ item.chevron }}" size="16" hint-size="16px,16px"></dc-import></button></sc-if>
+<sc-if value="{{ item.noChildren }}" hint-placeholder-val="{{ true }}"><a href="{{ item.href }}" aria-current="{{ item.ariaCurrent }}" data-current="{{ item.current }}" style="display:flex;align-items:center;height:40px;padding:0 var(--space-2);border-radius:var(--radius-sm);font-size:var(--text-sm);font-weight:var(--font-weight-medium);color:var(--color-text);text-decoration:none;white-space:nowrap;box-shadow:inset 0 -2px 0 var(--nav-indicator)" style-hover="background:var(--color-surface)">{{ item.label }}</a></sc-if>
+</li></sc-for>
+</ul></nav>
+<div style="flex:none"><dc-import name="Button" readiness="{{ cta.readiness }}" label="{{ cta.label }}" href="{{ cta.href }}" size="sm" on-activate="{{ ctaClick }}" hint-size="140px,36px"></dc-import></div>
+</sc-if>
+
+<sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+<div style="margin-left:auto;display:flex"><button type="button" aria-label="{{ burgerLabel }}" aria-expanded="{{ drawerExpanded }}" aria-controls="{{ drawerId }}" onClick="{{ toggleDrawer }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-bg);color:var(--color-text);cursor:pointer" style-hover="background:var(--color-surface)"><dc-import name="Icon" icon="{{ burgerIcon }}" size="20" hint-size="20px,20px"></dc-import></button></div>
+</sc-if>
+</div>
+</header>
+
+<sc-if value="{{ showPanel }}" hint-placeholder-val="{{ false }}">
+<div id="{{ panelId }}" style="position:absolute;top:64px;left:0;right:0;z-index:40;background:var(--color-surface-raised);border-bottom:1px solid var(--color-border);box-shadow:var(--shadow-md)">
+<div style="max-width:var(--container-max);margin:0 auto;padding:var(--space-8) var(--gutter);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr);gap:var(--space-8)">
+<div style="display:flex;flex-direction:column;gap:var(--space-3)"><span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ panelTitle }}</span><p style="margin:0;font-size:var(--text-sm);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ panelIntro }}</p></div>
+<ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-2)">
+<sc-for list="{{ panelItems }}" as="sub" hint-placeholder-count="6"><li><a href="{{ sub.href }}" style="display:flex;flex-direction:column;gap:var(--space-2);height:100%;box-sizing:border-box;padding:var(--space-4);border-radius:var(--radius-md);text-decoration:none;color:var(--color-text)" style-hover="background:var(--color-surface)">
+<span style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text-muted)">{{ sub.num }}</span><dc-import name="AvailabilityBadge" state="{{ sub.availability }}" hint-size="80px,22px"></dc-import></span>
+<span style="font-size:var(--text-md);font-weight:var(--font-weight-semibold);letter-spacing:-0.01em">{{ sub.label }}</span>
+<span style="font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)">{{ sub.description }}</span></a></li></sc-for>
+</ul></div></div>
+</sc-if>
+
+<sc-if value="{{ showDrawer }}" hint-placeholder-val="{{ false }}">
+<div id="{{ drawerId }}" style="position:absolute;top:64px;left:0;right:0;height:{{ drawerHeight }};z-index:40;background:var(--color-bg);display:flex;flex-direction:column;overflow:auto">
+<sc-if value="{{ drawerTop }}" hint-placeholder-val="{{ true }}">
+<nav aria-label="Primary" style="flex:1 1 auto;padding:var(--space-2) var(--gutter)"><ul style="list-style:none;margin:0;padding:0">
+<sc-for list="{{ navList }}" as="item" hint-placeholder-count="7"><li style="border-bottom:1px solid var(--color-border)">
+<sc-if value="{{ item.hasChildren }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ item.openLevel }}" style="width:100%;min-height:56px;display:flex;align-items:center;justify-content:space-between;padding:0;border:0;background:transparent;font-family:inherit;font-size:var(--text-lg);font-weight:var(--font-weight-medium);color:var(--color-text);cursor:pointer;text-align:left">{{ item.label }}<dc-import name="Icon" icon="chevron-right" size="20" hint-size="20px,20px"></dc-import></button></sc-if>
+<sc-if value="{{ item.noChildren }}" hint-placeholder-val="{{ true }}"><a href="{{ item.href }}" aria-current="{{ item.ariaCurrent }}" onClick="{{ closeDrawer }}" style="display:flex;align-items:center;min-height:56px;font-size:var(--text-lg);font-weight:var(--font-weight-medium);color:var(--color-text);text-decoration:none">{{ item.label }}</a></sc-if>
+</li></sc-for></ul></nav>
+</sc-if>
+<sc-if value="{{ drawerSub }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1 1 auto;padding:var(--space-2) var(--gutter);display:flex;flex-direction:column">
+<button type="button" onClick="{{ backLevel }}" style="align-self:flex-start;min-height:var(--touch-target);display:flex;align-items:center;gap:var(--space-2);padding:0;border:0;background:transparent;font-family:inherit;font-size:var(--text-sm);font-weight:var(--font-weight-medium);color:var(--color-text-secondary);cursor:pointer"><dc-import name="Icon" icon="arrow-left" size="16" hint-size="16px,16px"></dc-import>Menu</button>
+<span style="padding:var(--space-2) 0;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted);border-bottom:1px solid var(--color-border)">{{ levelTitle }}</span>
+<ul style="list-style:none;margin:0;padding:0">
+<sc-for list="{{ subItems }}" as="sub" hint-placeholder-count="6"><li style="border-bottom:1px solid var(--color-border)"><a href="{{ sub.href }}" onClick="{{ closeDrawer }}" style="display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-3) 0;text-decoration:none;color:var(--color-text)">
+<span style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);font-size:var(--text-md);font-weight:var(--font-weight-semibold)">{{ sub.label }}<dc-import name="AvailabilityBadge" state="{{ sub.availability }}" hint-size="80px,22px"></dc-import></span>
+<span style="font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)">{{ sub.description }}</span></a></li></sc-for>
+</ul></div>
+</sc-if>
+<div style="padding:var(--space-4) var(--gutter);border-top:1px solid var(--color-border);background:var(--color-bg)"><dc-import name="Button" readiness="{{ cta.readiness }}" label="{{ cta.label }}" href="{{ cta.href }}" size="md" full-width="{{ true }}" on-activate="{{ ctaClick }}" hint-size="100%,44px"></dc-import></div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;480px&quot;},&quot;initialOpen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;none&quot;,&quot;product&quot;,&quot;drawer&quot;,&quot;drawer-product&quot;],&quot;default&quot;:&quot;none&quot;,&quot;tsType&quot;:&quot;'none' | 'product' | 'drawer' | 'drawer-product'&quot;},&quot;navItems&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;NavItem[]&quot;},&quot;cta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;CtaConfig&quot;},&quot;current&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onCta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  static NAV = [
+    { label: 'Product', children: [
+      { label: 'How it works', href: '/how-it-works', description: 'The full workflow from verified profile to follow-up.', availability: 'concept' },
+      { label: 'Job Finder', href: '/features/ai-job-finder', description: 'Find openings that fit your target roles.', availability: 'preview' },
+      { label: 'Job Matching', href: '/features/job-matcher', description: 'Compare job requirements with your confirmed experience.', availability: 'preview' },
+      { label: 'Resume Tailoring', href: '/features/resume-tailoring', description: 'Adapt your resume to each job from verified facts.', availability: 'preview' },
+      { label: 'Autofill and Auto Apply', href: '/features/job-application-autofill', description: 'Fill applications from your profile. You decide when to submit.', availability: 'planned' },
+      { label: 'Application Tracker', href: '/features/job-application-tracker', description: 'Every application, resume version and next step in one pipeline.', availability: 'concept' }
+    ] },
+    { label: 'Job Finder', href: '/features/ai-job-finder' },
+    { label: 'Job Matching', href: '/features/job-matcher' },
+    { label: 'Resume Tailoring', href: '/features/resume-tailoring' },
+    { label: 'Auto Apply', href: '/features/auto-apply' },
+    { label: 'Tracker', href: '/features/job-application-tracker' },
+    { label: 'Resources', href: '/guides' }
+  ];
+  rootRef = { current: null };
+  navRef = { current: null };
+  uid = 'sbh' + Math.random().toString(36).slice(2, 7);
+  state = { w: 1200, open: null, drawer: false, level: null, collapseBelow: 0 };
+  setRoot = (el) => { if (el) this.rootRef.current = el; };
+  setNav = (el) => { this.navRef.current = el; };
+  measure = () => {
+    const el = this.rootRef.current;
+    if (!el || !el.isConnected) return;
+    const w = el.offsetWidth;
+    const upd = {};
+    if (w && Math.abs(w - this.state.w) > 1) upd.w = w;
+    const n = this.navRef.current;
+    const cw = upd.w || this.state.w;
+    if (n && n.isConnected && cw >= Math.max(900, this.state.collapseBelow) && n.scrollWidth > n.clientWidth + 1) upd.collapseBelow = cw + 1;
+    if (Object.keys(upd).length) this.setState(upd);
+  };
+  schedule = () => { cancelAnimationFrame(this.raf); this.raf = requestAnimationFrame(this.measure); };
+  componentDidMount() {
+    this.schedule();
+    this.t = setTimeout(this.measure, 120);
+    this.iv = setInterval(this.measure, 400);
+    window.addEventListener('resize', this.schedule);
+    if (this.rootRef.current) { this.ro = new ResizeObserver(this.schedule); this.ro.observe(this.rootRef.current); }
+    const items = this.props.navItems || Component.NAV;
+    const pi = items.findIndex(i => i.children && i.children.length);
+    const o = this.props.initialOpen;
+    if (o === 'product') this.setState({ open: pi });
+    if (o === 'drawer') this.setState({ drawer: true });
+    if (o === 'drawer-product') this.setState({ drawer: true, level: pi });
+    this.onKey = e => { if (e.key !== 'Escape') return; if (this.state.open != null) this.setState({ open: null }); else if (this.state.drawer) this.setState({ drawer: false, level: null }); };
+    this.onDown = e => { if (this.state.open != null && this.rootRef.current && !this.rootRef.current.contains(e.target)) this.setState({ open: null }); };
+    document.addEventListener('keydown', this.onKey);
+    document.addEventListener('mousedown', this.onDown);
+  }
+  componentWillUnmount() {
+    this.ro && this.ro.disconnect();
+    clearTimeout(this.t); clearInterval(this.iv); cancelAnimationFrame(this.raf);
+    window.removeEventListener('resize', this.schedule);
+    document.removeEventListener('keydown', this.onKey);
+    document.removeEventListener('mousedown', this.onDown);
+  }
+  renderVals() {
+    const p = this.props, s = this.state;
+    const items = p.navItems || Component.NAV;
+    const mobile = s.w < Math.max(900, s.collapseBelow);
+    const cur = p.current;
+    const navList = items.map((it, i) => {
+      const kids = it.children || [];
+      const has = kids.length > 0;
+      const isCur = it.href === cur || kids.some(c => c.href === cur);
+      return {
+        label: it.label, href: it.href || '#', hasChildren: has, noChildren: !has,
+        ariaExpanded: s.open === i ? 'true' : 'false', chevron: s.open === i ? 'chevron-up' : 'chevron-down',
+        ariaCurrent: it.href && it.href === cur ? 'page' : undefined, current: isCur ? 'true' : 'false',
+        toggle: () => this.setState(st => ({ open: st.open === i ? null : i })),
+        openLevel: () => this.setState({ level: i })
+      };
+    });
+    const mapKids = idx => ((items[idx] || {}).children || []).map((c, j) => ({ ...c, num: String(j + 1).padStart(2, '0') }));
+    const close = () => this.setState({ drawer: false, level: null });
+    return {
+      rootRef: this.setRoot, navRef: this.setNav,
+      logoHref: p.logoHref || '/',
+      isDesktop: !mobile, isMobile: mobile,
+      navList,
+      cta: p.cta || { readiness: 'waitlist' },
+      ctaClick: p.onCta ? (e) => { close(); this.setState({ open: null }); p.onCta(e); } : undefined,
+      panelId: this.uid + '-panel', drawerId: this.uid + '-drawer',
+      showPanel: !mobile && s.open != null,
+      panelTitle: s.open != null && items[s.open] ? items[s.open].label : '',
+      panelIntro: p.panelIntro || 'Each stage works from the same verified profile. Badges show what is available today.',
+      panelItems: s.open != null ? mapKids(s.open) : [],
+      showDrawer: mobile && s.drawer,
+      drawerHeight: p.drawerHeight || 'calc(100vh - 64px)',
+      drawerTop: s.level == null, drawerSub: s.level != null,
+      levelTitle: s.level != null && items[s.level] ? items[s.level].label : '',
+      subItems: s.level != null ? mapKids(s.level) : [],
+      burgerLabel: s.drawer ? 'Close menu' : 'Open menu',
+      burgerIcon: s.drawer ? 'close' : 'menu',
+      drawerExpanded: s.drawer ? 'true' : 'false',
+      toggleDrawer: () => this.setState(st => ({ drawer: !st.drawer, level: null })),
+      backLevel: () => this.setState({ level: null }),
+      closeDrawer: close
+    };
+  }
+}
+</script>
+</body>
+</html>

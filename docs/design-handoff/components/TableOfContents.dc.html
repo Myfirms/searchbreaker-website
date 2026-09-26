@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<div style="font-family:var(--font-sans);color:var(--color-text)">
+<sc-if value="{{ showSidebar }}" hint-placeholder-val="{{ true }}"><nav aria-label="{{ title }}" style="display:flex;flex-direction:column;gap:var(--space-3)">
+<span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ title }}</span>
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+<sc-for list="{{ itemList }}" as="it" hint-placeholder-count="4"><li><a href="{{ it.href }}" aria-current="{{ it.ariaCurrent }}" data-current="{{ it.current }}" onClick="{{ it.onClick }}" style="display:block;padding:6px var(--space-3);border-left:2px solid var(--nav-indicator);box-shadow:inset 1px 0 0 var(--color-border);font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text);text-decoration:none" style-hover="color:var(--color-accent)">{{ it.label }}</a></li></sc-for>
+</ol></nav></sc-if>
+<sc-if value="{{ showCollapsible }}" hint-placeholder-val="{{ false }}"><details open="{{ open }}" onToggle="{{ onToggle }}" style="border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface-raised)">
+<summary style="display:flex;align-items:center;justify-content:space-between;min-height:var(--touch-target);padding:0 var(--space-4);cursor:pointer;font-size:var(--text-sm);font-weight:var(--font-weight-semibold)">{{ title }}<dc-import name="Icon" icon="{{ chevron }}" size="16" hint-size="16px,16px"></dc-import></summary>
+<nav aria-label="{{ title }}"><ol style="list-style:none;margin:0;padding:0 var(--space-4) var(--space-3)">
+<sc-for list="{{ itemList }}" as="it" hint-placeholder-count="4"><li style="border-top:1px solid var(--color-border)"><a href="{{ it.href }}" onClick="{{ it.onClick }}" style="display:flex;align-items:center;min-height:var(--touch-target);font-size:var(--text-sm);color:var(--color-text);text-decoration:none">{{ it.label }}</a></li></sc-for>
+</ol></nav></details></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;280px&quot;,&quot;height&quot;:&quot;260px&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;sidebar&quot;,&quot;collapsible&quot;],&quot;default&quot;:&quot;sidebar&quot;,&quot;tsType&quot;:&quot;'sidebar' | 'collapsible'&quot;},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;On this page&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{ id: string; label: string }[]&quot;}}">
+class Component extends DCLogic {
+  state = { active: null, open: false };
+  componentDidMount() {
+    if (!('IntersectionObserver' in window)) return;
+    this.io = new IntersectionObserver((entries) => {
+      const vis = entries.filter(e => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (vis[0]) this.setState({ active: vis[0].target.id });
+    }, { rootMargin: '0px 0px -70% 0px' });
+    this.t = setTimeout(() => (this.props.items || []).forEach(i => { const el = document.getElementById(i.id); el && this.io.observe(el); }), 300);
+  }
+  componentWillUnmount() { clearTimeout(this.t); this.io && this.io.disconnect(); }
+  renderVals() {
+    const p = this.props;
+    const items = p.items || [{ id: 'why', label: 'Why tailoring matters' }, { id: 'steps', label: 'Tailor your resume in five steps' }, { id: 'compare', label: 'Tailoring vs rewriting' }, { id: 'keywords', label: 'Use keywords without stuffing' }];
+    const v = p.variant || 'sidebar';
+    const active = this.state.active || (items[0] && items[0].id);
+    return {
+      title: p.title || 'On this page',
+      showSidebar: v === 'sidebar', showCollapsible: v === 'collapsible',
+      open: this.state.open, chevron: this.state.open ? 'chevron-up' : 'chevron-down',
+      onToggle: (e) => this.setState({ open: e.currentTarget.open }),
+      itemList: items.map(i => ({ label: i.label, href: '#' + i.id, current: i.id === active ? 'true' : 'false', ariaCurrent: i.id === active ? 'location' : undefined, onClick: () => this.setState({ active: i.id }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

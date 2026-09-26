@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="container-type:inline-size;container-name:article;background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y-tight) var(--gutter) var(--space-10)">
+<div style="max-width:var(--container-max);margin:0 auto">
+<div data-article-col="true" style="display:flex;flex-direction:column;gap:var(--space-5)">
+<span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-accent)">{{ eyebrow }}</span>
+<h1 id="{{ headingId }}" style="margin:0;font-size:var(--display-compact);line-height:var(--leading-display);letter-spacing:var(--tracking-display);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ headline }}</h1>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4) var(--space-5);border-radius:var(--radius-sm);background:var(--color-surface)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">Short answer</span><p style="margin:0;font-size:var(--text-xl);line-height:var(--leading-body);text-wrap:pretty">{{ answer }}</p></div>
+<ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-5);font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-text-muted)">
+<sc-for list="{{ metaList }}" as="m" hint-placeholder-count="3"><li style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" icon="{{ m.icon }}" size="16" hint-size="16px,16px"></dc-import>{{ m.text }}</li></sc-for>
+</ul>
+</div></div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;420px&quot;},&quot;eyebrow&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Guide&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;headline&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;answer&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;meta&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;ArticleMeta&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbah' + Math.random().toString(36).slice(2, 7);
+  renderVals() {
+    const p = this.props;
+    const m = p.meta || { updated: '2026-09-14', reviewed: '2026-09-14', readingTime: '8 min read' };
+    const metaList = [];
+    if (m.updated) metaList.push({ icon: 'calendar', text: 'Updated ' + m.updated });
+    if (m.reviewed) metaList.push({ icon: 'check', text: 'Reviewed ' + m.reviewed });
+    if (m.readingTime) metaList.push({ icon: 'file', text: m.readingTime });
+    return {
+      headingId: this.uid,
+      tone: p.tone || 'default',
+      eyebrow: p.eyebrow || 'Guide',
+      headline: p.headline || 'How to tailor a resume to a job description',
+      answer: p.answer || 'Match each requirement in the job description to real evidence from your experience, then reorder and reword your resume so that evidence is easy to find.',
+      metaList
+    };
+  }
+}
+</script>
+</body>
+</html>

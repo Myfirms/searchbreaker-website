@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+<div ref="{{ setOverlay }}" onMouseDown="{{ onBackdrop }}" onKeyDown="{{ onKey }}" style="position:{{ position }};inset:0;z-index:100;box-sizing:border-box;background:var(--color-overlay);display:flex;align-items:{{ align }};justify-content:center;padding:{{ pad }};font-family:var(--font-sans)">
+<div ref="{{ dialogRef }}" role="dialog" aria-modal="true" aria-labelledby="{{ titleId }}" aria-describedby="{{ descId }}" style="box-sizing:border-box;width:100%;max-width:480px;max-height:100%;overflow:auto;background:var(--color-surface-raised);color:var(--color-text);border-radius:{{ radius }};box-shadow:var(--shadow-lg);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-5)">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4)">
+<div style="display:flex;flex-direction:column;gap:var(--space-2);padding-top:var(--space-2)">
+<dc-import name="AvailabilityBadge" state="preview" detail="in private testing" hint-size="200px,22px"></dc-import>
+<h2 id="{{ titleId }}" style="margin:0;font-size:var(--text-2xl);line-height:var(--leading-snug);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold)">{{ title }}</h2>
+</div>
+<button type="button" aria-label="Close" onClick="{{ close }}" style="width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;border:0;border-radius:var(--radius-sm);background:transparent;color:var(--color-text-secondary);cursor:pointer" style-hover="background:var(--color-surface)"><dc-import name="Icon" icon="close" size="20" hint-size="20px,20px"></dc-import></button>
+</div>
+<p id="{{ descId }}" style="margin:0;font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ text }}</p>
+<dc-import name="WaitlistForm" source="{{ source }}" consent-text="{{ consentText }}" initial-status="{{ initialStatus }}" show-role="{{ showRole }}" on-submit="{{ onSubmit }}" hint-size="100%,380px"></dc-import>
+</div></div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;720px&quot;},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;fixed&quot;,&quot;contained&quot;],&quot;default&quot;:&quot;contained&quot;,&quot;tsType&quot;:&quot;'fixed' | 'contained'&quot;},&quot;initialStatus&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;invalid&quot;,&quot;submitting&quot;,&quot;error&quot;,&quot;success&quot;,&quot;duplicate&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;WaitlistStatus&quot;},&quot;source&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;home-hero&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbd' + Math.random().toString(36).slice(2, 7);
+  dialogRef = React.createRef();
+  state = { w: 1200 };
+  setOverlay = (el) => {
+    if (this.ro) { this.ro.disconnect(); this.ro = null; }
+    if (!el) { if (this.prevFocus && this.prevFocus.focus) this.prevFocus.focus(); return; }
+    this.setState({ w: el.offsetWidth });
+    this.ro = new ResizeObserver(e => { const w = e[0].contentRect.width; if (Math.abs(w - this.state.w) > 1) this.setState({ w }); });
+    this.ro.observe(el);
+    if (this.props.layout !== 'contained') {
+      this.prevFocus = document.activeElement;
+      setTimeout(() => { const f = el.querySelector('input,select,button'); f && f.focus(); }, 30);
+    }
+  };
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  close = () => { this.props.onClose && this.props.onClose(); };
+  onKey = (e) => {
+    if (e.key === 'Escape') { e.stopPropagation(); this.close(); return; }
+    if (e.key !== 'Tab' || !this.dialogRef.current) return;
+    const f = Array.from(this.dialogRef.current.querySelectorAll('a[href],button:not([aria-disabled="true"]),input:not([type="hidden"]),select,textarea')).filter(x => x.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  renderVals() {
+    const p = this.props;
+    const sheet = this.state.w < 640;
+    return {
+      open: p.open !== false,
+      setOverlay: this.setOverlay, dialogRef: this.dialogRef,
+      position: p.layout === 'contained' ? 'absolute' : 'fixed',
+      align: sheet ? 'flex-end' : 'center',
+      pad: sheet ? '0' : 'var(--space-6)',
+      radius: sheet ? 'var(--radius-lg) var(--radius-lg) 0 0' : 'var(--radius-lg)',
+      titleId: this.uid + '-t', descId: this.uid + '-d',
+      title: p.title || 'Join the SearchBreaker waitlist',
+      text: p.text || "SearchBreaker is in private testing. Leave your email and we'll invite you when the workflow you need is ready.",
+      source: p.source || 'unknown', consentText: p.consentText, initialStatus: p.initialStatus || 'idle', showRole: p.showRole !== false,
+      onSubmit: p.onSubmit,
+      close: this.close,
+      onKey: this.onKey,
+      onBackdrop: (e) => { if (e.target === e.currentTarget) this.close(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

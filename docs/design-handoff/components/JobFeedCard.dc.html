@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<article data-jf-state="{{ st }}" aria-label="{{ ariaLabel }}" style="box-sizing:border-box;width:100%;font-family:var(--font-sans);color:var(--color-text);background:var(--color-surface-raised);border:1px solid var(--jf-border);border-radius:var(--radius-md);padding:var(--space-5);display:flex;flex-direction:column;gap:var(--space-4)">
+<sc-if value="{{ isSkipped }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:var(--space-2)"><span style="display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:var(--color-text-secondary)"><dc-import name="Icon" icon="skip" size="16" hint-size="16px,16px"></dc-import>Skipped · {{ job.title }}, {{ job.company }}</span><dc-import name="Button" variant="link" size="sm" label="Undo" on-activate="{{ undo }}" hint-size="56px,36px"></dc-import></div></sc-if>
+<sc-if value="{{ notSkipped }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:var(--space-3)">
+<div style="display:flex;flex-direction:column;gap:var(--space-1);min-width:0;flex:1 1 240px"><h3 style="margin:0;font-size:var(--text-lg);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold)">{{ job.title }}</h3><span style="font-size:var(--text-sm);color:var(--color-text-secondary)">{{ job.company }} · {{ job.location }} · {{ job.workMode }}</span></div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-2)"><sc-if value="{{ isSaved }}" hint-placeholder-val="{{ false }}"><dc-import name="StatusChip" status="reviewed" label="Saved" hint-size="80px,26px"></dc-import></sc-if><sc-if value="{{ illustrative }}" hint-placeholder-val="{{ true }}"><dc-import name="AvailabilityBadge" state="illustrative" hint-size="130px,22px"></dc-import></sc-if></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-4);font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)"><span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" icon="calendar" size="16" hint-size="16px,16px"></dc-import>Posted {{ job.postedAt }}</span><span style="display:flex;align-items:center;gap:6px"><dc-import name="Icon" icon="external" size="16" hint-size="16px,16px"></dc-import>Source: {{ job.source }}</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:var(--space-4)">
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">Why it appears</span><ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px"><sc-for list="{{ job.matches }}" as="m" hint-placeholder-count="3"><li style="display:flex;gap:var(--space-2);font-size:var(--text-sm);line-height:var(--leading-snug)"><span style="display:flex;color:var(--color-success);padding-top:1px"><dc-import name="Icon" icon="check" size="16" hint-size="16px,16px"></dc-import></span>{{ m }}</li></sc-for></ul></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">Missing information</span><ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px"><sc-for list="{{ job.missing }}" as="m" hint-placeholder-count="2"><li style="display:flex;gap:var(--space-2);font-size:var(--text-sm);line-height:var(--leading-snug);color:var(--color-text-secondary)"><span style="display:flex;color:var(--color-text-muted);padding-top:1px"><dc-import name="Icon" icon="help" size="16" hint-size="16px,16px"></dc-import></span>{{ m }}</li></sc-for></ul></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding-top:var(--space-4);border-top:1px solid var(--color-border)">
+<dc-import name="Button" size="sm" variant="{{ saveVariant }}" label="{{ saveLabel }}" on-activate="{{ toggleSave }}" hint-size="80px,36px"></dc-import>
+<dc-import name="Button" size="sm" variant="ghost" label="Skip" on-activate="{{ skip }}" hint-size="60px,36px"></dc-import>
+<span style="margin-left:auto;display:flex"><dc-import name="Button" size="sm" variant="link" label="View posting" href="{{ job.url }}" hint-size="100px,36px"></dc-import></span>
+</div>
+</sc-if>
+</article>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;640px&quot;,&quot;height&quot;:&quot;380px&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;saved&quot;,&quot;skipped&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;'default' | 'saved' | 'skipped'&quot;},&quot;illustrative&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;job&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Job&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(s: JobCardState) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { st: null };
+  componentDidMount() { this.setState({ st: this.props.state || 'default' }); }
+  renderVals() {
+    const p = this.props;
+    const st = this.state.st || p.state || 'default';
+    const job = p.job || {
+      title: 'Senior Product Manager, Payments', company: 'Fenwick Pay', location: 'Berlin', workMode: 'Hybrid',
+      postedAt: '2 days ago', source: 'Company careers page', url: '#posting',
+      matches: ['Title matches your target role', 'Payments work overlaps with your invoicing redesign', 'Location fits your Berlin or remote preference'],
+      missing: ['Salary range not listed', 'Team size not stated']
+    };
+    const change = (n) => { this.setState({ st: n }); p.onChange && p.onChange(n); };
+    return {
+      st, job,
+      ariaLabel: job.title + ', ' + job.company,
+      isSkipped: st === 'skipped', notSkipped: st !== 'skipped', isSaved: st === 'saved',
+      illustrative: p.illustrative !== false,
+      saveVariant: st === 'saved' ? 'primary' : 'secondary',
+      saveLabel: st === 'saved' ? 'Saved' : 'Save',
+      toggleSave: () => change(st === 'saved' ? 'default' : 'saved'),
+      skip: () => change('skipped'),
+      undo: () => change('default')
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<sc-if value="{{ visible }}" hint-placeholder-val="{{ true }}">
+<div role="region" aria-label="Announcement" style="background:var(--color-surface-accent);color:var(--color-text);font-family:var(--font-sans);border-bottom:1px solid var(--color-border)">
+<div style="max-width:var(--container-max);margin:0 auto;padding:0 var(--gutter);min-height:44px;display:flex;align-items:center;gap:var(--space-3);font-size:var(--text-sm)">
+<sc-if value="{{ hasBadge }}" hint-placeholder-val="{{ true }}"><dc-import name="AvailabilityBadge" state="{{ badge }}" hint-size="80px,22px"></dc-import></sc-if>
+<p style="margin:0;flex:1 1 auto;padding:var(--space-2) 0;line-height:var(--leading-snug)">{{ text }}<sc-if value="{{ hasLink }}" hint-placeholder-val="{{ true }}"> <a href="{{ href }}" onClick="{{ onLink }}" style="color:var(--color-link);font-weight:var(--font-weight-medium);text-underline-offset:var(--link-underline-offset);white-space:nowrap" style-hover="color:var(--color-link-hover);text-decoration-thickness:2px">{{ linkLabel }}</a></sc-if></p>
+<sc-if value="{{ dismissible }}" hint-placeholder-val="{{ false }}"><button type="button" aria-label="Dismiss announcement" onClick="{{ dismiss }}" style="width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;border:0;background:transparent;color:var(--color-text-secondary);cursor:pointer;border-radius:var(--radius-sm)" style-hover="background:var(--color-bg)"><dc-import name="Icon" icon="close" size="16" hint-size="16px,16px"></dc-import></button></sc-if>
+</div></div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;60px&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;linkLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Join the waitlist&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;badge&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;preview&quot;,&quot;concept&quot;,&quot;live&quot;,&quot;planned&quot;,&quot;none&quot;],&quot;default&quot;:&quot;preview&quot;,&quot;tsType&quot;:&quot;Availability | 'none'&quot;},&quot;dismissible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onActivate&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { dismissed: false };
+  renderVals() {
+    const p = this.props;
+    return {
+      visible: !this.state.dismissed,
+      text: p.text || 'SearchBreaker is in private testing. Invites go out in small groups.',
+      href: p.href || '#waitlist',
+      linkLabel: p.linkLabel || 'Join the waitlist',
+      hasLink: p.linkLabel !== '',
+      badge: p.badge || 'preview', hasBadge: p.badge !== 'none',
+      dismissible: !!p.dismissible,
+      onLink: p.onActivate ? (e) => { e.preventDefault(); p.onActivate(e); } : undefined,
+      dismiss: () => { this.setState({ dismissed: true }); p.onDismiss && p.onDismiss(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

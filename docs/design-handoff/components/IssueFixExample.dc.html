@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="../styles.css"></helmet>
+<section data-tone="{{ tone }}" aria-labelledby="{{ headingId }}" style="background:var(--section-bg);color:var(--color-text);font-family:var(--font-sans);padding:var(--section-pad-y) var(--gutter)">
+<div style="max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-10)">
+<header style="display:flex;flex-direction:column;gap:var(--space-4);max-width:720px">
+<h2 id="{{ headingId }}" style="margin:0;font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--tracking-heading);font-weight:var(--font-weight-semibold);text-wrap:balance">{{ heading }}</h2>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:var(--measure-lead);font-size:var(--text-lg);line-height:var(--leading-body);color:var(--color-text-secondary);text-wrap:pretty">{{ lead }}</p></sc-if>
+</header>
+<div style="border:1px dashed var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-surface-raised);overflow:hidden">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:40px;padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-border)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">{{ frameLabel }}</span><dc-import name="AvailabilityBadge" state="illustrative" hint-size="130px,22px"></dc-import></div>
+<ol style="list-style:none;margin:0;padding:0">
+<sc-for list="{{ itemList }}" as="it" hint-placeholder-count="3"><li style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:var(--space-4) var(--space-6);padding:var(--space-5);border-bottom:1px solid var(--color-border)">
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-warning)"><dc-import name="Icon" icon="alert" size="16" hint-size="16px,16px"></dc-import>{{ it.num }} · Issue</span><span style="font-size:var(--text-md);line-height:var(--leading-snug);font-weight:var(--font-weight-semibold)">{{ it.issue }}</span></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2)"><span style="font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-text-muted)">Why it matters</span><span style="font-size:var(--text-md);line-height:var(--leading-body);color:var(--color-text-secondary)">{{ it.why }}</span></div>
+<div style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3) var(--space-4);border-radius:var(--radius-sm);background:var(--color-accent-subtle)"><span style="display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--text-2xs);letter-spacing:var(--tracking-mono-caps);text-transform:uppercase;color:var(--color-accent)"><dc-import name="Icon" icon="check" size="16" hint-size="16px,16px"></dc-import>Suggested fix</span><span style="font-size:var(--text-md);line-height:var(--leading-body)">{{ it.fix }}</span></div>
+</li></sc-for></ol>
+</div>
+</div></section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;640px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;muted&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;SectionTone&quot;},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;See each issue with a reason and a fix&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{ issue: string; why: string; fix: string }[]&quot;}}">
+class Component extends DCLogic {
+  uid = 'sbif' + Math.random().toString(36).slice(2, 7);
+  renderVals() {
+    const p = this.props;
+    const items = p.items || [
+      { issue: 'Dates use two formats', why: 'Some parsers read “2019–21” and “Mar 2021” differently and can misplace roles.', fix: 'Use one format for every role, for example “Mar 2019 – Jun 2021”.' },
+      { issue: 'Skills appear only inside a table', why: 'Some applicant tracking systems skip table content when they extract text.', fix: 'Add a plain-text Skills section below the summary.' },
+      { issue: 'The job’s term “stakeholder management” is missing', why: 'The job lists it twice. Your profile describes the same work as “cross-team planning”.', fix: 'Use the job’s wording where it describes a fact already in your profile.' }
+    ];
+    return {
+      headingId: this.uid,
+      tone: p.tone || 'default',
+      heading: p.heading || 'See each issue with a reason and a fix',
+      lead: p.lead, hasLead: !!p.lead,
+      frameLabel: p.frameLabel || 'Resume check · Senior Product Manager, Payments',
+      itemList: items.map((it, i) => ({ ...it, num: String(i + 1).padStart(2, '0') }))
+    };
+  }
+}
+</script>
+</body>
+</html>
