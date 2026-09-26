@@ -9,7 +9,7 @@ export interface LinkCta { label: string; href: string; }
 export interface LinkItem { label: string; href: string; }
 export interface BadgeConfig { state: Availability; label?: string; detail?: string; }
 export type WaitlistStatus = 'idle' | 'invalid' | 'submitting' | 'error' | 'success' | 'duplicate';
-export interface WaitlistPayload { email: string; role: string | null; consent: true; source: string; }
+export interface WaitlistPayload { email: string; role: string | null; consent: true; source: string; /** Honeypot: must stay empty. */ hp?: string; }
 export type EvidenceStatus = 'confirmed' | 'partial' | 'gap' | 'unclear';
 export type ApplicationStatus = 'prepared' | 'reviewed' | 'submitted' | 'failed';
 export interface ArticleMeta { updated?: string; reviewed?: string; readingTime?: string; }

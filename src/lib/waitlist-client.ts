@@ -98,6 +98,7 @@ function initForm(root: HTMLElement) {
       role: role?.value || null,
       consent: true,
       source: sourceInput.value || 'unknown',
+      hp: form.querySelector<HTMLInputElement>('[data-wl-hp]')?.value ?? '',
     };
 
     setStatus('submitting');

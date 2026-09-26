@@ -78,6 +78,9 @@ const uid = `sb-wl-${Math.random().toString(36).slice(2, 7)}`;
     </div>
 
     <input type="hidden" name="source" value={source} data-wl-source />
+    <div class="sb-wl__trap" aria-hidden="true">
+      <label>Leave this field empty<input type="text" name="hp" tabindex="-1" autocomplete="off" data-wl-hp /></label>
+    </div>
     <Button type="submit" readiness="waitlist" size="lg" fullWidth />
   </form>
 
@@ -234,6 +237,13 @@ const uid = `sb-wl-${Math.random().toString(36).slice(2, 7)}`;
     flex: none;
     accent-color: var(--color-accent);
     cursor: pointer;
+  }
+  .sb-wl__trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
   }
   .sb-wl__result {
     display: flex;
