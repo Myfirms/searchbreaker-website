@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import BlockRenderer from '../components/astro/BlockRenderer.astro';
+import Breadcrumbs from '../components/astro/blocks/Breadcrumbs.astro';
+
+/** Every JSON file in src/content/pages becomes a route at its `path`. */
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages');
+  return pages.map((entry) => ({
+    params: { slug: entry.data.path === '/' ? undefined : entry.data.path.slice(1) },
+    props: { page: entry.data },
+  }));
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const isGuide = page.template === 'guide';
+---
+
+<PageLayout
+  title={page.title}
+  description={page.description}
+  canonicalPath={page.path}
+  current={page.current ?? page.path}
+  noindex={page.noindex}
+  stickyCta={!isGuide}
+  announcementBar={page.template === 'home'}
+  source={page.source}
+>
+  {page.breadcrumbs && <Breadcrumbs items={page.breadcrumbs} tone={page.template === 'feature' ? 'muted' : 'default'} />}
+  {page.blocks.map((block) => <BlockRenderer {block} source={page.source} />)}
+</PageLayout>

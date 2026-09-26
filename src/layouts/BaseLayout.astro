@@ -15,7 +15,9 @@ interface Props {
 const SITE_LAUNCHED = import.meta.env.PUBLIC_LAUNCHED === 'true';
 
 const { title, description, canonicalPath, noindex = !SITE_LAUNCHED } = Astro.props;
-const canonicalHref = canonicalPath ? new URL(canonicalPath, Astro.site).toString() : undefined;
+// Directory-style URLs: Amplify serves every page with a trailing slash, so canonical and sitemap must match.
+const withSlash = (path: string) => (path.endsWith('/') ? path : `${path}/`);
+const canonicalHref = canonicalPath ? new URL(withSlash(canonicalPath), Astro.site).toString() : undefined;
 ---
 
 <!doctype html>

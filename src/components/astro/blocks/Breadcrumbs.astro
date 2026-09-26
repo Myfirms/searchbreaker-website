@@ -18,7 +18,7 @@ const jsonLd = {
     '@type': 'ListItem',
     position: i + 1,
     name: it.label,
-    ...(it.href ? { item: new URL(it.href, Astro.site).toString() } : {}),
+    ...(it.href ? { item: new URL(it.href.endsWith('/') ? it.href : `${it.href}/`, Astro.site).toString() } : {}),
   })),
 };
 ---

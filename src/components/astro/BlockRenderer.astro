@@ -1,0 +1,77 @@
+---
+import type { Block } from '../../lib/blocks/schemas';
+import Hero from './blocks/Hero.astro';
+import WorkflowDiagram from './blocks/WorkflowDiagram.astro';
+import WorkflowSteps from './blocks/WorkflowSteps.astro';
+import ControlPoints from './blocks/ControlPoints.astro';
+import FeatureGrid from './blocks/FeatureGrid.astro';
+import BeforeAfterDiff from './blocks/BeforeAfterDiff.astro';
+import RequirementEvidencePanel from './blocks/RequirementEvidencePanel.astro';
+import IssueFixExample from './blocks/IssueFixExample.astro';
+import JobFeed from './blocks/JobFeed.astro';
+import PipelineBoard from './blocks/PipelineBoard.astro';
+import StatusStates from './blocks/StatusStates.astro';
+import ComparisonTable from './blocks/ComparisonTable.astro';
+import SupportMatrix from './blocks/SupportMatrix.astro';
+import LimitationsCallout from './blocks/LimitationsCallout.astro';
+import AudienceCards from './blocks/AudienceCards.astro';
+import RelatedLinks from './blocks/RelatedLinks.astro';
+import FaqAccordion from './blocks/FaqAccordion.astro';
+import FinalCta from './blocks/FinalCta.astro';
+import ArticleHero from './blocks/ArticleHero.astro';
+import ArticleBody from './blocks/ArticleBody.astro';
+import KeyTakeaways from './blocks/KeyTakeaways.astro';
+import InlineCta from './blocks/InlineCta.astro';
+import AuthorReviewed from './blocks/AuthorReviewed.astro';
+
+interface Props {
+  block: Block;
+  /** Waitlist source prefix for this page, e.g. "home". */
+  source: string;
+}
+
+const { block, source } = Astro.props;
+const { type, anchor, ...props } = block;
+
+// Blocks that open the waitlist dialog get a page-and-block specific `source`.
+const SOURCE_SUFFIX: Partial<Record<Block['type'], string>> = {
+  hero: 'hero',
+  finalCta: 'final-cta',
+  inlineCta: 'inline-cta',
+};
+const waitlistSource = SOURCE_SUFFIX[type] ? `${source}-${SOURCE_SUFFIX[type]}` : undefined;
+
+const registry = {
+  hero: Hero,
+  workflowDiagram: WorkflowDiagram,
+  workflowSteps: WorkflowSteps,
+  controlPoints: ControlPoints,
+  featureGrid: FeatureGrid,
+  beforeAfterDiff: BeforeAfterDiff,
+  requirementEvidence: RequirementEvidencePanel,
+  issueFix: IssueFixExample,
+  jobFeed: JobFeed,
+  pipelineBoard: PipelineBoard,
+  statusStates: StatusStates,
+  comparisonTable: ComparisonTable,
+  supportMatrix: SupportMatrix,
+  limitationsCallout: LimitationsCallout,
+  audienceCards: AudienceCards,
+  relatedLinks: RelatedLinks,
+  faq: FaqAccordion,
+  finalCta: FinalCta,
+  articleHero: ArticleHero,
+  articleBody: ArticleBody,
+  keyTakeaways: KeyTakeaways,
+  inlineCta: InlineCta,
+  authorReviewed: AuthorReviewed,
+} as const;
+
+const Component = registry[type] as any;
+---
+
+{anchor ? (
+  <div id={anchor}><Component {...props} waitlistSource={waitlistSource} /></div>
+) : (
+  <Component {...props} waitlistSource={waitlistSource} />
+)}

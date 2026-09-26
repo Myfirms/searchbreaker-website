@@ -35,6 +35,19 @@ const { title, description, canonicalPath, current, noindex, stickyCta = true, a
     <slot />
   </main>
   <Footer columns={footerColumns} {legalLinks} {statusNote} />
+  {stickyCta && <div class="sb-sticky-pad" aria-hidden="true" />}
   {stickyCta && <StickyMobileCta readiness="waitlist" waitlistSource={`${source}-sticky`} />}
   <WaitlistDialog />
 </BaseLayout>
+
+<style is:global>
+  /* Room for the fixed mobile CTA bar (76px) so it never covers the footer. */
+  .sb-sticky-pad {
+    height: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 900px) {
+    .sb-sticky-pad {
+      display: none;
+    }
+  }
+</style>

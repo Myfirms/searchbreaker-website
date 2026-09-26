@@ -1,0 +1,100 @@
+{
+  "path": "/guides/tailor-resume-to-job-description",
+  "template": "guide",
+  "title": "How to tailor a resume to a job description | SearchBreaker",
+  "description": "A step-by-step method for tailoring a resume to a job description using only your real experience, with a checklist and common mistakes to avoid.",
+  "source": "guide-tailor-resume",
+  "current": "/guides",
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Guides", "href": "/guides" },
+    { "label": "How to tailor a resume to a job description" }
+  ],
+  "blocks": [
+    {
+      "type": "articleHero",
+      "headline": "How to tailor a resume to a job description",
+      "answer": "Match each requirement in the job description to real evidence from your experience, then reorder and reword your resume so that evidence is easy to find.",
+      "meta": { "updated": "2026-09-14", "reviewed": "2026-09-14", "readingTime": "8 min read" }
+    },
+    {
+      "type": "articleBody",
+      "blocks": [
+        { "type": "h2", "id": "why", "text": "Why tailoring matters" },
+        { "type": "p", "text": "Recruiters and applicant tracking systems both compare your resume with the job description. A tailored resume makes the overlap easy to see. It needs no new experience, only clearer wording and ordering of what you already did." },
+        { "type": "h2", "id": "steps", "text": "Tailor your resume in five steps" },
+        {
+          "type": "steps",
+          "steps": [
+            { "title": "List the job’s requirements", "text": "Copy the must-have and nice-to-have items into two lists. Skip generic phrases like “team player”." },
+            { "title": "Match each requirement to evidence", "text": "For each item, find a role, project or result that shows it. Mark gaps honestly." },
+            { "title": "Reorder, then reword", "text": "Move the most relevant roles and bullets up. Use the job’s terms where they describe the same work." },
+            { "title": "Cut what does not support this job", "text": "Shorten or remove bullets that do not relate to the requirements." },
+            { "title": "Check every claim", "text": "Read each line and confirm you can explain it in an interview." }
+          ]
+        },
+        { "type": "callout", "variant": "warning", "title": "Never add experience you do not have", "text": "Using the job’s wording is fine when it describes real work. Adding skills or results you cannot back up can end an interview process." },
+        { "type": "h2", "id": "compare", "text": "Tailoring vs rewriting from scratch" },
+        {
+          "type": "table",
+          "caption": "When to tailor and when to rewrite",
+          "columns": ["", "Tailoring", "Rewriting"],
+          "rows": [
+            ["Starting point", "Your existing resume", "A blank page"],
+            ["Effort per job", "Small edits to wording and order", "A full rewrite"],
+            ["Risk of errors", "Low: facts stay the same", "Higher: new wording can drift from facts"],
+            ["Best for", "Roles similar to your recent work", "A major career change"]
+          ]
+        },
+        { "type": "h2", "id": "keywords", "text": "Use keywords without stuffing" },
+        { "type": "p", "text": "Repeat a term only where it describes something you did. A list of keywords without context rarely helps, and recruiters notice it." },
+        {
+          "type": "ul",
+          "items": [
+            "Use the job’s exact term once, where it fits a real bullet.",
+            "Keep your own wording elsewhere so the resume still reads naturally.",
+            "Do not hide keywords in white text or tiny fonts."
+          ]
+        },
+        { "type": "callout", "variant": "tip", "title": "Keep a master list of facts", "text": "Write down every role, result and skill once. Tailoring then becomes selecting and rewording, not remembering." }
+      ]
+    },
+    {
+      "type": "keyTakeaways",
+      "items": [
+        "Tailoring changes wording and order, not facts.",
+        "Map each requirement to real evidence before you edit.",
+        "Use the job’s terms only where they describe your actual work.",
+        "Check every line before you send."
+      ]
+    },
+    {
+      "type": "inlineCta",
+      "title": "Tailor each resume from verified facts",
+      "text": "SearchBreaker maps job requirements to the experience you confirmed and proposes edits you approve one by one.",
+      "href": "/features/resume-tailoring",
+      "linkLabel": "See how resume tailoring works",
+      "availability": "preview",
+      "cta": { "readiness": "waitlist" }
+    },
+    {
+      "type": "faq",
+      "heading": "Questions about tailoring",
+      "faqs": [
+        { "q": "Should I tailor every application?", "a": "Tailor for every role you actively want. For very similar roles, small changes to the summary and the order of bullets are often enough." },
+        { "q": "Is it okay to copy phrases from the job description?", "a": "Yes, where the phrase describes work you actually did. Copying requirements you do not meet misleads the reader." },
+        { "q": "Does tailoring help with applicant tracking systems?", "a": "Clear headings, plain text and the job’s own terms make a resume easier to parse. No method guarantees how a specific system will read it." }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Related",
+      "items": [
+        { "kind": "related", "label": "Resume tailoring in SearchBreaker", "href": "/features/resume-tailoring", "blurb": "Proposed edits linked to your verified facts.", "availability": "preview" },
+        { "kind": "related", "label": "Job matcher", "href": "/features/job-matcher", "blurb": "Map requirements to your evidence before you edit.", "availability": "preview" }
+      ]
+    },
+    { "type": "authorReviewed", "updated": "2026-09-14" }
+  ]
+}

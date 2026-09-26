@@ -1,0 +1,108 @@
+{
+  "path": "/",
+  "template": "home",
+  "pageId": "P001",
+  "title": "AI job search built around your whole application workflow | SearchBreaker",
+  "description": "A structured job search workspace that helps you move from verified experience to prioritized applications and follow-up. Learn the workflow, its controls and what you can review before applying.",
+  "source": "home",
+  "blocks": [
+    {
+      "type": "hero",
+      "variant": "home",
+      "headline": "AI job search built around your whole application workflow",
+      "lead": "SearchBreaker turns your verified experience into a controlled workflow: find relevant jobs, tailor materials and track every application. You review everything before anything is sent.",
+      "badge": { "state": "preview", "detail": "in private testing" },
+      "primaryCta": { "readiness": "waitlist" },
+      "secondaryCta": { "label": "See how the search works", "href": "#how-it-works" },
+      "media": {
+        "state": "concept",
+        "label": "Application pipeline",
+        "alt": "Concept of the application pipeline board with five stages",
+        "caption": "Pipeline view with the resume version and next action on each card."
+      },
+      "reassurance": "You review everything before anything is sent."
+    },
+    {
+      "type": "workflowDiagram",
+      "anchor": "how-it-works",
+      "heading": "How the search works",
+      "lead": "Four stages share one verified profile. Each stage shows what is available today.",
+      "nodes": [
+        { "label": "Build a verified profile", "availability": "preview", "text": "Confirm your roles, results and skills once." },
+        { "label": "Choose target roles", "availability": "preview", "text": "Set titles, level, location and work mode." },
+        { "label": "Find and prioritize jobs", "href": "/features/ai-job-finder", "availability": "preview", "text": "See openings with fit reasons and gaps." },
+        { "label": "Prepare, review and track applications", "href": "/features/resume-tailoring", "availability": "preview", "text": "Approve every edit and follow each application." }
+      ]
+    },
+    {
+      "type": "controlPoints",
+      "tone": "muted",
+      "heading": "What you control",
+      "lead": "SearchBreaker prepares drafts and suggestions. Every step that changes your materials or contacts an employer waits for you.",
+      "points": [
+        { "title": "Edit your experience", "text": "Your profile is the only source for resumes and applications. Change or remove any fact at any time.", "icon": "edit" },
+        { "title": "Approve every material", "text": "Each tailored resume and answer waits for your review. Accept, edit or reject each proposed change.", "icon": "user-check" },
+        { "title": "Decide when to submit", "text": "Nothing is sent to an employer without an explicit action from you.", "icon": "send" }
+      ]
+    },
+    {
+      "type": "pipelineBoard",
+      "heading": "See your application pipeline",
+      "lead": "Every application, the resume version you sent and the next step, in one place.",
+      "columns": [
+        { "id": "to-apply", "title": "To apply" },
+        { "id": "applied", "title": "Applied" },
+        { "id": "screening", "title": "Screening" },
+        { "id": "next", "title": "Next steps" },
+        { "id": "closed", "title": "Rejected / No answer" }
+      ],
+      "cards": [
+        { "id": 1, "column": "to-apply", "title": "Senior Product Manager, Payments", "company": "Fenwick Pay", "resumeVersion": "Resume v3", "nextAction": "Review tailored resume", "updated": "Sep 22" },
+        { "id": 2, "column": "applied", "title": "Product Lead, Billing", "company": "Arcadia Health", "resumeVersion": "Resume v2", "nextAction": "Follow up on Oct 2", "updated": "Sep 18" },
+        { "id": 3, "column": "applied", "title": "Group PM, Platform", "company": "Oakridge Freight", "resumeVersion": "Resume v2", "nextAction": "Wait for reply until Sep 30", "updated": "Sep 16" },
+        { "id": 4, "column": "screening", "title": "Senior PM, Checkout", "company": "Lumen Retail", "resumeVersion": "Resume v3", "nextAction": "Recruiter call on Sep 29", "updated": "Sep 20" },
+        { "id": 5, "column": "next", "title": "Principal Product Manager", "company": "Halden Systems", "resumeVersion": "Resume v1", "nextAction": "Prepare case study", "updated": "Sep 12" },
+        { "id": 6, "column": "closed", "title": "Product Manager, Growth", "company": "Verto Media", "resumeVersion": "Resume v1", "nextAction": "No answer after 21 days", "updated": "Aug 30" }
+      ]
+    },
+    {
+      "type": "audienceCards",
+      "tone": "muted",
+      "heading": "Who this helps",
+      "items": [
+        { "title": "Experienced professionals", "text": "You have years of results to draw on and need each application to show the ones that matter for that job.", "caveat": "Less useful if you apply to one or two roles a month." },
+        { "title": "Career changers", "text": "You need to show how past work maps to a new field, using only what you actually did.", "caveat": "It will not invent experience in the new field." },
+        { "title": "High-volume searchers", "text": "You apply often and need to keep versions, dates and follow-ups straight.", "caveat": "It will not send applications without your approval." }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "heading": "Explore each stage",
+      "items": [
+        { "kind": "related", "label": "AI job finder", "href": "/features/ai-job-finder", "blurb": "Find openings that fit your target roles.", "availability": "preview" },
+        { "kind": "related", "label": "Job matcher", "href": "/features/job-matcher", "blurb": "Compare requirements with your confirmed experience.", "availability": "preview" },
+        { "kind": "related", "label": "Resume tailoring", "href": "/features/resume-tailoring", "blurb": "Adapt your resume to each job from verified facts.", "availability": "preview" },
+        { "kind": "related", "label": "Application tracker", "href": "/features/job-application-tracker", "blurb": "Every application and next step in one pipeline.", "availability": "concept" }
+      ]
+    },
+    {
+      "type": "faq",
+      "tone": "muted",
+      "heading": "Questions",
+      "defaultOpen": 0,
+      "faqs": [
+        { "q": "Is this another job board?", "a": "No. SearchBreaker does not host job listings. It helps you find openings from existing sources, assess fit and manage your applications in one workspace." },
+        { "q": "Will AI invent experience?", "a": "No. Resumes and applications use only facts you entered and confirmed. Each proposed edit shows which profile fact it comes from, and you can reject any of them." },
+        { "q": "Will it submit applications without my consent?", "a": "No. Submission always needs your explicit approval. Auto-apply, when available, runs only under rules you set and can be paused at any time." },
+        { "q": "Is SearchBreaker available now?", "a": "Not yet. It is in private testing. Join the waitlist to get an invite when the workflow you need is ready." }
+      ]
+    },
+    {
+      "type": "finalCta",
+      "heading": "Run your job search as one controlled workflow",
+      "text": "Join the waitlist and we’ll invite you as each stage moves from preview to live.",
+      "cta": { "readiness": "waitlist" },
+      "secondaryCta": { "label": "See how the search works", "href": "#how-it-works" }
+    }
+  ]
+}
