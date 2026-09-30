@@ -14,11 +14,6 @@ export const navItems: HeaderProps['navItems'] = [
       { label: 'Application Tracker', href: '/features/job-application-tracker', description: 'Every application, resume version and next step in one pipeline.', availability: 'concept' },
     ],
   },
-  { label: 'Job Finder', href: '/features/ai-job-finder' },
-  { label: 'Job Matching', href: '/features/job-matcher' },
-  { label: 'Resume Tailoring', href: '/features/resume-tailoring' },
-  { label: 'Auto Apply', href: '/features/auto-apply' },
-  { label: 'Tracker', href: '/features/job-application-tracker' },
   { label: 'Resources', href: '/guides/tailor-resume-to-job-description' },
 ];
 
