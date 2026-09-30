@@ -1,0 +1,217 @@
+{
+  "path": "/guides/job-search-workflow",
+  "template": "guide",
+  "title": "Organize Your Weekly Job Search Workflow | SearchBreaker",
+  "description": "Learn how to build a consistent job search workflow using time-blocking, application tracking, and weekly reviews to stay organized and focused.",
+  "pageId": "P027",
+  "source": "guide-job-search-workflow",
+  "current": "/guides/job-search-workflow",
+  "breadcrumbs": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "How to Organize Your Job Search Workflow"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "articleHero",
+      "headline": "How to Organize Your Job Search Workflow",
+      "answer": "A reliable job search workflow uses dedicated time blocks for sourcing roles, tailoring resumes, and following up. Structuring your search this way maintains momentum, prevents burnout, and ensures no opportunities slip through the cracks.",
+      "meta": {
+        "updated": "2026-09-30",
+        "reviewed": "2026-09-30",
+        "readingTime": "3 min read"
+      }
+    },
+    {
+      "type": "articleBody",
+      "toc": true,
+      "blocks": [
+        {
+          "type": "h2",
+          "id": "why-you-need-a-structured-job-search-workflow",
+          "text": "Why You Need a Structured Job Search Workflow",
+          "tocLabel": "Why Structure Matters"
+        },
+        {
+          "type": "p",
+          "text": "An effective job search workflow replaces ad hoc browsing with a structured, repeatable schedule. When you jump randomly from scrolling job boards to tweaking a resume and back again, you lose focus and efficiency."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Prevents duplicate work by tracking exactly where you have applied.",
+            "Reduces burnout by confining search activities to specific time blocks.",
+            "Ensures critical follow-up emails and thank-you notes are sent on time."
+          ]
+        },
+        {
+          "type": "h2",
+          "id": "the-4-part-weekly-job-search-workflow",
+          "text": "The 4-Part Weekly Job Search Workflow",
+          "tocLabel": "The 4-Part Weekly Workflow"
+        },
+        {
+          "type": "p",
+          "text": "Structuring your week into dedicated phases allows you to focus entirely on one type of task at a time. Establish a recurring schedule that breaks the process into four core steps to keep your search moving forward consistently."
+        },
+        {
+          "type": "steps",
+          "steps": [
+            {
+              "title": "Time-block sourcing and matching",
+              "text": "Set aside specific hours to exclusively find and save relevant open roles without applying to them immediately."
+            },
+            {
+              "title": "Tailor and submit applications",
+              "text": "Dedicate your next block to customizing your resume and cover letter for the roles you saved, then submit them in batches."
+            },
+            {
+              "title": "Follow up and update the tracker",
+              "text": "Spend time logging new submissions, recording interview dates, and sending follow-up notes to hiring managers."
+            },
+            {
+              "title": "Conduct a weekly review",
+              "text": "At the end of the week, analyze which applications led to interviews so you can adjust your sourcing strategy for the following week."
+            }
+          ]
+        },
+        {
+          "type": "h2",
+          "id": "time-blocking-sourcing-and-matching",
+          "text": "Time-Blocking Sourcing and Matching",
+          "tocLabel": "Sourcing and Matching"
+        },
+        {
+          "type": "p",
+          "text": "Batching your task of finding jobs separate from applying to them drastically reduces context switching. Dedicate a specific window—such as two hours on Monday mornings—strictly to discovering open roles, reviewing the requirements, and saving promising matches to your pipeline."
+        },
+        {
+          "type": "h2",
+          "id": "establishing-a-single-source-of-truth",
+          "text": "Establishing a Single Source of Truth",
+          "tocLabel": "Single Source of Truth"
+        },
+        {
+          "type": "p",
+          "text": "Maintaining one central pipeline for all your job hunt activities is essential for preventing missed opportunities. If your job links are scattered across browser tabs, spreadsheets, and physical notebooks, you will inevitably lose track of deadlines."
+        },
+        {
+          "type": "p",
+          "text": "A unified system ensures you always know which version of your resume was sent to which company and when you need to follow up. The SearchBreaker job application tracker is designed to help centralize this data and automate the record-keeping part, aiming to keep your pipeline organized in one clear view."
+        },
+        {
+          "type": "h2",
+          "id": "conducting-a-weekly-conversion-review",
+          "text": "Conducting a Weekly Conversion Review",
+          "tocLabel": "Weekly Conversion Review"
+        },
+        {
+          "type": "p",
+          "text": "A short weekly review allows you to measure the effectiveness of your job search workflow and pivot if necessary. Instead of just counting how many jobs you applied for, track how those applications are converting into screening calls."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "text": "Schedule 30 minutes every Friday afternoon to review your metrics. If you are sending dozens of applications but getting zero interviews, your workflow likely needs more time allocated to resume tailoring rather than sourcing.",
+          "title": "Review Your Strategy"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Metric",
+            "What It Measures",
+            "How to Use It"
+          ],
+          "rows": [
+            [
+              "Applications Sent",
+              "Total volume of tailored submissions",
+              "Ensure you are hitting your weekly targets."
+            ],
+            [
+              "Interview Rate",
+              "Percentage of applications that lead to calls",
+              "If low, refine your keyword matching and tailoring."
+            ],
+            [
+              "Follow-ups Due",
+              "Pending communications for next week",
+              "Plan your Monday morning outreach block."
+            ]
+          ],
+          "caption": "Key metrics to track during your weekly review."
+        }
+      ]
+    },
+    {
+      "type": "keyTakeaways",
+      "items": [
+        "Time-blocking your job search prevents burnout and keeps you focused on one task at a time.",
+        "Separate your sourcing efforts from your resume tailoring and application submission phases.",
+        "Use a single tracking system to manage your pipeline, prevent duplicate work, and schedule follow-ups.",
+        "Review your weekly application-to-interview conversion rate to continuously improve your strategy."
+      ]
+    },
+    {
+      "type": "inlineCta",
+      "title": "Automate the record-keeping part of this workflow",
+      "text": "SearchBreaker keeps the pipeline and next actions up to date so the weekly review takes minutes.",
+      "href": "/features/job-application-tracker",
+      "linkLabel": "See the job application tracker",
+      "availability": "concept",
+      "cta": {
+        "readiness": "waitlist"
+      }
+    },
+    {
+      "type": "faq",
+      "heading": "Questions about organizing your job search",
+      "faqs": [
+        {
+          "q": "How many hours a week should I spend on my job search workflow?",
+          "a": "If you are unemployed, treat the search like a full-time job, dedicating 30 to 40 hours a week. If you are currently employed, aim for 10 to 15 hours broken into manageable evening and weekend blocks."
+        },
+        {
+          "q": "Should I apply to jobs every single day?",
+          "a": "It is usually more efficient to batch your tasks. Sourcing roles on Monday and Tuesday, then tailoring and applying on Wednesday and Thursday, often yields higher quality applications than rushing through daily submissions."
+        },
+        {
+          "q": "How long should I wait before sending a follow-up email?",
+          "a": "A standard guideline is to follow up one to two weeks after submitting your application if you have not heard back. For post-interview follow-ups, always send a thank-you note within 24 hours."
+        },
+        {
+          "q": "What should I do if my workflow feels overwhelming?",
+          "a": "Scale back your target number of applications and increase the strictness of your time blocks. Taking scheduled breaks and focusing on a few high-quality applications is better than burning out on a high volume of rushed submissions."
+        }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Related",
+      "items": [
+        {
+          "kind": "related",
+          "label": "Job application tracker",
+          "href": "/features/job-application-tracker",
+          "blurb": "One pipeline for every application and its next action.",
+          "availability": "concept"
+        },
+        {
+          "kind": "guide",
+          "label": "How to track job applications",
+          "href": "/guides/how-to-track-job-applications",
+          "blurb": "The record-keeping this workflow depends on."
+        }
+      ]
+    },
+    {
+      "type": "authorReviewed",
+      "updated": "2026-09-30"
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "pages": [
+    {
+      "id": "P023",
+      "path": "/guides/how-to-track-job-applications",
+      "outputFile": "src/content/pages/guides/how-to-track-job-applications.json",
+      "h1": "How to Track Job Applications",
+      "primaryKeyword": "how to track job applications",
+      "faqHeadingTopic": "tracking applications",
+      "source": "guide-track-applications",
+      "status": "drafted",
+      "brief": "Backlog P023 (Step 12 disposition: Keep). Search intent: informational how-to, MOFU. Teach a reader how to track job applications well regardless of tool: what fields to record per application (company, role, date applied, source, resume version, status, next action, follow-up date), how to define a simple status pipeline (e.g. applied, phone screen, interview, offer, rejected), and how to review the pipeline weekly to decide next actions. Cover both a plain spreadsheet approach and what a purpose-built tracker adds (automatic status updates, reminders, one view across everything). Must not read like a product page: this guide owns the how-to/process query, a separate feature page and a separate downloadable template own the tool/product and spreadsheet-download intents. Mention SearchBreaker's job application tracker once, near the end, as an option for someone who wants this automated rather than a task to reference the SearchBreaker product more than once.",
+      "productMention": "Mention the job application tracker feature once, near the end, as what automates the manual process just described.",
+      "inlineCta": {
+        "featureSlug": "job-application-tracker",
+        "title": "Track every application without the spreadsheet upkeep",
+        "text": "SearchBreaker keeps one pipeline for every application, with status and next action tracked automatically.",
+        "linkLabel": "See the job application tracker"
+      },
+      "relatedLinks": {
+        "heading": "Related",
+        "items": [
+          {
+            "featureSlug": "job-application-tracker"
+          },
+          {
+            "kind": "guide",
+            "label": "How to organize your job search workflow",
+            "href": "/guides/job-search-workflow",
+            "blurb": "The bigger system a tracker fits into."
+          }
+        ]
+      }
+    },
+    {
+      "id": "P024",
+      "path": "/guides/does-auto-apply-work",
+      "outputFile": "src/content/pages/guides/does-auto-apply-work.json",
+      "h1": "Does Auto-Apply Actually Work?",
+      "primaryKeyword": "does auto apply actually work",
+      "faqHeadingTopic": "auto-apply",
+      "source": "guide-does-auto-apply-work",
+      "status": "drafted",
+      "brief": "Backlog P024 (Step 12 disposition: Keep). Search intent: commercial investigation, MOFU. Answer honestly and evenhandedly: 'auto-apply' tools submit applications faster, but speed without fit can lower response rate per application, and some employers/ATS can detect low-effort mass applications. Explain the trade-off between volume and match quality, what determines whether a faster application still gets a response (fit to the role, whether the resume/answers are tailored, whether required fields are actually filled correctly), and questions a reader should ask about any auto-apply tool before trusting it with their applications (does it let you review before submitting, does it tailor per job or spray the same resume everywhere, can you pause or exclude specific listings). Do not name or make claims about any specific competing auto-apply product — discuss the category generically. Frame SearchBreaker's own planned approach (candidate reviews and approves before submission, not a background mass-blast) once as an example of one way to resolve the trade-off, hedged as a planned capability, not something to compare favorably against named competitors.",
+      "productMention": "Mention SearchBreaker's own auto-apply approach once — candidate review before submission — as an example of resolving the volume-vs-fit trade-off, not a comparison against competitors.",
+      "inlineCta": {
+        "featureSlug": "auto-apply",
+        "title": "Auto-apply with a review step, not a mass-blast",
+        "text": "SearchBreaker is designed so every application it submits is one you approved first.",
+        "linkLabel": "See how auto-apply is designed to work"
+      },
+      "relatedLinks": {
+        "heading": "Related",
+        "items": [
+          {
+            "featureSlug": "auto-apply"
+          },
+          {
+            "featureSlug": "job-application-autofill"
+          }
+        ]
+      }
+    },
+    {
+      "id": "P022",
+      "path": "/guides/how-to-pass-ats",
+      "outputFile": "src/content/pages/guides/how-to-pass-ats.json",
+      "h1": "How to Get Your Resume Past ATS",
+      "primaryKeyword": "how to get resume past ats",
+      "faqHeadingTopic": "getting past ATS",
+      "source": "guide-how-to-pass-ats",
+      "status": "drafted",
+      "brief": "Backlog P022 (Step 12 disposition: Keep). Search intent: informational how-to, MOFU. Explain accurately how applicant tracking systems generally work (they store and let recruiters search/filter applications; most modern ATS do not auto-reject resumes on formatting alone, but poor formatting, missing standard section headings, or images/tables can still make a resume hard for the system or a recruiter to parse). Give concrete formatting guidance (standard fonts and headings, no text in images/headers/footers, no multi-column layouts that scramble parsing order, save as the requested file type). Cover keyword matching honestly: matching the job description's actual terms where they describe real experience helps a recruiter searching the system find the resume, but repeating a term with no supporting evidence does not help. Never claim any method 'guarantees' passing an ATS — that behavior cannot be fully verified from the outside and varies by vendor. This guide owns the informational how-to intent; a separate feature page (ATS resume optimizer) and a separate free checker tool own the diagnostic/optimization intent, so do not turn this into a product pitch. Mention the ATS resume optimizer feature once near the end as an option for the diagnosis step.",
+      "productMention": "Mention the ATS resume optimizer feature once, near the end, as an option for finding format/keyword gaps automatically instead of manually.",
+      "inlineCta": {
+        "featureSlug": "ats-resume-optimizer",
+        "title": "Find ATS formatting and keyword gaps automatically",
+        "text": "SearchBreaker is designed to check your resume against a specific job description's keywords and formatting risks.",
+        "linkLabel": "See the ATS resume optimizer"
+      },
+      "relatedLinks": {
+        "heading": "Related",
+        "items": [
+          {
+            "featureSlug": "ats-resume-optimizer"
+          },
+          {
+            "kind": "guide",
+            "label": "How to tailor a resume to a job description",
+            "href": "/guides/tailor-resume-to-job-description",
+            "blurb": "Match your resume's wording to what the role actually asks for."
+          }
+        ]
+      }
+    },
+    {
+      "id": "P025",
+      "path": "/guides/why-am-i-not-getting-interviews",
+      "outputFile": "src/content/pages/guides/why-am-i-not-getting-interviews.json",
+      "h1": "Why Am I Not Getting Interviews?",
+      "primaryKeyword": "why am i not getting interviews",
+      "faqHeadingTopic": "not getting interviews",
+      "source": "guide-why-no-interviews",
+      "status": "drafted",
+      "brief": "Backlog P025 (Step 12 disposition: Keep). Search intent: problem-aware informational, MOFU. Diagnostic guide: walk through the most common, evidence-backed reasons application volume does not convert to interviews — resume not tailored to the specific role (keyword/requirement mismatch), applying to roles outside actual qualification fit, resume formatting or parsing problems, weak or generic resume summary/positioning, applying too late relative to a posting, and simply too small a sample size to draw conclusions from yet. For each reason, give the reader a concrete way to check whether it applies to them (e.g. 'compare your last 3 rejections' job descriptions against your resume's wording'). Close by helping the reader decide which single cause to fix first rather than trying to fix everything at once. Do not turn this into a diagnostics-product pitch — no analytics feature exists yet to link to. Instead mention the job matcher and resume tailoring features once each as ways to address the two most common causes (mismatch and generic resume).",
+      "productMention": "Mention job matcher and resume tailoring once each, tied to the specific causes they address (fit mismatch, generic resume), not as a general pitch.",
+      "inlineCta": {
+        "featureSlug": "job-matcher",
+        "title": "Check your fit before you apply again",
+        "text": "SearchBreaker maps a job's requirements to your actual experience so you can see the real gaps.",
+        "linkLabel": "See the job matcher"
+      },
+      "relatedLinks": {
+        "heading": "Related",
+        "items": [
+          {
+            "featureSlug": "resume-tailoring"
+          },
+          {
+            "kind": "guide",
+            "label": "How to get more interviews from job applications",
+            "href": "/guides/how-to-get-more-interviews",
+            "blurb": "What to do once you know the likely cause."
+          }
+        ]
+      }
+    },
+    {
+      "id": "P029",
+      "path": "/guides/how-to-get-hired-faster",
+      "outputFile": "src/content/pages/guides/how-to-get-hired-faster.json",
+      "h1": "How to Get Hired Faster",
+      "primaryKeyword": "how to get hired faster",
+      "faqHeadingTopic": "getting hired faster",
+      "source": "guide-get-hired-faster",
+      "status": "drafted",
+      "brief": "Backlog P029 (Step 12 disposition: Keep). Search intent: informational/outcome-aware, MOFU. This is a system-level hub guide, not a single tactic: cover the main levers that shorten a job search end to end — applying to enough well-matched roles rather than a handful of long shots, tailoring each application instead of one generic resume, following a consistent process for tracking and following up so nothing stalls silently, and treating early results as feedback to adjust the approach rather than repeating what isn't working. Do not duplicate the homepage's product pitch; this page's job is to teach the system, then point to the specific guides/features that help with each lever. Use relatedLinks (not the body) to fan out to job-matcher, resume-tailoring, and job-application-tracker so the page acts as an internal-link hub as the backlog note specifies.",
+      "productMention": "Mention SearchBreaker once, briefly, as the system that ties these levers together automatically — not a restatement of every feature.",
+      "inlineCta": {
+        "featureSlug": "job-search-automation",
+        "title": "Run this system automatically instead of by hand",
+        "text": "SearchBreaker is designed to connect matching, tailoring, applying, and tracking into one system.",
+        "linkLabel": "See job search automation"
+      },
+      "relatedLinks": {
+        "heading": "Related",
+        "items": [
+          {
+            "featureSlug": "job-matcher"
+          },
+          {
+            "featureSlug": "resume-tailoring"
+          },
+          {
+            "featureSlug": "job-application-tracker"
+          }
+        ]
+      }
+    },
+    {
+      "id": "P027",
+      "path": "/guides/job-search-workflow",
+      "outputFile": "src/content/pages/guides/job-search-workflow.json",
+      "h1": "How to Organize Your Job Search Workflow",
+      "primaryKeyword": "job search workflow",
+      "faqHeadingTopic": "organizing your job search",
+      "source": "guide-job-search-workflow",
+      "status": "drafted",
+      "brief": "Backlog P027 (Step 12 disposition: Keep). Search intent: informational, MOFU. Teach an end-to-end weekly workflow: a fixed time block for finding/matching roles, a fixed time block for tailoring and submitting a target number of applications, a fixed time block for following up and updating the tracker, and a short weekly review of what converted. Emphasize consistency and time-boxing over ad hoc searching, and why a single source of truth (one pipeline) prevents duplicate work and missed follow-ups. This guide owns the workflow/time-savings framing; the job application tracker feature page owns the tool itself, so keep this about the process a reader can run with any tool, mentioning the tracker once as the way to automate the record-keeping part.",
+      "productMention": "Mention the job application tracker once, tied specifically to the record-keeping and follow-up-reminder part of the workflow.",
+      "inlineCta": {
+        "featureSlug": "job-application-tracker",
+        "title": "Automate the record-keeping part of this workflow",
+        "text": "SearchBreaker keeps the pipeline and next actions up to date so the weekly review takes minutes.",
+        "linkLabel": "See the job application tracker"
+      },
+      "relatedLinks": {
+        "heading": "Related",
+        "items": [
+          {
+            "featureSlug": "job-application-tracker"
+          },
+          {
+            "kind": "guide",
+            "label": "How to track job applications",
+            "href": "/guides/how-to-track-job-applications",
+            "blurb": "The record-keeping this workflow depends on."
+          }
+        ]
+      }
+    },
+    {
+      "id": "P031",
+      "path": "/guides/how-to-get-more-interviews",
+      "outputFile": "src/content/pages/guides/how-to-get-more-interviews.json",
+      "h1": "How to Get More Interviews From Job Applications",
+      "primaryKeyword": "increase interview rate",
+      "faqHeadingTopic": "getting more interviews",
+      "source": "guide-get-more-interviews",
+      "status": "drafted",
+      "brief": "Backlog P031 (Step 12 disposition: Keep). Search intent: informational/outcome-aware, MOFU. This is the positive-outcome pair to /guides/why-am-i-not-getting-interviews (diagnostic guide) — cross-link the two but do not repeat the diagnostic content here. Assume the reader already has a rough idea what's holding them back and wants concrete actions: tailoring the resume summary and top bullets to each role's actual requirements, applying within the first days of a posting when possible, writing a short and specific cover note only when it adds real information, and making sure contact/portfolio links actually work. Frame this as an action checklist a reader can run through per application, not a rehash of causes. Mention resume tailoring and job matcher once each as ways to execute the tailoring and targeting actions faster.",
+      "productMention": "Mention resume tailoring and job matcher once each, tied to the specific checklist actions they speed up.",
+      "inlineCta": {
+        "featureSlug": "resume-tailoring",
+        "title": "Tailor each application without starting from scratch",
+        "text": "SearchBreaker proposes resume edits linked to the specific job description, for you to approve.",
+        "linkLabel": "See resume tailoring"
+      },
+      "relatedLinks": {
+        "heading": "Related",
+        "items": [
+          {
+            "featureSlug": "job-matcher"
+          },
+          {
+            "kind": "guide",
+            "label": "Why am I not getting interviews?",
+            "href": "/guides/why-am-i-not-getting-interviews",
+            "blurb": "Diagnose the likely cause before applying this checklist."
+          }
+        ]
+      }
+    }
+  ]
+}

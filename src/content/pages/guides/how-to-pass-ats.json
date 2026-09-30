@@ -1,0 +1,180 @@
+{
+  "path": "/guides/how-to-pass-ats",
+  "template": "guide",
+  "title": "Guide: How to Get Your Resume Past ATS | SearchBreaker",
+  "description": "Learn how applicant tracking systems work and discover practical formatting and keyword strategies to help get your resume past ATS and seen by recruiters.",
+  "pageId": "P022",
+  "source": "guide-how-to-pass-ats",
+  "current": "/guides/how-to-pass-ats",
+  "breadcrumbs": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "How to Get Your Resume Past ATS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "articleHero",
+      "headline": "How to Get Your Resume Past ATS",
+      "answer": "To get your resume past an ATS, use a clean format, standard headings, and exact keywords from the job description that match your experience. This helps the system parse your data correctly so recruiters can actually find you.",
+      "meta": {
+        "updated": "2026-09-30",
+        "reviewed": "2026-09-30",
+        "readingTime": "3 min read"
+      }
+    },
+    {
+      "type": "articleBody",
+      "toc": true,
+      "blocks": [
+        {
+          "type": "h2",
+          "id": "what-an-applicant-tracking-system-ats-actually-does",
+          "text": "What an Applicant Tracking System (ATS) Actually Does",
+          "tocLabel": "What is an ATS?"
+        },
+        {
+          "type": "p",
+          "text": "An ATS is essentially a database that companies use to collect, store, and search through job applications. When you submit your resume, the system parses the text and organizes it into a digital candidate profile."
+        },
+        {
+          "type": "p",
+          "text": "Recruiters then use the ATS to search for specific skills, job titles, or keywords to filter the applicant pool. If your resume isn't formatted correctly, the system might scramble your text, making it impossible for a recruiter's search to pull up your profile."
+        },
+        {
+          "type": "h2",
+          "id": "the-truth-about-ats-auto-rejections",
+          "text": "The Truth About ATS Auto-Rejections",
+          "tocLabel": "ATS Auto-Rejections"
+        },
+        {
+          "type": "callout",
+          "variant": "note",
+          "text": "Most modern ATS platforms do not automatically reject resumes purely based on formatting. A human recruiter is usually the one making the rejection decision.",
+          "title": "Fact Check"
+        },
+        {
+          "type": "p",
+          "text": "A common myth is that an ATS acts as a robotic gatekeeper that deletes resumes if they lack specific margins or fonts. In reality, the danger of bad formatting is that it breaks the parser. If your resume contains complex layouts or graphics that the ATS cannot read, your candidate profile will look blank or garbled to the recruiter, leading to a quick rejection."
+        },
+        {
+          "type": "h2",
+          "id": "formatting-guidelines-for-ats-compatibility",
+          "text": "Formatting Guidelines for ATS Compatibility",
+          "tocLabel": "Formatting Guidelines"
+        },
+        {
+          "type": "p",
+          "text": "Keep your layout simple and predictable. The easier it is for a machine to read top-to-bottom, left-to-right, the better it will parse into the employer's system."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Use standard section headings like \"Work Experience,\" \"Education,\" and \"Skills.\"",
+            "Avoid multi-column layouts, tables, and text boxes, which can scramble the parsing order.",
+            "Remove images, logos, and charts, as ATS parsers cannot read them.",
+            "Keep your contact information in the main body text, not the document header or footer.",
+            "Save and submit your file as a .docx or .pdf, depending on what the application specifically requests."
+          ]
+        },
+        {
+          "type": "h2",
+          "id": "how-to-optimize-your-resume-keywords",
+          "text": "How to Optimize Your Resume Keywords",
+          "tocLabel": "Optimizing Keywords"
+        },
+        {
+          "type": "p",
+          "text": "Matching keywords from the job description helps a recruiter find your resume when they search the ATS database. The key is to incorporate these terms naturally alongside the evidence of your achievements."
+        },
+        {
+          "type": "p",
+          "text": "Identify the required hard skills, software, and job titles in the posting. If you have that experience, use the exact phrasing from the job description. For example, if the posting asks for \"Search Engine Optimization,\" write that out rather than just using \"SEO.\" Avoid keyword stuffing—pasting hidden text or repeating terms without context will look unprofessional when a human ultimately reviews your application."
+        },
+        {
+          "type": "h2",
+          "id": "diagnosing-and-fixing-your-ats-resume-gaps",
+          "text": "Diagnosing and Fixing Your ATS Resume Gaps",
+          "tocLabel": "Fixing ATS Gaps"
+        },
+        {
+          "type": "p",
+          "text": "Reviewing your resume against a job description manually takes time, but it is a necessary step before submitting any application. You need to verify that your formatting is strictly text-based and that your experience accurately reflects the role's requirements."
+        },
+        {
+          "type": "p",
+          "text": "If you prefer not to do this manually, you can use dedicated tools to check your documents. SearchBreaker's upcoming ATS resume optimizer is designed to automatically identify formatting issues and keyword gaps between your resume and a target job description, helping you make corrections before you apply."
+        }
+      ]
+    },
+    {
+      "type": "keyTakeaways",
+      "items": [
+        "Applicant tracking systems act as searchable databases for recruiters, not robotic gatekeepers that instantly reject candidates.",
+        "Complex formatting like columns, images, and headers can scramble how an ATS parses your resume data.",
+        "Use standard, predictable section headings so the system correctly categorizes your work history and education.",
+        "Include exact keyword matches from the job description only where they genuinely align with your past experience."
+      ]
+    },
+    {
+      "type": "inlineCta",
+      "title": "Find ATS formatting and keyword gaps automatically",
+      "text": "SearchBreaker is designed to check your resume against a specific job description's keywords and formatting risks.",
+      "href": "/features/ats-resume-optimizer",
+      "linkLabel": "See the ATS resume optimizer",
+      "availability": "concept",
+      "cta": {
+        "readiness": "waitlist"
+      }
+    },
+    {
+      "type": "faq",
+      "heading": "Questions about getting past ATS",
+      "faqs": [
+        {
+          "q": "Should I save my resume as a PDF or Word document for an ATS?",
+          "a": "Always check the job application instructions first. If both are accepted, a PDF is usually best because it preserves your visual layout, but standard Word documents (.docx) are also highly compatible with ATS parsers."
+        },
+        {
+          "q": "Do applicant tracking systems read the header and footer of my resume?",
+          "a": "Many ATS parsers ignore headers and footers entirely. Always put your name, phone number, and email address in the main body text at the top of the page so they are easily captured."
+        },
+        {
+          "q": "Does the ATS penalize my resume if it is longer than one page?",
+          "a": "An ATS does not score or dock points based on page length. It will parse all the text provided, though you should still keep your resume concise for the human recruiter who reads it afterward."
+        },
+        {
+          "q": "Can I use creative fonts to stand out?",
+          "a": "It is best to avoid unusual or custom fonts. Stick to standard, web-safe fonts like Arial, Calibri, or Times New Roman to help the system properly extract the text."
+        }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Related",
+      "items": [
+        {
+          "kind": "related",
+          "label": "ATS resume optimizer",
+          "href": "/features/ats-resume-optimizer",
+          "blurb": "Checks keyword and formatting gaps against a job description.",
+          "availability": "concept"
+        },
+        {
+          "kind": "guide",
+          "label": "How to tailor a resume to a job description",
+          "href": "/guides/tailor-resume-to-job-description",
+          "blurb": "Match your resume's wording to what the role actually asks for."
+        }
+      ]
+    },
+    {
+      "type": "authorReviewed",
+      "updated": "2026-09-30"
+    }
+  ]
+}

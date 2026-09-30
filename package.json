@@ -13,7 +13,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
-    "test:lambda": "node --test lambda/waitlist/index.test.mjs lambda/waitlist-admin/index.test.mjs"
+    "test:lambda": "node --test lambda/waitlist/index.test.mjs lambda/waitlist-admin/index.test.mjs",
+    "generate:guides": "node scripts/generate-guide-content.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.1",
@@ -26,6 +27,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@google/genai": "^2.15.0",
+    "dotenv": "^17.4.2",
     "typescript": "^6.0.3"
   }
 }

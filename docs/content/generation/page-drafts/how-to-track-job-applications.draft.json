@@ -1,0 +1,238 @@
+{
+  "path": "/guides/how-to-track-job-applications",
+  "template": "guide",
+  "title": "How to Track Job Applications Like a Pro | SearchBreaker",
+  "description": "Learn how to track job applications effectively. Discover the key fields to record, how to build a status pipeline, and ways to stay organized.",
+  "pageId": "P023",
+  "source": "guide-track-applications",
+  "current": "/guides/how-to-track-job-applications",
+  "breadcrumbs": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "How to Track Job Applications"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "articleHero",
+      "headline": "How to Track Job Applications",
+      "answer": "Track job applications by recording the essential details—like the role, application date, and current status—for every job you apply to. Whether you use a spreadsheet or a dedicated tool, a well-managed tracker ensures you follow up on time and never lose sight of your next steps.",
+      "meta": {
+        "updated": "2026-09-29",
+        "reviewed": "2026-09-29",
+        "readingTime": "3 min read"
+      }
+    },
+    {
+      "type": "articleBody",
+      "toc": true,
+      "blocks": [
+        {
+          "type": "h2",
+          "id": "why-you-need-to-track-every-application",
+          "text": "Why You Need to Track Every Application",
+          "tocLabel": "Why Track Applications"
+        },
+        {
+          "type": "p",
+          "text": "Relying on memory or disorganized email folders leads to missed interviews and dropped follow-ups. Tracking your applications gives you a single source of truth for your entire job hunt so you always know your exact standing with every employer."
+        },
+        {
+          "type": "h2",
+          "id": "essential-fields-your-tracker-must-include",
+          "text": "Essential Fields Your Tracker Must Include",
+          "tocLabel": "Essential Fields"
+        },
+        {
+          "type": "p",
+          "text": "Your tracker must include core details like the company, role, date applied, and current status for every submission. A good tracking system captures enough detail to prepare you for an unexpected phone screen without overwhelming you with data entry."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Company name and specific role title",
+            "Date applied and application source (e.g., job board, referral)",
+            "The exact resume version you submitted",
+            "Current status and expected follow-up date",
+            "Next action required on your end"
+          ]
+        },
+        {
+          "type": "h2",
+          "id": "how-to-build-a-simple-status-pipeline",
+          "text": "How to Build a Simple Status Pipeline",
+          "tocLabel": "Status Pipeline"
+        },
+        {
+          "type": "p",
+          "text": "A status pipeline moves your applications sequentially from submission to final decision. Categorizing jobs this way helps you see exactly where your efforts are paying off and where they are stalling."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Status",
+            "Description",
+            "Next Action"
+          ],
+          "rows": [
+            [
+              "Applied",
+              "Application submitted, awaiting initial response",
+              "Wait 1-2 weeks before following up"
+            ],
+            [
+              "Phone Screen",
+              "Initial call with HR or a recruiter is scheduled",
+              "Research the company and prep your elevator pitch"
+            ],
+            [
+              "Interview",
+              "In-depth conversations with the hiring team",
+              "Send a thank-you note within 24 hours"
+            ],
+            [
+              "Offer",
+              "Verbal or written job offer received",
+              "Review compensation and negotiate"
+            ],
+            [
+              "Rejected / Ghosted",
+              "Confirmed no move forward, or no reply after weeks",
+              "Archive and move focus to active leads"
+            ]
+          ],
+          "caption": "A basic job application tracking pipeline."
+        },
+        {
+          "type": "h2",
+          "id": "reviewing-your-tracker-for-next-actions",
+          "text": "Reviewing Your Tracker for Next Actions",
+          "tocLabel": "Reviewing Your Tracker"
+        },
+        {
+          "type": "p",
+          "text": "Review your tracker by setting aside 15 minutes at the end of each week to update pipeline statuses and plan upcoming tasks. Data is only useful if you consistently act on it."
+        },
+        {
+          "type": "steps",
+          "steps": [
+            {
+              "title": "Update changed statuses",
+              "text": "Move any applications that progressed during the week into their new pipeline stage, such as moving a role from \"Applied\" to \"Phone Screen.\""
+            },
+            {
+              "title": "Identify required follow-ups",
+              "text": "Look for applications that have sat in the \"Applied\" stage for more than a week or two, and plan a polite follow-up email to the recruiter."
+            },
+            {
+              "title": "Log your rejections",
+              "text": "Mark any official rejections clearly so you can mentally move on and focus your energy solely on active opportunities."
+            },
+            {
+              "title": "Plan your interview prep",
+              "text": "Check your upcoming interviews and schedule specific time blocks on your calendar to research the company and practice your answers."
+            }
+          ]
+        },
+        {
+          "type": "h2",
+          "id": "spreadsheets-vs-dedicated-application-trackers",
+          "text": "Spreadsheets vs. Dedicated Application Trackers",
+          "tocLabel": "Spreadsheets vs. Trackers"
+        },
+        {
+          "type": "p",
+          "text": "When deciding how to track job applications, you generally have two options: building a manual spreadsheet or using a purpose-built tool."
+        },
+        {
+          "type": "p",
+          "text": "A plain spreadsheet gives you complete control. You can customize every column and color-code it exactly how you like. However, it requires manual data entry every single time you apply, update a status, or send an email."
+        },
+        {
+          "type": "p",
+          "text": "Purpose-built trackers handle the heavy lifting. They often consolidate your applications into one view, provide automatic reminders, and significantly reduce the manual data entry required to keep everything organized."
+        },
+        {
+          "type": "h2",
+          "id": "automating-your-application-tracking",
+          "text": "Automating Your Application Tracking",
+          "tocLabel": "SearchBreaker Automation"
+        },
+        {
+          "type": "p",
+          "text": "If you want to spend less time managing rows and columns and more time preparing for interviews, a dedicated tool can bridge the gap."
+        },
+        {
+          "type": "p",
+          "text": "SearchBreaker's job application tracker is designed to automate the manual tracking process. It aims to pull your application statuses into a single, organized view so you know exactly where you stand without the tedious data entry."
+        }
+      ]
+    },
+    {
+      "type": "keyTakeaways",
+      "items": [
+        "Tracking your applications prevents missed follow-ups and keeps your job hunt organized.",
+        "Always record the company, role, date applied, and the specific resume version you submitted.",
+        "Use a clear status pipeline like Applied, Interview, Offer, and Rejected to monitor progress.",
+        "Review your tracker weekly to plan follow-ups and block out interview preparation time.",
+        "Dedicated tracking tools can automate the heavy manual data entry required by traditional spreadsheets."
+      ]
+    },
+    {
+      "type": "inlineCta",
+      "title": "Track every application without the spreadsheet upkeep",
+      "text": "SearchBreaker keeps one pipeline for every application, with status and next action tracked automatically.",
+      "href": "/features/job-application-tracker",
+      "linkLabel": "See the job application tracker",
+      "availability": "concept",
+      "cta": {
+        "readiness": "waitlist"
+      }
+    },
+    {
+      "type": "faq",
+      "heading": "Questions about tracking applications",
+      "faqs": [
+        {
+          "q": "How often should I update my job application tracker?",
+          "a": "Update your tracker immediately after submitting an application or receiving an update from an employer. Waiting too long makes it easy to forget which resume version you used or what date you applied."
+        },
+        {
+          "q": "Should I keep tracking jobs after I get rejected?",
+          "a": "Yes, keeping a record of rejections is helpful. Moving them to an archived status keeps your active pipeline clean while giving you historical data on where you have applied."
+        },
+        {
+          "q": "How long should I wait before following up on an application?",
+          "a": "Generally, wait one to two weeks after applying before sending a polite follow-up email. If a job posting listed a closing date, wait until a week after that date has passed."
+        }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Related",
+      "items": [
+        {
+          "kind": "related",
+          "label": "Job application tracker",
+          "href": "/features/job-application-tracker",
+          "blurb": "One pipeline for every application and its next action.",
+          "availability": "concept"
+        },
+        {
+          "kind": "guide",
+          "label": "How to organize your job search workflow",
+          "href": "/guides/job-search-workflow",
+          "blurb": "The bigger system a tracker fits into."
+        }
+      ]
+    },
+    {
+      "type": "authorReviewed",
+      "updated": "2026-09-29"
+    }
+  ]
+}

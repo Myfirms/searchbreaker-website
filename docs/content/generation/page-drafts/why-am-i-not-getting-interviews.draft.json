@@ -1,0 +1,247 @@
+{
+  "path": "/guides/why-am-i-not-getting-interviews",
+  "template": "guide",
+  "title": "Why Am I Not Getting Interviews? 6 Reasons | SearchBreaker",
+  "description": "Learn exactly why you are not getting interviews despite applying to jobs. Discover six common resume and strategy mistakes and how to fix them.",
+  "pageId": "P025",
+  "source": "guide-why-no-interviews",
+  "current": "/guides/why-am-i-not-getting-interviews",
+  "breadcrumbs": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "Why Am I Not Getting Interviews?"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "articleHero",
+      "headline": "Why Am I Not Getting Interviews?",
+      "answer": "If you are not getting interviews, your resume likely lacks tailoring for specific roles, you are applying outside your core qualifications, or formatting issues are blocking your application. Fixing your job alignment is the fastest way to see results.",
+      "meta": {
+        "updated": "2026-09-30",
+        "reviewed": "2026-09-30",
+        "readingTime": "4 min read"
+      }
+    },
+    {
+      "type": "articleBody",
+      "toc": true,
+      "blocks": [
+        {
+          "type": "h2",
+          "id": "you-are-using-a-generic-resume",
+          "text": "You Are Using a Generic Resume",
+          "tocLabel": "Generic Resume"
+        },
+        {
+          "type": "p",
+          "text": "Your resume is not tailored to the specific keywords and requirements of each job posting."
+        },
+        {
+          "type": "p",
+          "text": "Recruiters and screening software scan for exact matches between their job description and your experience. If you send the exact same document to fifty different roles, you appear less qualified than candidates who customized their bullet points to reflect the employer's exact needs."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "text": "Pull up your last three rejection emails and compare those job descriptions against your resume. If their core requirements are missing from your bullet points, a lack of tailoring is likely your problem.",
+          "title": "How to check your alignment"
+        },
+        {
+          "type": "p",
+          "text": "The SearchBreaker resume tailoring feature is designed to help you quickly adjust your resume for each application by highlighting the specific skills the employer is looking for."
+        },
+        {
+          "type": "h2",
+          "id": "you-are-applying-outside-your-core-qualifications",
+          "text": "You Are Applying Outside Your Core Qualifications",
+          "tocLabel": "Qualifications Mismatch"
+        },
+        {
+          "type": "p",
+          "text": "You are applying to roles where you lack the strict minimum requirements."
+        },
+        {
+          "type": "p",
+          "text": "It is common advice to apply for jobs even if you do not meet every single bullet point. However, hiring teams prioritize candidates who check the mandatory boxes first. Review your last ten applications—if you lacked the required years of experience or mandatory certifications for most of them, you are aiming too far outside your core qualifications."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Applying for roles requiring 5+ years of experience when you only have two.",
+            "Lacking a specific, mandatory technical certification the job requires.",
+            "Trying to transition careers without clearly translating your transferable skills."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "SearchBreaker's job matcher feature aims to evaluate your core skills against active listings, helping you focus your energy on roles where your baseline qualifications genuinely align with the employer's needs."
+        },
+        {
+          "type": "h2",
+          "id": "your-resume-formatting-breaks-parsing-software",
+          "text": "Your Resume Formatting Breaks Parsing Software",
+          "tocLabel": "Formatting Issues"
+        },
+        {
+          "type": "p",
+          "text": "Complex resume designs can prevent screening software from reading your information correctly."
+        },
+        {
+          "type": "p",
+          "text": "Most large companies use software to organize incoming applications. To test your formatting, copy all the text from your resume and paste it into a plain text document. If the information scrambles or reads out of order, an ATS will likely fail to read it correctly too."
+        },
+        {
+          "type": "p",
+          "text": "To fix this, use a clean, single-column layout with standard fonts like Arial or Calibri. Save your document as a PDF or standard Word file, depending on the application's specific instructions."
+        },
+        {
+          "type": "h2",
+          "id": "your-summary-and-positioning-are-weak",
+          "text": "Your Summary and Positioning Are Weak",
+          "tocLabel": "Weak Positioning"
+        },
+        {
+          "type": "p",
+          "text": "Your resume does not immediately tell the reader who you are and what value you bring."
+        },
+        {
+          "type": "p",
+          "text": "Hiring managers often spend just seconds scanning an application. To check your positioning, read your summary out loud to a friend. If they cannot immediately identify your primary expertise and top achievement, your summary is too weak and needs rewriting."
+        },
+        {
+          "type": "h2",
+          "id": "you-are-applying-too-late",
+          "text": "You Are Applying Too Late",
+          "tocLabel": "Applying Late"
+        },
+        {
+          "type": "p",
+          "text": "You are submitting applications weeks after the job was posted, competing against candidates who are already in the interview stage."
+        },
+        {
+          "type": "p",
+          "text": "Many roles receive hundreds of applicants in the first few days. Even if a listing remains open for a month, recruiters often start interviewing the first batch of qualified applicants immediately. Check the 'date posted' on your last five applications—if they were open for more than a week before you applied, timing is likely hurting your chances."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Set up job alerts for your target titles to catch them early.",
+            "Aim to apply within 48 to 72 hours of a job going live.",
+            "Check company career pages directly, as third-party boards sometimes show outdated listings."
+          ]
+        },
+        {
+          "type": "h2",
+          "id": "your-sample-size-is-still-too-small",
+          "text": "Your Sample Size Is Still Too Small",
+          "tocLabel": "Small Sample Size"
+        },
+        {
+          "type": "p",
+          "text": "You might simply need to apply to more jobs before drawing conclusions about your strategy."
+        },
+        {
+          "type": "p",
+          "text": "Job searching is partially a numbers game. Count your total tailored applications sent in the last month. If you have sent fewer than twenty applications in a competitive market, zero interviews is likely just statistical noise rather than a fatal flaw in your resume."
+        },
+        {
+          "type": "h2",
+          "id": "which-problem-should-you-fix-first",
+          "text": "Which Problem Should You Fix First?",
+          "tocLabel": "What to Fix First"
+        },
+        {
+          "type": "p",
+          "text": "Diagnose your biggest bottleneck instead of changing your entire approach at once. Follow these steps to systematically improve your interview rate."
+        },
+        {
+          "type": "steps",
+          "steps": [
+            {
+              "title": "Review your basic qualifications",
+              "text": "Ensure you are actually applying for jobs where you meet the mandatory requirements. Stop spending time on roles where you lack the core baseline."
+            },
+            {
+              "title": "Simplify your resume format",
+              "text": "Strip out complex columns, photos, and heavy graphics to ensure the text can be read easily by screening software."
+            },
+            {
+              "title": "Tailor your applications",
+              "text": "Take the extra time to align your past experience with the specific job description for your next ten applications."
+            },
+            {
+              "title": "Track your data",
+              "text": "Monitor whether your newly tailored, simplified applications yield a better interview response rate over the next month."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "keyTakeaways",
+      "items": [
+        "Failing to tailor your resume to the specific job description is a primary reason you aren't landing interviews.",
+        "Applying for roles where you lack the mandatory qualifications wastes time and dilutes your overall job search effort.",
+        "Complex resume formatting can prevent screening software from accurately reading your application.",
+        "Applying within the first 48 hours of a job posting significantly increases your chances of your resume being seen."
+      ]
+    },
+    {
+      "type": "inlineCta",
+      "title": "Check your fit before you apply again",
+      "text": "SearchBreaker maps a job's requirements to your actual experience so you can see the real gaps.",
+      "href": "/features/job-matcher",
+      "linkLabel": "See the job matcher",
+      "availability": "preview",
+      "cta": {
+        "readiness": "waitlist"
+      }
+    },
+    {
+      "type": "faq",
+      "heading": "Questions about not getting interviews",
+      "faqs": [
+        {
+          "q": "How many jobs should I apply to before expecting an interview?",
+          "a": "There is no universal number, as it depends heavily on your industry and seniority level. However, if you have sent over 50 tailored applications without a single screening call, it is time to review your resume strategy."
+        },
+        {
+          "q": "Do cover letters help you get more interviews?",
+          "a": "A strong cover letter can help contextualize career gaps or transitions, but it cannot fix a fundamentally weak resume. Focus on perfecting your resume first before spending hours writing cover letters."
+        },
+        {
+          "q": "Does reaching out to recruiters directly lead to more interviews?",
+          "a": "Messaging the hiring manager or recruiter can sometimes bring attention to your application. It works best when you keep the message brief and clearly state how your background specifically matches their open role."
+        }
+      ]
+    },
+    {
+      "type": "relatedLinks",
+      "tone": "muted",
+      "heading": "Related",
+      "items": [
+        {
+          "kind": "related",
+          "label": "Resume tailoring in SearchBreaker",
+          "href": "/features/resume-tailoring",
+          "blurb": "Proposed edits linked to your verified facts.",
+          "availability": "preview"
+        },
+        {
+          "kind": "guide",
+          "label": "How to get more interviews from job applications",
+          "href": "/guides/how-to-get-more-interviews",
+          "blurb": "What to do once you know the likely cause."
+        }
+      ]
+    },
+    {
+      "type": "authorReviewed",
+      "updated": "2026-09-30"
+    }
+  ]
+}
