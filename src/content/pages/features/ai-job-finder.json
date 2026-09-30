@@ -15,11 +15,30 @@
       "badge": { "state": "preview", "detail": "in private testing" },
       "primaryCta": { "readiness": "waitlist" },
       "secondaryCta": { "label": "See matching workflow", "href": "/features/job-matcher" },
-      "media": {
-        "state": "illustrative",
-        "label": "Job feed",
-        "alt": "Example of a job feed card with posting time, source and fit reasons",
-        "caption": "Each opening shows its date, source and why it appears."
+      "demo": {
+        "type": "jobFeed",
+        "jobs": [
+          {
+            "title": "Senior Product Manager, Payments",
+            "company": "Fenwick Pay",
+            "location": "Berlin",
+            "workMode": "Hybrid",
+            "postedAt": "2 days ago",
+            "source": "Company careers page",
+            "matches": ["Title matches your target role", "Payments work overlaps with your invoicing redesign", "Location fits your Berlin or remote preference"],
+            "missing": ["Salary range not listed", "Team size not stated"]
+          },
+          {
+            "title": "Product Lead, Billing",
+            "company": "Arcadia Health",
+            "location": "Remote (EU)",
+            "workMode": "Remote",
+            "postedAt": "5 hours ago",
+            "source": "Job board listing",
+            "matches": ["Billing experience is confirmed in your profile", "Remote matches your work-mode setting"],
+            "missing": ["Reporting line not stated"]
+          }
+        ]
       },
       "reassurance": "You decide which openings to pursue."
     },

@@ -15,11 +15,25 @@
       "badge": { "state": "preview", "detail": "in private testing" },
       "primaryCta": { "readiness": "waitlist" },
       "secondaryCta": { "label": "See what changes for a job", "href": "#diff" },
-      "media": {
-        "state": "illustrative",
-        "label": "Proposed edits",
-        "alt": "Example of proposed resume edits, each linked to a profile fact",
-        "caption": "Each edit links to the profile fact it comes from."
+      "demo": {
+        "type": "beforeAfterDiff",
+        "frameLabel": "Proposed edit · Senior Product Manager, Payments",
+        "requirement": "Experience reducing checkout or payment failure rates.",
+        "before": [
+          { "text": "Worked on redesigning", "kind": "removed" },
+          { "text": " the invoicing flow for enterprise customers." }
+        ],
+        "after": [
+          { "text": "Redesigned", "kind": "added" },
+          { "text": " the invoicing flow for enterprise customers" },
+          { "text": ", cutting failed invoice payments from 7% to 3% in two quarters", "kind": "added" },
+          { "text": "." }
+        ],
+        "provenance": {
+          "source": "Profile · Northwind Logistics · Product Manager",
+          "fact": "Failed invoice payments fell from 7% to 3% after the invoicing redesign (Q3–Q4 2024).",
+          "confirmedOn": "2026-08-02"
+        }
       },
       "reassurance": "You approve every change before it is saved."
     },

@@ -1,23 +1,11 @@
 ---
 import type { SectionTone } from '../../../lib/types';
-import Icon from '../primitives/Icon.astro';
 import Section from '../foundation/Section.astro';
 import SectionHeader from '../foundation/SectionHeader.astro';
+import ComparisonTableFrame, { type ComparisonColumn, type ComparisonValue, type ComparisonRow } from './ComparisonTableFrame.astro';
 import { makeId } from '../../../lib/ids';
 
-export interface ComparisonColumn {
-  key: string;
-  label: string;
-}
-export type ComparisonValue = string | { text: string; mark?: 'yes' | 'no' | 'partial' };
-export interface ComparisonRow {
-  /** ≤ 5 words. */
-  label: string;
-  /** Cells ≤ 20 words. */
-  values: Record<string, ComparisonValue>;
-  /** At most one emphasized row (e.g. "Who presses submit"). */
-  emphasis?: boolean;
-}
+export type { ComparisonColumn, ComparisonValue, ComparisonRow };
 export interface ComparisonTableProps {
   heading: string;
   lead?: string;
@@ -28,192 +16,21 @@ export interface ComparisonTableProps {
   tone?: SectionTone;
 }
 
-const MARK = {
-  yes: { status: 'confirmed', icon: 'check', text: 'Yes: ' },
-  no: { status: 'unclear', icon: 'minus', text: 'No: ' },
-  partial: { status: 'partial', icon: 'circle-half', text: 'Partly: ' },
-} as const;
-
 const { heading, lead, columns, rows, caption, tone = 'default' } = Astro.props as ComparisonTableProps;
-const id = makeId('sb-ct', heading);
-const cell = (v: ComparisonValue | undefined) => {
-  const o = typeof v === 'object' && v ? v : { text: v == null ? '—' : String(v), mark: undefined };
-  return { text: o.text, mark: o.mark ? MARK[o.mark] : undefined };
-};
-const gridCols = `minmax(10rem, 0.8fr) repeat(${columns.length}, minmax(0, 1fr))`;
+const id = makeId('sb-ct-section', heading);
 ---
 
 <Section labelledby={id} tone={tone}>
-  <div class="sb-ct">
+  <div class="sb-ct-section">
     <SectionHeader {heading} {id} {lead} />
-
-    <div class="sb-ct__table" role="table" aria-label={heading}>
-      <div class="sb-ct__row sb-ct__row--head" role="row" style={`grid-template-columns:${gridCols}`}>
-        <span role="columnheader" class="sb-ct__cell"></span>
-        {columns.map((c) => <span role="columnheader" class="sb-ct__cell sb-ct__colhead">{c.label}</span>)}
-      </div>
-      {rows.map((r) => (
-        <div class="sb-ct__row" role="row" data-emphasis={r.emphasis ? 'true' : 'false'} style={`grid-template-columns:${gridCols}`}>
-          <span role="rowheader" class="sb-ct__cell sb-ct__rowhead">{r.label}</span>
-          {columns.map((c) => {
-            const v = cell(r.values[c.key]);
-            return (
-              <span role="cell" class="sb-ct__cell">
-                {v.mark && (
-                  <span class="sb-ct__mark" data-status={v.mark.status}>
-                    <Icon icon={v.mark.icon} size={16} />
-                    <span class="sb-ct__sr">{v.mark.text}</span>
-                  </span>
-                )}
-                <span class="sb-ct__value">{v.text}</span>
-              </span>
-            );
-          })}
-        </div>
-      ))}
-    </div>
-
-    <div class="sb-ct__stack">
-      {columns.map((c) => (
-        <section class="sb-ct__card" aria-label={c.label}>
-          <h3 class="sb-ct__card-title">{c.label}</h3>
-          <dl class="sb-ct__dl">
-            {rows.map((r) => {
-              const v = cell(r.values[c.key]);
-              return (
-                <div class="sb-ct__entry" data-emphasis={r.emphasis ? 'true' : 'false'}>
-                  <dt class="sb-ct__entry-label">{r.label}</dt>
-                  <dd class="sb-ct__entry-value">
-                    {v.mark && (
-                      <span class="sb-ct__mark" data-status={v.mark.status}>
-                        <Icon icon={v.mark.icon} size={16} />
-                        <span class="sb-ct__sr">{v.mark.text}</span>
-                      </span>
-                    )}
-                    {v.text}
-                  </dd>
-                </div>
-              );
-            })}
-          </dl>
-        </section>
-      ))}
-    </div>
-
-    {caption && <p class="sb-ct__caption">{caption}</p>}
+    <ComparisonTableFrame {heading} {columns} {rows} {caption} />
   </div>
 </Section>
 
 <style>
-  .sb-ct {
+  .sb-ct-section {
     display: flex;
     flex-direction: column;
     gap: var(--space-10);
-  }
-  /* Grid table from 768px; below, one stacked card per column. */
-  .sb-ct__table {
-    display: none;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface-raised);
-    overflow: hidden;
-  }
-  .sb-ct__row {
-    display: grid;
-    background: var(--row-bg);
-    border-bottom: 1px solid var(--color-border);
-  }
-  .sb-ct__row--head {
-    background: transparent;
-    border-bottom: 1px solid var(--color-border-strong);
-  }
-  .sb-ct__cell {
-    display: flex;
-    gap: var(--space-2);
-    align-items: flex-start;
-    padding: var(--space-4) var(--space-5);
-    font-size: var(--text-sm);
-    line-height: var(--leading-snug);
-    color: var(--color-text-secondary);
-  }
-  .sb-ct__colhead {
-    font-size: var(--text-md);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text);
-  }
-  .sb-ct__rowhead {
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text);
-  }
-  .sb-ct__value {
-    color: var(--color-text);
-  }
-  .sb-ct__mark {
-    display: flex;
-    color: var(--st-fg);
-  }
-  .sb-ct__sr {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-  }
-  .sb-ct__stack {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-  .sb-ct__card {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface-raised);
-    overflow: hidden;
-  }
-  .sb-ct__card-title {
-    margin: 0;
-    padding: var(--space-4);
-    font-size: var(--text-lg);
-    font-weight: var(--font-weight-semibold);
-    border-bottom: 1px solid var(--color-border-strong);
-  }
-  .sb-ct__dl {
-    margin: 0;
-  }
-  .sb-ct__entry {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    padding: var(--space-3) var(--space-4);
-    background: var(--row-bg);
-    border-bottom: 1px solid var(--color-border);
-  }
-  .sb-ct__entry-label {
-    font-family: var(--font-mono);
-    font-size: var(--text-2xs);
-    letter-spacing: var(--tracking-mono-caps);
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-  .sb-ct__entry-value {
-    margin: 0;
-    display: flex;
-    gap: var(--space-2);
-    align-items: flex-start;
-    font-size: var(--text-sm);
-    line-height: var(--leading-snug);
-  }
-  .sb-ct__caption {
-    margin: 0;
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-  }
-  @media (min-width: 768px) {
-    .sb-ct__table {
-      display: block;
-    }
-    .sb-ct__stack {
-      display: none;
-    }
   }
 </style>

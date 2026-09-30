@@ -3,7 +3,6 @@ import BaseLayout from './BaseLayout.astro';
 import AnnouncementBar from '../components/astro/blocks/AnnouncementBar.astro';
 import Header from '../components/astro/blocks/Header.astro';
 import Footer from '../components/astro/blocks/Footer.astro';
-import StickyMobileCta from '../components/astro/blocks/StickyMobileCta.astro';
 import WaitlistDialog from '../components/astro/blocks/WaitlistDialog.astro';
 import { announcement, footerColumns, legalLinks, navItems, statusNote } from '../lib/site';
 
@@ -14,16 +13,13 @@ interface Props {
   /** Current path, drives the nav indicator. */
   current?: string;
   noindex?: boolean;
-  /** Mobile bottom CTA bar (feature pages and home). Off for guides. */
-  stickyCta?: boolean;
   /** Pre-launch status bar above the header. */
   announcementBar?: boolean;
   /** Prefix for waitlist `source` values, e.g. "home" or "resume-tailoring". */
   source?: string;
 }
 
-const { title, description, canonicalPath, current, noindex, stickyCta = true, announcementBar = true, source = 'page' } =
-  Astro.props;
+const { title, description, canonicalPath, current, noindex, announcementBar = true, source = 'page' } = Astro.props;
 ---
 
 <BaseLayout {title} {description} {canonicalPath} {noindex}>
@@ -35,19 +31,5 @@ const { title, description, canonicalPath, current, noindex, stickyCta = true, a
     <slot />
   </main>
   <Footer columns={footerColumns} {legalLinks} {statusNote} />
-  {stickyCta && <div class="sb-sticky-pad" aria-hidden="true" />}
-  {stickyCta && <StickyMobileCta readiness="waitlist" waitlistSource={`${source}-sticky`} />}
   <WaitlistDialog />
 </BaseLayout>
-
-<style is:global>
-  /* Room for the fixed mobile CTA bar (76px) so it never covers the footer. */
-  .sb-sticky-pad {
-    height: calc(4.75rem + env(safe-area-inset-bottom));
-  }
-  @media (min-width: 900px) {
-    .sb-sticky-pad {
-      display: none;
-    }
-  }
-</style>

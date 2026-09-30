@@ -5,7 +5,48 @@ import Button from '../primitives/Button.astro';
 import Icon from '../primitives/Icon.astro';
 import Section from '../foundation/Section.astro';
 import ProductShot, { type ProductShotProps } from './ProductShot.astro';
+import PipelineBoardFrame, { type PipelineColumn, type PipelineCard } from './PipelineBoardFrame.astro';
+import BeforeAfterDiffFrame, { type DiffSegment, type Provenance } from './BeforeAfterDiffFrame.astro';
+import RequirementEvidencePanelFrame, { type EvidenceRow } from './RequirementEvidencePanelFrame.astro';
+import ComparisonTableFrame, { type ComparisonColumn, type ComparisonRow } from './ComparisonTableFrame.astro';
+import JobFeedCard, { type Job } from './JobFeedCard.astro';
 import { makeId } from '../../../lib/ids';
+
+export interface HeroPipelineDemo {
+  type: 'pipelineBoard';
+  frameLabel?: string;
+  columns: PipelineColumn[];
+  cards: PipelineCard[];
+  view?: 'kanban' | 'table';
+}
+export interface HeroBeforeAfterDemo {
+  type: 'beforeAfterDiff';
+  frameLabel?: string;
+  requirement: string;
+  before: DiffSegment[];
+  after: DiffSegment[];
+  provenance: Provenance;
+  resumeVersion?: string;
+}
+export interface HeroRequirementEvidenceDemo {
+  type: 'requirementEvidence';
+  frameLabel?: string;
+  rows: EvidenceRow[];
+  footnote?: string;
+}
+export interface HeroComparisonDemo {
+  type: 'comparisonTable';
+  heading: string;
+  columns: ComparisonColumn[];
+  rows: ComparisonRow[];
+  caption?: string;
+}
+export interface HeroJobFeedDemo {
+  type: 'jobFeed';
+  /** 1-2 cards — this is a hero, keep it compact. */
+  jobs: Job[];
+}
+export type HeroDemo = HeroPipelineDemo | HeroBeforeAfterDemo | HeroRequirementEvidenceDemo | HeroComparisonDemo | HeroJobFeedDemo;
 
 export interface HeroProps {
   /** home → --display-home, feature → --display-page. */
@@ -17,6 +58,9 @@ export interface HeroProps {
   primaryCta: CtaConfig;
   secondaryCta?: LinkCta;
   badge?: BadgeConfig;
+  /** A real, live block used as the hero visual — prefer this over `media`. */
+  demo?: HeroDemo;
+  /** A static screenshot/illustration. Ignored when `demo` is set. */
   media?: ProductShotProps;
   reassurance?: string;
   tone?: SectionTone;
@@ -24,7 +68,7 @@ export interface HeroProps {
   waitlistSource?: string;
 }
 
-const { variant, headline, lead, primaryCta, secondaryCta, badge, media, reassurance, tone = 'muted', waitlistSource } =
+const { variant, headline, lead, primaryCta, secondaryCta, badge, demo, media, reassurance, tone = 'muted', waitlistSource } =
   Astro.props as HeroProps;
 const id = makeId('sb-hero', headline);
 ---
@@ -49,7 +93,36 @@ const id = makeId('sb-hero', headline);
         <p class="sb-hero__reassurance"><Icon icon="lock" size={16} />{reassurance}</p>
       )}
     </div>
-    {media && <ProductShot {...media} loading="eager" />}
+    {demo ? (
+      <div class="sb-hero__demo">
+        {demo.type === 'pipelineBoard' && (
+          <PipelineBoardFrame frameLabel={demo.frameLabel} columns={demo.columns} cards={demo.cards} view={demo.view} />
+        )}
+        {demo.type === 'beforeAfterDiff' && (
+          <BeforeAfterDiffFrame
+            frameLabel={demo.frameLabel}
+            requirement={demo.requirement}
+            before={demo.before}
+            after={demo.after}
+            provenance={demo.provenance}
+            resumeVersion={demo.resumeVersion}
+          />
+        )}
+        {demo.type === 'requirementEvidence' && (
+          <RequirementEvidencePanelFrame frameLabel={demo.frameLabel} rows={demo.rows} footnote={demo.footnote} />
+        )}
+        {demo.type === 'comparisonTable' && (
+          <ComparisonTableFrame heading={demo.heading} columns={demo.columns} rows={demo.rows} caption={demo.caption} />
+        )}
+        {demo.type === 'jobFeed' && (
+          <div class="sb-hero__jobfeed">
+            {demo.jobs.map((job) => <JobFeedCard {job} />)}
+          </div>
+        )}
+      </div>
+    ) : (
+      media && <ProductShot {...media} loading="eager" />
+    )}
   </div>
 </Section>
 
@@ -91,6 +164,15 @@ const id = makeId('sb-hero', headline);
   .sb-hero__actions {
     display: flex;
     flex-wrap: wrap;
+    gap: var(--space-3);
+    width: 100%;
+  }
+  .sb-hero__demo {
+    width: 100%;
+  }
+  .sb-hero__jobfeed {
+    display: flex;
+    flex-direction: column;
     gap: var(--space-3);
     width: 100%;
   }

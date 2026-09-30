@@ -15,11 +15,15 @@
       "badge": { "state": "preview", "detail": "in private testing" },
       "primaryCta": { "readiness": "waitlist" },
       "secondaryCta": { "label": "Explore job finder", "href": "/features/ai-job-finder" },
-      "media": {
-        "state": "illustrative",
-        "label": "Requirement breakdown",
-        "alt": "Example of job requirements mapped to confirmed evidence with a status for each",
-        "caption": "Every requirement shows the evidence behind its status."
+      "demo": {
+        "type": "requirementEvidence",
+        "frameLabel": "Requirement breakdown · Senior Product Manager, Payments",
+        "rows": [
+          { "requirement": "5+ years of product management in B2B software", "evidence": "6 years as a product manager at Northwind Logistics and Brightline.", "status": "confirmed" },
+          { "requirement": "Experience with payments or billing products", "evidence": "Led the invoicing redesign at Northwind Logistics.", "note": "Invoicing is related to billing. Payment processing is not in your profile.", "status": "partial" },
+          { "requirement": "SQL for self-serve analysis", "evidence": "No confirmed evidence in your profile.", "status": "gap" },
+          { "requirement": "Comfortable working in regulated industries", "evidence": "Healthcare logistics clients at Brightline.", "note": "The job does not say which regulations apply.", "status": "unclear" }
+        ]
       },
       "reassurance": "No score replaces your own judgment."
     },

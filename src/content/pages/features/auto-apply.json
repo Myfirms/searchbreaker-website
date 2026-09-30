@@ -15,11 +15,19 @@
       "badge": { "state": "planned" },
       "primaryCta": { "readiness": "waitlist" },
       "secondaryCta": { "label": "See autofill workflow", "href": "/features/job-application-autofill" },
-      "media": {
-        "state": "concept",
-        "label": "Submission log",
-        "alt": "Concept of a submission log showing prepared, reviewed, submitted and failed applications",
-        "caption": "Every application has a status and a record of what was sent."
+      "demo": {
+        "type": "comparisonTable",
+        "heading": "Auto apply versus autofill",
+        "columns": [
+          { "key": "auto", "label": "Auto apply" },
+          { "key": "autofill", "label": "Autofill" }
+        ],
+        "rows": [
+          { "label": "What it does", "values": { "auto": "Prepares and sends applications that match rules you set.", "autofill": "Fills application fields from your verified profile." } },
+          { "label": "Who presses submit", "emphasis": true, "values": { "auto": "SearchBreaker, only under rules you approved. You can pause it at any time.", "autofill": "You, every time." } },
+          { "label": "Custom questions", "values": { "auto": { "text": "Sent back to you, never guessed", "mark": "no" }, "autofill": { "text": "Drafted for you to edit", "mark": "yes" } } },
+          { "label": "Availability", "values": { "auto": "Planned", "autofill": "Planned" } }
+        ]
       },
       "reassurance": "Nothing is sent outside rules you approved."
     },

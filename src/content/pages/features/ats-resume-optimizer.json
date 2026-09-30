@@ -15,11 +15,25 @@
       "badge": { "state": "concept", "detail": "design concept" },
       "primaryCta": { "readiness": "waitlist" },
       "secondaryCta": { "label": "What an ATS score can tell you", "href": "#limits" },
-      "media": {
-        "state": "concept",
-        "label": "Resume review",
-        "alt": "Concept of a resume and job description side by side with issues and suggested fixes",
-        "caption": "Each issue comes with a reason and a suggested fix."
+      "demo": {
+        "type": "beforeAfterDiff",
+        "frameLabel": "Proposed revision · Senior Product Manager, Payments",
+        "requirement": "Experience with stakeholder management across teams.",
+        "before": [
+          { "text": "Handled " },
+          { "text": "cross-team planning", "kind": "removed" },
+          { "text": " for the payments roadmap." }
+        ],
+        "after": [
+          { "text": "Handled " },
+          { "text": "stakeholder management", "kind": "added" },
+          { "text": " for the payments roadmap." }
+        ],
+        "provenance": {
+          "source": "Profile · Northwind Logistics · Product Manager",
+          "fact": "Coordinated roadmap planning across engineering, finance and support teams (2023–2024).",
+          "confirmedOn": "2026-08-02"
+        }
       },
       "reassurance": "You approve every change before it is saved."
     },

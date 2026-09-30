@@ -33,6 +33,78 @@ const productShot = z.object({
   stateNote: z.string().optional(),
 });
 
+// Shared sub-shapes, defined once here (before `hero`/`heroDemo` need them)
+// and reused verbatim by both `heroDemo` (below) and the full standalone
+// block schemas further down this file (beforeAfterDiff, requirementEvidence,
+// jobFeed, pipelineBoard, comparisonTable) — one shape, two places it's used.
+const pipelineColumn = z.object({ id: z.string(), title: z.string() });
+const pipelineCard = z.object({
+  id: z.union([z.string(), z.number()]),
+  column: z.string(),
+  title: z.string(),
+  company: z.string(),
+  resumeVersion: z.string(),
+  nextAction: z.string(),
+  updated: z.string(),
+});
+const diffSegment = z.object({ text: z.string(), kind: z.enum(['added', 'removed']).optional() });
+const provenance = z.object({ source: z.string(), fact: z.string(), confirmedOn: z.string().optional() });
+const evidenceRow = z.object({ requirement: z.string(), evidence: z.string(), status: evidenceStatus, note: z.string().optional() });
+const comparisonColumn = z.object({ key: z.string(), label: z.string() });
+const comparisonValue = z.union([z.string(), z.object({ text: z.string(), mark: z.enum(['yes', 'no', 'partial']).optional() })]);
+const comparisonRow = z.object({ label: z.string(), emphasis: z.boolean().optional(), values: z.record(z.string(), comparisonValue) });
+const job = z.object({
+  title: z.string(),
+  company: z.string(),
+  location: z.string(),
+  workMode: z.string(),
+  postedAt: z.string(),
+  source: z.string(),
+  url: z.string().optional(),
+  matches: z.array(z.string()).min(2).max(4),
+  missing: z.array(z.string()).min(1).max(3),
+});
+
+/** A real, live block embedded as the hero visual — prefer this over `media`
+ * (a static screenshot/illustration): it renders crisp at any resolution and
+ * adapts to viewport width instead of being a fixed raster image. */
+const heroDemo = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('pipelineBoard'),
+    frameLabel: z.string().optional(),
+    columns: z.array(pipelineColumn).max(5),
+    cards: z.array(pipelineCard),
+    view: z.enum(['kanban', 'table']).optional(),
+  }),
+  z.object({
+    type: z.literal('beforeAfterDiff'),
+    frameLabel: z.string().optional(),
+    requirement: z.string(),
+    before: z.array(diffSegment),
+    after: z.array(diffSegment),
+    provenance,
+    resumeVersion: z.string().optional(),
+  }),
+  z.object({
+    type: z.literal('requirementEvidence'),
+    frameLabel: z.string().optional(),
+    rows: z.array(evidenceRow).min(3).max(7),
+    footnote: z.string().optional(),
+  }),
+  z.object({
+    type: z.literal('comparisonTable'),
+    heading: z.string(),
+    columns: z.array(comparisonColumn).min(2).max(4),
+    rows: z.array(comparisonRow),
+    caption: z.string().optional(),
+  }),
+  z.object({
+    type: z.literal('jobFeed'),
+    /** 1-2 cards — this is a hero, keep it compact. */
+    jobs: z.array(job).min(1).max(2),
+  }),
+]);
+
 const hero = z.object({
   type: z.literal('hero'),
   ...base,
@@ -42,6 +114,7 @@ const hero = z.object({
   primaryCta: cta,
   secondaryCta: linkCta.optional(),
   badge: badge.optional(),
+  demo: heroDemo.optional(),
   media: productShot.optional(),
   reassurance: z.string().optional(),
 });
@@ -62,6 +135,17 @@ const workflowSteps = z.object({
   lead: z.string().optional(),
   eyebrow: z.string().optional(),
   steps: z.array(z.object({ title: z.string(), text: z.string(), availability: availability.optional() })).min(3).max(6),
+});
+
+const phaseSteps = z.object({
+  type: z.literal('phaseSteps'),
+  ...base,
+  heading: z.string(),
+  lead: z.string().optional(),
+  /** Exactly 3 stages, each with exactly 3 steps — a fixed 3x3 shape, not a generic list. */
+  phases: z
+    .array(z.object({ title: z.string(), items: z.array(z.string()).length(3) }))
+    .length(3),
 });
 
 const controlPoints = z.object({
@@ -102,9 +186,9 @@ const beforeAfterDiff = z.object({
   lead: z.string().optional(),
   frameLabel: z.string().optional(),
   requirement: z.string(),
-  before: z.array(z.object({ text: z.string(), kind: z.enum(['added', 'removed']).optional() })),
-  after: z.array(z.object({ text: z.string(), kind: z.enum(['added', 'removed']).optional() })),
-  provenance: z.object({ source: z.string(), fact: z.string(), confirmedOn: z.string().optional() }),
+  before: z.array(diffSegment),
+  after: z.array(diffSegment),
+  provenance,
   resumeVersion: z.string().optional(),
 });
 
@@ -114,10 +198,7 @@ const requirementEvidence = z.object({
   heading: z.string(),
   lead: z.string().optional(),
   frameLabel: z.string().optional(),
-  rows: z
-    .array(z.object({ requirement: z.string(), evidence: z.string(), status: evidenceStatus, note: z.string().optional() }))
-    .min(3)
-    .max(7),
+  rows: z.array(evidenceRow).min(3).max(7),
   footnote: z.string().optional(),
 });
 
@@ -130,17 +211,6 @@ const issueFix = z.object({
   items: z.array(z.object({ issue: z.string(), why: z.string(), fix: z.string() })).min(2).max(5),
 });
 
-const job = z.object({
-  title: z.string(),
-  company: z.string(),
-  location: z.string(),
-  workMode: z.string(),
-  postedAt: z.string(),
-  source: z.string(),
-  url: z.string().optional(),
-  matches: z.array(z.string()).min(2).max(4),
-  missing: z.array(z.string()).min(1).max(3),
-});
 const jobFeed = z.object({
   type: z.literal('jobFeed'),
   ...base,
@@ -156,18 +226,8 @@ const pipelineBoard = z.object({
   lead: z.string().optional(),
   frameLabel: z.string().optional(),
   view: z.enum(['kanban', 'table']).optional(),
-  columns: z.array(z.object({ id: z.string(), title: z.string() })).max(5),
-  cards: z.array(
-    z.object({
-      id: z.union([z.string(), z.number()]),
-      column: z.string(),
-      title: z.string(),
-      company: z.string(),
-      resumeVersion: z.string(),
-      nextAction: z.string(),
-      updated: z.string(),
-    }),
-  ),
+  columns: z.array(pipelineColumn).max(5),
+  cards: z.array(pipelineCard),
 });
 
 const statusStates = z.object({
@@ -184,17 +244,8 @@ const comparisonTable = z.object({
   heading: z.string(),
   lead: z.string().optional(),
   caption: z.string().optional(),
-  columns: z.array(z.object({ key: z.string(), label: z.string() })).min(2).max(4),
-  rows: z.array(
-    z.object({
-      label: z.string(),
-      emphasis: z.boolean().optional(),
-      values: z.record(
-        z.string(),
-        z.union([z.string(), z.object({ text: z.string(), mark: z.enum(['yes', 'no', 'partial']).optional() })]),
-      ),
-    }),
-  ),
+  columns: z.array(comparisonColumn).min(2).max(4),
+  rows: z.array(comparisonRow),
 });
 
 const supportMatrix = z.object({
@@ -334,6 +385,7 @@ export const blockSchema = z.discriminatedUnion('type', [
   hero,
   workflowDiagram,
   workflowSteps,
+  phaseSteps,
   controlPoints,
   featureGrid,
   beforeAfterDiff,

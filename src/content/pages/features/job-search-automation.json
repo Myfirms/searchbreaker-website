@@ -15,11 +15,21 @@
       "badge": { "state": "preview", "detail": "in private testing" },
       "primaryCta": { "readiness": "waitlist" },
       "secondaryCta": { "label": "Explore the workflow", "href": "#workflow" },
-      "media": {
-        "state": "concept",
-        "label": "Review queue",
-        "alt": "Concept of a review queue with approve and skip controls for each opening",
-        "caption": "One queue for every opening, with approve and skip on each."
+      "demo": {
+        "type": "comparisonTable",
+        "heading": "Automation versus auto apply",
+        "columns": [
+          { "key": "search", "label": "Search" },
+          { "key": "prepare", "label": "Preparation" },
+          { "key": "autofill", "label": "Autofill" },
+          { "key": "submit", "label": "Submission" }
+        ],
+        "rows": [
+          { "label": "What happens", "values": { "search": "New openings are collected and compared with your profile.", "prepare": "A tailored resume and answers are drafted from verified facts.", "autofill": "Application fields are filled from your profile.", "submit": "The finished application is sent to the employer." } },
+          { "label": "Who decides", "emphasis": true, "values": { "search": "You choose roles, location and sources.", "prepare": "You accept, edit or reject each draft.", "autofill": "You check each field.", "submit": "You, or rules you approved, when auto apply is available." } },
+          { "label": "Availability", "values": { "search": "Preview", "prepare": "Preview", "autofill": "Planned", "submit": "Planned" } }
+        ],
+        "caption": "Autofill and auto apply are separate features with their own pages."
       },
       "reassurance": "Nothing is sent to an employer without your action."
     },

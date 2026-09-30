@@ -15,7 +15,6 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
-const isGuide = page.template === 'guide';
 ---
 
 <PageLayout
@@ -24,7 +23,6 @@ const isGuide = page.template === 'guide';
   canonicalPath={page.path}
   current={page.current ?? page.path}
   noindex={page.noindex}
-  stickyCta={!isGuide}
   announcementBar={page.template === 'home'}
   source={page.source}
 >

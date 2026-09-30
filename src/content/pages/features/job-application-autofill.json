@@ -15,11 +15,18 @@
       "badge": { "state": "planned" },
       "primaryCta": { "readiness": "waitlist" },
       "secondaryCta": { "label": "See application workflow", "href": "/features/job-application-tracker" },
-      "media": {
-        "state": "concept",
-        "label": "Autofilled form",
-        "alt": "Concept of an application form with each filled field linked to its profile source",
-        "caption": "Every filled field shows its source and can be corrected."
+      "demo": {
+        "type": "beforeAfterDiff",
+        "frameLabel": "Form field · Most recent employer",
+        "requirement": "Form field: Most recent employer",
+        "before": [{ "text": "(empty)", "kind": "removed" }],
+        "after": [{ "text": "Northwind Logistics, Product Manager, 2021–2025", "kind": "added" }],
+        "provenance": {
+          "source": "Profile · Experience · Northwind Logistics",
+          "fact": "Product Manager at Northwind Logistics from Mar 2021 to Jun 2025.",
+          "confirmedOn": "2026-08-02"
+        },
+        "resumeVersion": "the application record"
       },
       "reassurance": "You press submit. Always."
     },

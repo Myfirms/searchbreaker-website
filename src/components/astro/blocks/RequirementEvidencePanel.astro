@@ -1,19 +1,11 @@
 ---
-import type { EvidenceStatus, SectionTone } from '../../../lib/types';
-import AvailabilityBadge from '../primitives/AvailabilityBadge.astro';
-import StatusChip from '../primitives/StatusChip.astro';
+import type { SectionTone } from '../../../lib/types';
 import Section from '../foundation/Section.astro';
 import SectionHeader from '../foundation/SectionHeader.astro';
+import RequirementEvidencePanelFrame, { type EvidenceRow } from './RequirementEvidencePanelFrame.astro';
 import { makeId } from '../../../lib/ids';
 
-export interface EvidenceRow {
-  /** ≤ 12 words. */
-  requirement: string;
-  /** ≤ 20 words. */
-  evidence: string;
-  status: EvidenceStatus;
-  note?: string;
-}
+export type { EvidenceRow };
 export interface RequirementEvidencePanelProps {
   heading: string;
   lead?: string;
@@ -24,151 +16,21 @@ export interface RequirementEvidencePanelProps {
   tone?: SectionTone;
 }
 
-const {
-  heading,
-  lead,
-  frameLabel = 'Requirement breakdown',
-  rows,
-  footnote = 'Status uses only the facts you confirmed in your profile. It is not a prediction of interview chances.',
-  tone = 'default',
-} = Astro.props as RequirementEvidencePanelProps;
-const id = makeId('sb-re', heading);
+const { heading, lead, frameLabel, rows, footnote, tone = 'default' } = Astro.props as RequirementEvidencePanelProps;
+const id = makeId('sb-re-section', heading);
 ---
 
 <Section labelledby={id} tone={tone}>
-  <div class="sb-re">
+  <div class="sb-re-section">
     <SectionHeader {heading} {id} {lead} />
-    <div class="sb-re__frame">
-      <div class="sb-re__bar">
-        <span class="sb-re__label">{frameLabel}</span>
-        <AvailabilityBadge state="illustrative" />
-      </div>
-      <div role="table" aria-label={frameLabel}>
-        <div class="sb-re__row sb-re__row--head" role="row">
-          <span role="columnheader">Job requirement</span>
-          <span role="columnheader">Confirmed evidence</span>
-          <span role="columnheader">Status</span>
-        </div>
-        {rows.map((r) => (
-          <div class="sb-re__row" role="row">
-            <span class="sb-re__req" role="cell">{r.requirement}</span>
-            <span class="sb-re__evidence" role="cell">
-              <span class="sb-re__mobile-label" aria-hidden="true">Evidence</span>
-              <span>{r.evidence}</span>
-              {r.note && <span class="sb-re__note">{r.note}</span>}
-            </span>
-            <span class="sb-re__status" role="cell"><StatusChip status={r.status} /></span>
-          </div>
-        ))}
-      </div>
-      <p class="sb-re__footnote">{footnote}</p>
-    </div>
+    <RequirementEvidencePanelFrame {frameLabel} {rows} {footnote} />
   </div>
 </Section>
 
 <style>
-  .sb-re {
+  .sb-re-section {
     display: flex;
     flex-direction: column;
     gap: var(--space-10);
-  }
-  .sb-re__frame {
-    border: 1px dashed var(--color-border-strong);
-    border-radius: var(--radius-md);
-    background: var(--color-surface-raised);
-    overflow: hidden;
-  }
-  .sb-re__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    min-height: 2.5rem;
-    padding: var(--space-2) var(--space-3);
-    border-bottom: 1px solid var(--color-border);
-  }
-  .sb-re__label {
-    font-family: var(--font-mono);
-    font-size: var(--text-2xs);
-    letter-spacing: var(--tracking-mono-caps);
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-  /* Mobile: each row is a stacked card, the status chip sits top-right. */
-  .sb-re__row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas:
-      'req status'
-      'evidence evidence';
-    gap: var(--space-3);
-    padding: var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-    align-items: start;
-  }
-  .sb-re__row--head {
-    display: none;
-  }
-  .sb-re__req {
-    grid-area: req;
-    font-size: var(--text-md);
-    line-height: var(--leading-snug);
-    font-weight: var(--font-weight-medium);
-  }
-  .sb-re__status {
-    grid-area: status;
-    display: flex;
-  }
-  .sb-re__evidence {
-    grid-area: evidence;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    font-size: var(--text-sm);
-    line-height: var(--leading-snug);
-    color: var(--color-text-secondary);
-  }
-  .sb-re__mobile-label {
-    font-family: var(--font-mono);
-    font-size: var(--text-2xs);
-    letter-spacing: var(--tracking-mono-caps);
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-  .sb-re__note {
-    color: var(--color-text-muted);
-  }
-  .sb-re__footnote {
-    margin: 0;
-    padding: var(--space-4) var(--space-5);
-    font-size: var(--text-sm);
-    line-height: var(--leading-snug);
-    color: var(--color-text-muted);
-  }
-  @media (min-width: 768px) {
-    .sb-re__row {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) 9.375rem;
-      grid-template-areas: 'req evidence status';
-      gap: var(--space-6);
-      padding: var(--space-4) var(--space-5);
-    }
-    .sb-re__row--head {
-      display: grid;
-      padding: var(--space-3) var(--space-5);
-      font-family: var(--font-mono);
-      font-size: var(--text-2xs);
-      letter-spacing: var(--tracking-mono-caps);
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
-    .sb-re__evidence {
-      font-size: var(--text-md);
-    }
-    .sb-re__note {
-      font-size: var(--text-sm);
-    }
-    .sb-re__mobile-label {
-      display: none;
-    }
   }
 </style>

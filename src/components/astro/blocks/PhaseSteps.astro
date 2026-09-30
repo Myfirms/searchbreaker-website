@@ -1,0 +1,110 @@
+---
+// Three stages, each with three steps — a fixed 3x3 shape (not a generic
+// N-step list like WorkflowSteps/WorkflowDiagram). Unlike WorkflowDiagram,
+// nothing here is a link: every stage reads the same way, so there is no
+// "some cards are clickable, some aren't" inconsistency to explain.
+import type { SectionTone } from '../../../lib/types';
+import Icon from '../primitives/Icon.astro';
+import Section from '../foundation/Section.astro';
+import SectionHeader from '../foundation/SectionHeader.astro';
+import { makeId } from '../../../lib/ids';
+
+export interface Phase {
+  /** ≤ 6 words, value-oriented (what the visitor gets), not an internal feature name. */
+  title: string;
+  /** Exactly 3 short steps. */
+  items: [string, string, string] | string[];
+}
+export interface PhaseStepsProps {
+  heading: string;
+  lead?: string;
+  /** Exactly 3 phases. */
+  phases: Phase[];
+  tone?: SectionTone;
+}
+
+const ROMAN = ['I', 'II', 'III'];
+const { heading, lead, phases, tone = 'default' } = Astro.props as PhaseStepsProps;
+const id = makeId('sb-ph', heading);
+---
+
+<Section labelledby={id} tone={tone}>
+  <div class="sb-ph">
+    <SectionHeader {heading} {id} {lead} />
+    <ol class="sb-ph__list">
+      {phases.map((phase, i) => (
+        <li class="sb-ph__phase">
+          <span class="sb-ph__num">{ROMAN[i] ?? String(i + 1)}</span>
+          <h3 class="sb-ph__title">{phase.title}</h3>
+          <ul class="sb-ph__items">
+            {phase.items.map((item) => (
+              <li class="sb-ph__item">
+                <span class="sb-ph__icon"><Icon icon="check" size={16} /></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Section>
+
+<style>
+  .sb-ph {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+  .sb-ph__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.625rem), 1fr));
+    gap: var(--space-6);
+  }
+  .sb-ph__phase {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+  }
+  .sb-ph__num {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+  }
+  .sb-ph__title {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-semibold);
+  }
+  .sb-ph__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .sb-ph__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-text-secondary);
+  }
+  .sb-ph__icon {
+    flex: none;
+    display: flex;
+    margin-top: 2px;
+    color: var(--color-success);
+  }
+</style>

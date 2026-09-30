@@ -15,11 +15,24 @@
       "badge": { "state": "concept", "detail": "design concept" },
       "primaryCta": { "readiness": "waitlist" },
       "secondaryCta": { "label": "See how to begin", "href": "#start" },
-      "media": {
-        "state": "concept",
-        "label": "Application pipeline",
-        "alt": "Concept of the application pipeline with the resume version and next action on each card",
-        "caption": "Each card shows the resume version and the next action."
+      "demo": {
+        "type": "pipelineBoard",
+        "frameLabel": "Application pipeline",
+        "columns": [
+          { "id": "to-apply", "title": "To apply" },
+          { "id": "applied", "title": "Applied" },
+          { "id": "screening", "title": "Screening" },
+          { "id": "next", "title": "Next steps" },
+          { "id": "closed", "title": "Rejected / No answer" }
+        ],
+        "cards": [
+          { "id": 1, "column": "to-apply", "title": "Senior Product Manager, Payments", "company": "Fenwick Pay", "resumeVersion": "Resume v3", "nextAction": "Review tailored resume", "updated": "Sep 22" },
+          { "id": 2, "column": "applied", "title": "Product Lead, Billing", "company": "Arcadia Health", "resumeVersion": "Resume v2", "nextAction": "Follow up on Oct 2", "updated": "Sep 18" },
+          { "id": 3, "column": "applied", "title": "Group PM, Platform", "company": "Oakridge Freight", "resumeVersion": "Resume v2", "nextAction": "Wait for reply until Sep 30", "updated": "Sep 16" },
+          { "id": 4, "column": "screening", "title": "Senior PM, Checkout", "company": "Lumen Retail", "resumeVersion": "Resume v3", "nextAction": "Recruiter call on Sep 29", "updated": "Sep 20" },
+          { "id": 5, "column": "next", "title": "Principal Product Manager", "company": "Halden Systems", "resumeVersion": "Resume v1", "nextAction": "Prepare case study", "updated": "Sep 12" },
+          { "id": 6, "column": "closed", "title": "Product Manager, Growth", "company": "Verto Media", "resumeVersion": "Resume v1", "nextAction": "No answer after 21 days", "updated": "Aug 30" }
+        ]
       },
       "reassurance": "Your applications stay yours to edit and export."
     },
